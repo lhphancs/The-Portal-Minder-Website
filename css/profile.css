@@ -1,12 +1,19 @@
 .title{
-        
+    text-align:center;
 }
 
 .user_photo_container{
+    display:inline-block;
+    border: 2px solid black;
+
+    padding:10px;
     margin:10px 10px 0px 10px;
 }
 
 .user_photo{
-    width:50px;
-    height:50px;
+    margin:auto;
+    border: 1px solid black;
+    border-radius:50%;
+    width:100px;
+    height:100px;
 }
