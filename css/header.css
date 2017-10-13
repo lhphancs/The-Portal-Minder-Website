@@ -1,0 +1,13 @@
+.header_container{
+    margin:10px;
+    font-size:2em;
+
+}
+
+.left_header_container{
+    float:left;
+}
+
+.right_header_container{
+    float:right;
+}
