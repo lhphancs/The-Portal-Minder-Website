@@ -4,11 +4,16 @@
     border:2px solid black;
 }
 
+.chat_area{
+    height:400px;
+}
 .name_list_container{
+    height:90%;
     margin:10px;
     padding:10px;
     width:30%;
     border:1px solid black;
+    display:inline-block;
 }
 
 .btn_user_name{
@@ -16,6 +21,36 @@
     width:100%;
     display:block;
 }
-messages_container{
-    width:70%;
+
+#messages_container{
+    height:90%;
+    width:65%;
+
+    padding:10px;
+    margin-top:10px;
+    vertical-align:top;
+    border:1px solid black;
+    display:inline-block;
+    overflow:scroll;
+}
+
+.send_msg_container{
+    margin:10px;
+    height:100px;
+}
+
+#textarea_msg{
+    height:100%;
+}
+
+#btn_send_msg{
+    vertical-align:top;
+    height:100%;
+}
+
+.chat_bubble{
+    padding:20px;
+    display:inline-block;
+    border:1px solid black;
+    border-radius:90%;
 }
