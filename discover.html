@@ -4,9 +4,15 @@
 		<link type="text/css" rel= "stylesheet" href="css/discover.css">
 	</head>
 	<body>
-		<button id="btn_local_search" class = "btn_search">Local Search</button>
-		<button id="btn_tag_search" class = "btn_search">Matching Tags Search</button>
-		<button id="btn_random_search" class = "btn_search">Random Search</button>
+        <form action = "other_profile.html">
+            <input class = "submit_search" type = "submit" value = "Local Search">
+        </form>
+        <form action = "other_profile.html">
+            <input class = "submit_search" type = "submit" value = "Matching Tags Search">
+        </form>
+        <form action = "other_profile.html">
+            <input class = "submit_search" type = "submit" value = "Random Search">
+        </form>
 
 		<div class = "search_person_container">
 			<form class="form_container">Search Person:
@@ -16,3 +22,9 @@
 		</div>
 	</body>
 </html>
+
+<script>
+    document.getElementById("btn_local_search").onclick = function(){
+
+    }
+</script>

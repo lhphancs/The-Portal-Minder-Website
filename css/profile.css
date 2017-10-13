@@ -22,6 +22,15 @@ body{
     height:100px;
 }
 
+.btn_search_users, .btn_connect{
+    background-color:#FFEBCD ;
+    display:block;
+    margin:10px auto;
+    font-size:2em;
+    border:2px solid #F75D59;
+    padding:10px;
+
+}
 
 .header_for_textarea{
     display:inline-block
@@ -36,4 +45,29 @@ textarea{
 
 #btn_save_profile{
     margin-top:10px;
+}
+
+p.info{
+    margin-top:-20px;
+}
+
+.related_users_list_container{
+    padding:0px 10px;
+    border: 2px dashed black;
+    overflow:scroll;
+}
+.related_user_container{
+    display:inline-block;
+    margin-left:10px;
+}
+
+.related_user_img{
+    width:100px;
+    height:100px;
+    display:block;
+
+}
+
+.related_user_name{
+    text-align:center;
 }
