@@ -1,25 +1,68 @@
 <!DOCTYPE>
 <html>
-<head>
-    <link type="text/css" rel= "stylesheet" href="css/profile.css">
-</head>
-<body>
-    <div class = "profile_container">
-        <h1 class ="title">
-            Profile
-        </h1>
-        <div class = "user_photo_container">
-            <h1 class = "user_name">UserName</h1>
-            <img class= "user_photo" src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png"/>
+    <head>
+        <link type="text/css" rel= "stylesheet" href="css/profile.css">
+    </head>
+    <body>
+        <div class = "profile_container">
+            <h1 class ="title">
+                Profile
+            </h1>
+            <div class = "user_photo_container">
+                <h1 class = "user_name">[MyUserName]</h1>
+                <img class= "user_photo" src="./img/logo.jpg"/>
+            </div>
+
+            <div class = "editable_container">
+                <h3 class = "header_for_textarea">Description</h3>
+                <button class ="btn_edit" id="btn_edit_description">Edit</button>
+                <br>
+                <textarea>[Description to be filled]</textarea>
+            </div>
+            <div class = "editable_container">
+                <h3 class = "header_for_textarea">Tags</h3>
+                <button class ="btn_edit" id="btn_edit_tag">Edit</button>
+                <br>
+                <textarea>[Tags, separated by space]</textarea>
+            </div>
+            <div class = "editable_container">
+                <h3 class = "header_for_textarea">Education</h3>
+                <button class ="btn_edit" id="btn_edit_education">Edit</button>
+                <br>
+                <textarea>[Education to be filled]</textarea>
+            </div>
+            <div class = "editable_container">
+                <h3 class = "header_for_textarea">Location (City)</h3>
+                <button class ="btn_edit" id="btn_edit_location">Edit</button>
+                <br>
+                <textarea>[Location to be filled]</textarea>
+            </div>
+
+            <button id = "btn_save_profile">Save Profile</button>
         </div>
-        <h3 class = "sub_header">Description</h3>
-        <p>[Description to be filled]</p>
-        <h3 class = "sub_header">Tags</h3>
-        <p>[Tags to be filled]</p>
-        <h3 class = "sub_header">Education</h3>
-        <p>[Education to be filled]</p>
-        <h3 class = "sub_header">Location</h3>
-        <p>[Location to be filled]</p>
-    </div>
-</body>
+    </body>
 </html>
+
+<script>
+    var eles_textarea = document.getElementsByTagName("textarea");
+    for(var i = 0; i<eles_textarea.length; ++i)
+        eles_textarea[i].disabled = true;
+
+
+
+    var editable_containers_eles = document.getElementsByClassName("editable_container");
+    for(var i=0; i<editable_containers_eles.length; ++i)
+    {
+        var ele_btn_edit = editable_containers_eles[i].getElementsByTagName("button")[0];
+        ele_btn_edit.onclick = function(){
+            var ele_textarea = this.parentNode.getElementsByTagName('textarea')[0];
+
+            ele_textarea.disabled = !ele_textarea.disabled;
+            if(ele_textarea.disabled)
+                this.innerHTML = "Edit";
+            else
+                this.innerHTML = "Save";
+        };
+    }
+
+</script>

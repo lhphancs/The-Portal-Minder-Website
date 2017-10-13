@@ -1,19 +1,39 @@
+body{
+    background-color:#FFBAAE;
+}
+
+.profile_container{
+    padding:0px 20px;
+}
+
 .title{
     text-align:center;
 }
 
-.user_photo_container{
-    display:inline-block;
-    border: 2px solid black;
-
-    padding:10px;
-    margin:10px 10px 0px 10px;
+.user_name{
+    text-align:center;
 }
-
 .user_photo{
+    display:block;
     margin:auto;
     border: 1px solid black;
     border-radius:50%;
     width:100px;
     height:100px;
+}
+
+
+.header_for_textarea{
+    display:inline-block
+}
+
+textarea{
+    margin-top:-5px;
+    width:50%;
+    overflow:scroll;
+    resize:none;
+}
+
+#btn_save_profile{
+    margin-top:10px;
 }
