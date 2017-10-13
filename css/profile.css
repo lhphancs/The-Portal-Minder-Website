@@ -51,23 +51,23 @@ p.info{
     margin-top:-20px;
 }
 
-.related_users_list_container{
+.other_users_list_container{
     padding:0px 10px;
     border: 2px dashed black;
     overflow:scroll;
 }
-.related_user_container{
+.other_user_container{
     display:inline-block;
     margin-left:10px;
 }
 
-.related_user_img{
+.other_user_img{
     width:100px;
     height:100px;
     display:block;
 
 }
 
-.related_user_name{
-    text-align:center;
+.other_user_name{
+    display:block;
 }
