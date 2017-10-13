@@ -16,11 +16,8 @@
                 <button class = "btn_user_name">[UserName]</button>
                 <button class = "btn_user_name">[UserName]</button>
             </div>
-            <div id = "messages_container">
-                <div class = "row">
-                    <p class="chat_bubble">You are chatting with [OtherUserName]</p>
-                </div>
-
+            <div id = "msgs_container">
+                <p class="msg_header">You are chatting with [OtherUserName]</p>
             </div>
             <div class="send_msg_container">
                 <textarea id="textarea_msg"></textarea>
@@ -32,23 +29,4 @@
 </body>
 </html>
 
-<script>
-    var send_msg = function(){
-        var messages_container = document.getElementById("messages_container")
-        var textarea_msg = document.getElementById("textarea_msg").value;
-
-        var new_div = document.createElement("div");
-        new_div.classList.add("row");
-
-        var para = document.createElement("p");
-        para.classList.add("chat_bubble");
-        var node = document.createTextNode("[UserName]: " + textarea_msg);
-        para.appendChild(node);
-
-        new_div.appendChild(para);
-        messages_container.appendChild(new_div);
-    };
-    var ele_send_btn = document.getElementById("btn_send_msg");
-    ele_send_btn.onclick = send_msg;
-
-</script>
+<script src="./js/messaging.js"></script>
