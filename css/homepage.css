@@ -9,8 +9,12 @@ h1.title{
 }
 
 #nav_bar{
-    width:auto;
-    height:auto;
+    margin:10px;
+    font-size:2em;
+}
+
+.header_anchor{
+    margin-right:5px;
 }
 
 .btn_default{
@@ -18,7 +22,7 @@ h1.title{
 }
 
 .container{
-    height:100%;
+    height:500px;
     background-image:url("https://az616578.vo.msecnd.net/files/2016/11/18/6361508893520048051716170808_dating-websites-for-people-who-hate-online-dating.jpg");
     background-size:cover;
 }
@@ -39,4 +43,9 @@ h1.title{
     border: 2px solid black;
     border-radius:20%;
     padding: 10px 20px;
+}
+
+.right_header{
+    float:right;
+    vertical-align:baseline;
 }

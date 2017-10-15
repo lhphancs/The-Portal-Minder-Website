@@ -1,34 +1,46 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-    <link type="text/css" rel= "stylesheet" href="css/global.css">
-    <link type="text/css" rel= "stylesheet" href="css/profile.css">
-    <link type="text/css" rel= "stylesheet" href="css/messaging.css">
-</head>
-<body>
-    <div class = "entire_container">
-        <h1 class = "title">Messaging</h1>
-        <div class = "chat_area">
-            <div class="contact_list_container">
-                <h2 class="contact_list_title">Contact list</h2>
-                <button class = "btn_user_name">[UserName1]</button>
-                <button class = "btn_user_name">[UserName2]</button>
-                <button class = "btn_user_name">[UserName3]</button>
-                <button class = "btn_user_name">[UserName4]</button>
-                <button class = "btn_user_name">[UserName5]</button>
-                <button class = "btn_user_name">[UserName6]</button>
-            </div>
-            <div id = "msgs_container">
-                <p class="msg_header">You are chatting with [OtherUserName]</p>
-            </div>
-            <div class="send_msg_container">
-                <textarea id="textarea_msg"></textarea>
-                <button id="btn_send_msg">Send</button>
-            </div>
+    <head>
+        <link type="text/css" rel= "stylesheet" href="css/global.css">
+        <link type="text/css" rel= "stylesheet" href="css/profile.css">
+        <link type="text/css" rel= "stylesheet" href="css/messaging.css">
+    </head>
+    <body>
+        <div class = "header_container">
+            <nav class = "left_header_container">
+                <a href="./discover.html" >Discover Users</a>
+            </nav>
 
+            <nav class = "right_header_container">
+                <a href="./notifications.html">Notifications</a>
+                <a href="./profile.html">Profile</a>
+                <a href="./homepage.html">Logout</a>
+            </nav>
         </div>
-    </div>
-</body>
+
+        <div class = "entire_container">
+            <h1 class = "title">Messaging</h1>
+            <div class = "chat_area">
+                <div class="contact_list_container">
+                    <h2 class="contact_list_title">Contact list</h2>
+                    <button class = "btn_user_name">[UserName1]</button>
+                    <button class = "btn_user_name">[UserName2]</button>
+                    <button class = "btn_user_name">[UserName3]</button>
+                    <button class = "btn_user_name">[UserName4]</button>
+                    <button class = "btn_user_name">[UserName5]</button>
+                    <button class = "btn_user_name">[UserName6]</button>
+                </div>
+                <div id = "msgs_container">
+                    <p class="msg_header">You are chatting with [OtherUserName]</p>
+                </div>
+                <div class="send_msg_container">
+                    <textarea id="textarea_msg"></textarea>
+                    <button id="btn_send_msg">Send</button>
+                </div>
+
+            </div>
+        </div>
+    </body>
 </html>
 
 <script src="./js/messaging.js"></script>

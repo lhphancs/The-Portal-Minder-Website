@@ -6,15 +6,13 @@ body{
     text-align:center;
 }
 
-
 .header_container{
     margin:10px;
-    font-size:2em;
-
+    font-size:1.5em;
 }
 
 .left_header_container{
-    float:left;
+    display:inline-block;
 }
 
 .right_header_container{
