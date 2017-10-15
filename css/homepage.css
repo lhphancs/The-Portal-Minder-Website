@@ -21,10 +21,14 @@ h1.title{
     font-size:50px;
 }
 
+imag{
+
+}
 .container{
     height:500px;
-    background-image:url("https://az616578.vo.msecnd.net/files/2016/11/18/6361508893520048051716170808_dating-websites-for-people-who-hate-online-dating.jpg");
+    background-image:url("https://static.pexels.com/photos/58572/pexels-photo-58572.jpeg");
     background-size:cover;
+    background-position: center;
 }
 
 #login_form{
