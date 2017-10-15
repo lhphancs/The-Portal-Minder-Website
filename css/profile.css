@@ -1,13 +1,5 @@
-body{
-    background-color:#FFBAAE;
-}
-
 .profile_container{
     padding:0px 20px;
-}
-
-.title{
-    text-align:center;
 }
 
 .user_name{
@@ -43,10 +35,6 @@ textarea{
     resize:none;
 }
 
-#btn_save_profile{
-    margin-top:10px;
-}
-
 p.info{
     margin-top:-20px;
 }
@@ -70,4 +58,32 @@ p.info{
 
 .other_user_name{
     display:block;
+}
+
+.insert_tag_container{
+    margin-top:10px;
+}
+
+.tag_txt{
+    margin-left:5px;
+    height:100%;
+    display:inline-block;
+    background-color:#FFEBCD;
+    border:1px solid black;
+}
+.btn_tag_remove{
+    height:50%;
+    font-size:.6em;
+    background-color:#FFEBCD;
+    border:1px solid black;
+    vertical-align:top;
+}
+
+.div_tag_container{
+    display:inline-block;
+    height:30px;
+}
+
+#btn_save_profile{
+    margin-top:10px;
 }

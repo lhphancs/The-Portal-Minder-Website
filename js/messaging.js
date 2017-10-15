@@ -1,4 +1,4 @@
-var send_msg = function(){
+var send_msg_response = function(){
     var messages_container = document.getElementById("msgs_container")
     var ele_textarea_msg = document.getElementById("textarea_msg");
 
@@ -14,6 +14,7 @@ var send_msg = function(){
     messages_container.appendChild(new_div);
     ele_textarea_msg.value = "";
 
+    messages_container.scrollTop = messages_container.scrollHeight; //Scrolls to bottom
 };
 
 var btn_user_messaging_response = function(){
@@ -31,19 +32,25 @@ var btn_user_messaging_response = function(){
     } while(child_node);
     document.getElementById("textarea_msg").value = "";
 
-    //Add person chatting with
+    //Add chat bubble w/ msg
     var para = document.createElement("p");
     para.classList.add("msg_header");
     var node = document.createTextNode("You are chatting with " + this.innerHTML);
-    msg_container.appendChild(node);
+    para.appendChild(node);
+    msg_container.appendChild(para);
 };
 
-var ele_send_btn = document.getElementById("btn_send_msg");
-ele_send_btn.onclick = send_msg;
+var set_event_chat_with_other_user = function(){
+    var eles_btn_user_messaging = document.getElementsByClassName("btn_user_name");
+    for(var i=0; i<eles_btn_user_messaging.length; ++i)
+    {
+        eles_btn_user_messaging[i].onclick = btn_user_messaging_response;
+    }
+};
 
-var eles_btn_user_messaging = document.getElementsByClassName("btn_user_name");
-for(var i=0; i<eles_btn_user_messaging.length; ++i)
-{
-    eles_btn_user_messaging[i].onclick = btn_user_messaging_response;
-}
+var main = function(){
+    document.getElementById("btn_send_msg").onclick = send_msg_response;
+    set_event_chat_with_other_user();
+};
 
+main();

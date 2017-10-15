@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
+        <link type="text/css" rel= "stylesheet" href="css/global.css">
         <link type="text/css" rel= "stylesheet" href="css/profile.css">
         <link rel="import" href="./header.html">
     </head>
@@ -24,11 +25,14 @@
                 <br>
                 <textarea>[Description to be filled]</textarea>
             </div>
-            <div class = "editable_container">
+            <div class = "tag_container">
                 <h3 class = "header_for_textarea">Tags</h3>
-                <button class ="btn_edit" id="btn_edit_tag">Edit</button>
-                <br>
-                <textarea>[Tags, separated by space]</textarea>
+                <div id = "tag_list_container"></div>
+
+                <div class = "insert_tag_container">
+                    <input id = "input_tag" type = "text">
+                    <button id="btn_add_tag" class = "btn">Add Tag</button>
+                </div>
             </div>
             <div class = "editable_container">
                 <h3 class = "header_for_textarea">Education</h3>
@@ -43,31 +47,9 @@
                 <textarea>[Location to be filled]</textarea>
             </div>
 
-            <button id = "btn_save_profile">Save Profile</button>
+            <button id = "btn_save_profile" class = "btn">Save Profile</button>
         </div>
     </body>
 </html>
 
-<script>
-    var eles_textarea = document.getElementsByTagName("textarea");
-    for(var i = 0; i<eles_textarea.length; ++i)
-        eles_textarea[i].disabled = true;
-
-
-
-    var editable_containers_eles = document.getElementsByClassName("editable_container");
-    for(var i=0; i<editable_containers_eles.length; ++i)
-    {
-        var ele_btn_edit = editable_containers_eles[i].getElementsByTagName("button")[0];
-        ele_btn_edit.onclick = function(){
-            var ele_textarea = this.parentNode.getElementsByTagName('textarea')[0];
-
-            ele_textarea.disabled = !ele_textarea.disabled;
-            if(ele_textarea.disabled)
-                this.innerHTML = "Edit";
-            else
-                this.innerHTML = "Save";
-        };
-    }
-
-</script>
+<script src="./js/profile.js"></script>
