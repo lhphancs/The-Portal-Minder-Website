@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link type="text/css" rel= "stylesheet" href="css/global.css">
+		<link type="text/css" rel= "stylesheet" href="css/homepage.css">
+		<link type="text/css" rel= "stylesheet" href="css/signup.css">
+		<script src="js/form_check.js"></script>
+	</head>
+	<body>
+		<div id = "nav_bar">
+			<a href="#"><img class = "logo" src="./img/logo.jpg"></a>
+			<div class="right_header">
+				<a class = "header_anchor" href="./about.html">About</a>
+				<a class = "header_anchor" href="./homepage.html">Login</a>
+				<a class = "header_anchor" href="./signup.html">Sign Up</a>
+			</div>
+		</div>
+
+		<div class="container">
+			<h1 class = "title">Sign up</h1>
+
+
+			<form id="signup_form" method="get" action="./profile.html" onsubmit="return is_valid_signup()">
+				<div class = "top_form_container">
+					<div>
+						First Name:
+						<input type="text" id="input_first_name">
+					</div>
+					<div>
+						Last Name:
+						<input type="text" id="input_last_name">
+					</div>
+					<div>
+						City/Zip Code:
+						<input type="text" id="input_city">
+					</div>
+				</div>
+
+				<div class = "btm_form_container">
+					<div>
+						Email:
+						<input type="text" id="input_email">
+					</div>
+					<div>
+						Password:
+						<input type="password" id="input_password1">
+					</div>
+					<div>
+						Re-enter Password:
+						<input type="password" id="input_password2">
+					</div>
+					<input type="submit" class="form_submit" value="Sign Up">
+				</div>
+			</form>
+		</div>
+	</body>
+</html>
+
