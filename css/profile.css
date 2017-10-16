@@ -87,3 +87,13 @@ p.info{
 #btn_save_profile{
     margin-top:10px;
 }
+
+#video_element{
+    width:100px;
+    height:100px;
+    border: 1px solid black;
+}
+
+#canvas{
+    border:1px solid black;
+}

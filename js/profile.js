@@ -75,11 +75,47 @@ var save_profile_response = function(){
     alert("This needs to be filled out later.");
 };
 
+var activate_video = function(){
+    setTimeout(2000);
+    var video = document.querySelector("#video_element");
+
+    //This checks for which one will browser match first
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+
+    if (navigator.getUserMedia) {
+        navigator.getUserMedia({video: true}, handleVideo, videoError);
+    }
+
+    function handleVideo(stream) {
+        video.src = window.URL.createObjectURL(stream);
+    }
+
+    function videoError(e) {
+        // do something
+    }
+};
+
+var set_capture_response = function(){
+    // Elements for taking the snapshot
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    var video = document.getElementById('video_element');
+
+    // Trigger photo take
+    document.getElementById("btn_capture").addEventListener("click", function() {
+        context.drawImage(video, 0, 0, 100, 100);
+    });
+};
+
 var main = function(){
     textarea_disable();
     set_event_edit_and_save_textarea_response();
     document.getElementById("btn_add_tag").onclick = insert_tag_response;
     document.getElementById("btn_save_profile").onclick = save_profile_response;
+
+    activate_video();
+    set_capture_response();
 };
+
 
 main();
