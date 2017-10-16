@@ -6,67 +6,66 @@
         <link rel="import" href="./header.html">
     </head>
     <body>
-        <div class = "header_container">
-            <nav class = "left_header_container">
+        <div class="header_container">
+            <nav class="left_header_container">
                 <a href="./discover.html" >Discover Users</a>
             </nav>
 
-            <nav class = "right_header_container">
+            <nav class="right_header_container">
                 <a href="./notification.html">Notifications</a>
                 <a href="./profile.html">Profile</a>
                 <a href="./homepage.html">Logout</a>
             </nav>
         </div>
 
-        <div class = "profile_container">
-            <h1 class ="title">
+        <div class="profile_container">
+            <h1 class="title">
                 Profile
             </h1>
-            <div class = "user_photo_container">
-                <h1 class = "user_name">[MyUserName]</h1>
-                <img class= "user_photo" src="./img/logo.jpg"/>
+            <div class="user_photo_container">
+                <h1 class="user_name">[MyUserName]</h1>
 
-                <video autoplay="true" id="video_element">
-                    
+                <video class="user_photo display_none" id="video_webcam" autoplay="true">   
                 </video>
-                <canvas id="canvas" width="100" height="100"></canvas>
 
-                <button id="btn_capture">Capture</button>
+                <canvas id="canvas_user" class="user_photo" width="100" height="100"></canvas>
+
+                <button id="btn_webcam_toggle">Activate Webcam</button>
             </div>
 
-            <form action = "other_profile.html">
-                <input class = "btn_search_users" type = "submit" value = "Match with Others">
+            <form action ="other_profile.html">
+                <input class ="btn_search_users" type="submit" value="Match with Others">
             </form>
 
-            <div class = "editable_container">
-                <h3 class = "header_for_textarea">Description</h3>
-                <button class ="btn_edit" id="btn_edit_description">Edit</button>
+            <div class="editable_container">
+                <h3 class="header_for_textarea">Description</h3>
+                <button class="btn_edit" id="btn_edit_description">Edit</button>
                 <br>
                 <textarea>[Description to be filled]</textarea>
             </div>
-            <div class = "tag_container">
-                <h3 class = "header_for_textarea">Tags</h3>
-                <div id = "tag_list_container"></div>
+            <div class="tag_container">
+                <h3 class="header_for_textarea">Tags</h3>
+                <div id="tag_list_container"></div>
 
-                <div class = "insert_tag_container">
-                    <input id = "input_tag" type = "text">
-                    <button id="btn_add_tag" class = "btn">Add Tag</button>
+                <div class="insert_tag_container">
+                    <input id="input_tag" type="text">
+                    <button id="btn_add_tag" class="btn">Add Tag</button>
                 </div>
             </div>
-            <div class = "editable_container">
-                <h3 class = "header_for_textarea">Education</h3>
-                <button class ="btn_edit" id="btn_edit_education">Edit</button>
+            <div class="editable_container">
+                <h3 class="header_for_textarea">Education</h3>
+                <button class="btn_edit" id="btn_edit_education">Edit</button>
                 <br>
                 <textarea>[Education to be filled]</textarea>
             </div>
-            <div class = "editable_container">
-                <h3 class = "header_for_textarea">Location (City)</h3>
-                <button class ="btn_edit" id="btn_edit_location">Edit</button>
+            <div class="editable_container">
+                <h3 class="header_for_textarea">Location (City)</h3>
+                <button class="btn_edit" id="btn_edit_location">Edit</button>
                 <br>
                 <textarea>[Location to be filled]</textarea>
             </div>
 
-            <button id = "btn_save_profile" class = "btn">Save Profile</button>
+            <button id="btn_save_profile" class="btn">Save Profile</button>
         </div>
     </body>
 </html>

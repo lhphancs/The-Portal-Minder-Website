@@ -76,8 +76,7 @@ var save_profile_response = function(){
 };
 
 var activate_video = function(){
-    setTimeout(2000);
-    var video = document.querySelector("#video_element");
+    var video = document.querySelector("#video_webcam");
 
     //This checks for which one will browser match first
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
@@ -87,6 +86,7 @@ var activate_video = function(){
     }
 
     function handleVideo(stream) {
+        local_stream = stream;
         video.src = window.URL.createObjectURL(stream);
     }
 
@@ -95,27 +95,51 @@ var activate_video = function(){
     }
 };
 
-var set_capture_response = function(){
+var set_capture_listener = function(){
     // Elements for taking the snapshot
-    var canvas = document.getElementById('canvas');
+    var canvas = document.getElementById('canvas_user');
     var context = canvas.getContext('2d');
-    var video = document.getElementById('video_element');
+    var video = document.getElementById('video_webcam');
 
     // Trigger photo take
-    document.getElementById("btn_capture").addEventListener("click", function() {
+    document.getElementById("btn_webcam_toggle").addEventListener("click", function() {
         context.drawImage(video, 0, 0, 100, 100);
     });
 };
 
+var set_webcam_toggle = function(){
+    var ele_video = document.querySelector("#video_webcam");
+    var ele_canvas = document.querySelector("#canvas_user");
+    var btn_webcam_toggle = document.querySelector("#btn_webcam_toggle");
+    //This will turn on webcam
+    if(ele_video.classList.contains("display_none") ){
+        btn_webcam_toggle.innerHTML = "Take picture";
+        ele_video.classList.remove("display_none");
+        ele_canvas.classList.add("display_none");
+        activate_video();
+    }
+
+    //This will turn off webcam and display picture taken
+    else{
+        btn_webcam_toggle.innerHTML = "Activate webcam";
+        setTimeout(function() {
+            local_stream.stop();
+            ele_video.classList.add("display_none");
+            ele_canvas.classList.remove("display_none");
+        }, 0); //Why do I need a set timeout of 0? breaks if I remove setTimeout
+        
+        
+    }
+};
+
+var local_stream;
 var main = function(){
     textarea_disable();
     set_event_edit_and_save_textarea_response();
     document.getElementById("btn_add_tag").onclick = insert_tag_response;
     document.getElementById("btn_save_profile").onclick = save_profile_response;
-
-    activate_video();
-    set_capture_response();
+    document.getElementById("btn_webcam_toggle").onclick = set_webcam_toggle;
+    set_capture_listener();
 };
-
 
 main();
