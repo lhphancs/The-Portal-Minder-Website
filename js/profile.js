@@ -61,12 +61,16 @@ var set_event_edit_and_save_textarea_response = function()
         var ele_btn_edit = editable_containers_eles[i].getElementsByTagName("button")[0];
         ele_btn_edit.onclick = function(){
             var ele_textarea = this.parentNode.getElementsByTagName('textarea')[0];
-
-            ele_textarea.disabled = !ele_textarea.disabled;
-            if(ele_textarea.disabled)
-                this.innerHTML = "Edit";
-            else
+            if(ele_textarea.disabled){
                 this.innerHTML = "Save";
+            }
+                
+            else{
+                this.innerHTML = "Edit";
+                update_map();
+            }
+            ele_textarea.disabled = !ele_textarea.disabled;
+                
         };
     }
 };
@@ -126,16 +130,30 @@ var set_webcam_toggle = function(){
             local_stream.stop();
             ele_video.classList.add("display_none");
             ele_canvas.classList.remove("display_none");
-        }, 0); //Why do I need a set timeout of 0? breaks if I remove setTimeout
-        
-        
+        }, 0); //Why do I need a set timeout of 0? breaks if I remove setTimeout 
     }
+};
+
+var update_map = function(){
+    var img_map = document.querySelector("#map");
+    var str_city = document.querySelector("#textarea_address").value;
+    var query = "center=" + str_city;
+    img_map.src = "https://maps.googleapis.com/maps/api/staticmap?" + query
+                    + "&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794"
+                    + "&key=AIzaSyB4DZ4LgiGs_wHsmkGzgUCB4TJHSomYVFU";
 };
 
 var local_stream;
 var main = function(){
     textarea_disable();
     set_event_edit_and_save_textarea_response();
+
+    //Set tag insert listener for keyboard
+    document.querySelector("#input_tag").addEventListener("keydown", function(){
+        if(event.key === "Enter")
+            insert_tag_response(event);
+    })
+    //Set tag insert listener for buton
     document.getElementById("btn_add_tag").onclick = insert_tag_response;
     document.getElementById("btn_save_profile").onclick = save_profile_response;
     document.getElementById("btn_webcam_toggle").onclick = set_webcam_toggle;

@@ -16,12 +16,10 @@
     font-size:50px;
 }
 
-imag{
 
-}
 .container{
     height:500px;
-    background-image:url("https://static.pexels.com/photos/58572/pexels-photo-58572.jpeg");
+    background-image:url("https://images.pexels.com/photos/164531/pexels-photo-164531.jpeg?w=940&h=650&auto=compress&cs=tinysrgb");
     background-size:cover;
     background-position: center;
 }

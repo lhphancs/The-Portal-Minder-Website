@@ -24,15 +24,20 @@
 
 }
 
+.editable_container{
+    display:block;
+}
+
 .header_for_textarea{
     display:inline-block
 }
 
 textarea{
     margin-top:-5px;
-    width:50%;
+    width:600px;
     overflow:scroll;
     resize:none;
+    height:100px;
 }
 
 p.info{
@@ -53,7 +58,6 @@ p.info{
     width:100px;
     height:100px;
     display:block;
-
 }
 
 .other_user_name{
@@ -85,7 +89,8 @@ p.info{
 }
 
 #btn_save_profile{
-    margin-top:10px;
+    margin-top:40px;
+    font-size:1.5em;
 }
 
 #btn_webcam_toggle{
@@ -97,4 +102,20 @@ p.info{
 
 .display_none{
     display:none;
+}
+
+.map_display{
+    width:500px;
+    height:500px;
+    border:1px solid black;
+    margin:10px;
+}
+
+#textarea_address{
+    display:block;
+}
+
+.last_editable_container{
+    display:inline-block;
+    vertical-align: top;
 }
