@@ -4,7 +4,8 @@
 		<link type="text/css" rel= "stylesheet" href="css/global.css">
 		<link type="text/css" rel= "stylesheet" href="css/homepage.css">
 		<link type="text/css" rel= "stylesheet" href="css/signup.css">
-		<script src="js/form_check.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="js/signup.js"></script>
 	</head>
 	<body>
 		<div id = "nav_bar">
@@ -20,7 +21,7 @@
 			<h1 class = "title">Sign up</h1>
 
 
-			<form id="signup_form" method="get" action="./profile.html" onsubmit="return is_valid_signup()">
+			<form id="signup_form" method="get" action="./profile.html" onsubmit="return is_successful_registration()">
 				<div class = "top_form_container">
 					<div>
 						First Name:
@@ -29,10 +30,6 @@
 					<div>
 						Last Name:
 						<input type="text" id="input_last_name">
-					</div>
-					<div>
-						City/Zip Code:
-						<input type="text" id="input_city">
 					</div>
 				</div>
 
@@ -55,4 +52,3 @@
 		</div>
 	</body>
 </html>
-
