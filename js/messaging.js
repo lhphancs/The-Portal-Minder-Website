@@ -76,13 +76,3 @@ var main = function(){
 };
 
 main();
-/*
-<div class="contact_list_container">
-                    <h2 class="contact_list_title">Contact list</h2>
-                    <button class = "btn_user_name">[UserName1]</button>
-                    <button class = "btn_user_name">[UserName2]</button>
-                    <button class = "btn_user_name">[UserName3]</button>
-                    <button class = "btn_user_name">[UserName4]</button>
-                    <button class = "btn_user_name">[UserName5]</button>
-                    <button class = "btn_user_name">[UserName6]</button>
-                </div>*/

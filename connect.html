@@ -4,6 +4,7 @@
 		<link type="text/css" rel= "stylesheet" href="css/global.css">
 		<link type="text/css" rel= "stylesheet" href="css/connect.css">
 		<link type="text/css" rel= "stylesheet" href="css/profile.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	</head>
 	<body>
 		<div class="header_container">
@@ -19,37 +20,23 @@
 		</div>
 
 		<h1 class="title">Connect</h1>
-
 		<div>
 			<h2>Contacts:</h2>
 			<div class="other_users_list_container">
-				<div class="other_user_container">
-					<a href="other_profile.html" class="other_user_name">[Name]</a>
-					<a href="other_profile.html"><img class="other_user_img" src="./img/logo.jpg"></a>
-					<a href="messaging.html">Message</a>
-				</div>
-				<div class="other_user_container">
-					<a href="other_profile.html" class="other_user_name">[Name]</a>
-					<a href="other_profile.html"><img class="other_user_img" src="./img/logo.jpg"></a>
-					<a href="messaging.html">Message</a>
+				<div id="users_matched_container" class="other_user_container">
+					<!-- AJAX fills this spot with database-->
 				</div>
 			</div>
 		</div>
 
-
-
-		<div class = "invite_container">
+		<div>
 			<h2>Pending Invites:</h2>
 			<div class="other_users_list_container">
-				<div class="other_user_container">
-					<a href="other_profile.html"><img class = "other_user_img" src="./img/logo.jpg"></a>
-					<a href="other_profile.html" class = "other_user_name">[Name]</a>
-				</div>
-				<div class="other_user_container">
-					<a href="other_profile.html"><img class = "other_user_img" src="./img/logo.jpg"></a>
-					<a href="other_profile.html" class = "other_user_name">[Name]</a>
+				<div id="pending_users_container" class="other_user_container">
+					<!-- AJAX fills this spot with database-->
 				</div>
 			</div>
 		</div>
 	</body>
 </html>
+<script src="./js/connect.js"></script>
