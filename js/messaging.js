@@ -35,8 +35,7 @@ var btn_user_messaging_response = function(){
     //Add chat bubble w/ msg
     var para = document.createElement("p");
     para.classList.add("msg_header");
-    var node = document.createTextNode("You are chatting with " + this.innerHTML);
-    para.appendChild(node);
+    para.innerHTML = "You are chatting with " + this.innerHTML;
     msg_container.appendChild(para);
 };
 
@@ -48,9 +47,42 @@ var set_event_chat_with_other_user = function(){
     }
 };
 
+var load_all_users = function(){
+    //First get json of all users
+    $.ajax({
+        url:"http://thiman.me:1337/lee/users",
+        data:{},
+        dataType:"json",
+        type:"GET",
+    }).done(function(json){
+        var json_size = json.length;
+        var contact_list_container = document.getElementById("contact_list");
+        for(var i=0; i<json_size; ++i){
+            var ele_new_btn = document.createElement("button");
+            ele_new_btn.classList.add("btn_user_name");
+            ele_new_btn.innerHTML = json[i].first_name + " " + json[i].last_name;
+            contact_list_container.appendChild(ele_new_btn);
+            ele_new_btn.onclick = btn_user_messaging_response;
+        }
+    }).fail(function(){
+        alert("Failed to grab data from database");
+    });
+};
+
 var main = function(){
-    document.getElementById("btn_send_msg").onclick = send_msg_response;
+    document.querySelector("#btn_send_msg").onclick = send_msg_response;
     set_event_chat_with_other_user();
+    load_all_users();
 };
 
 main();
+/*
+<div class="contact_list_container">
+                    <h2 class="contact_list_title">Contact list</h2>
+                    <button class = "btn_user_name">[UserName1]</button>
+                    <button class = "btn_user_name">[UserName2]</button>
+                    <button class = "btn_user_name">[UserName3]</button>
+                    <button class = "btn_user_name">[UserName4]</button>
+                    <button class = "btn_user_name">[UserName5]</button>
+                    <button class = "btn_user_name">[UserName6]</button>
+                </div>*/

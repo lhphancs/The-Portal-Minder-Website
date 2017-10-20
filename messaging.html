@@ -4,6 +4,7 @@
         <link type="text/css" rel= "stylesheet" href="css/global.css">
         <link type="text/css" rel= "stylesheet" href="css/profile.css">
         <link type="text/css" rel= "stylesheet" href="css/messaging.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </head>
     <body>
         <div class = "header_container">
@@ -21,14 +22,8 @@
         <div class = "entire_container">
             <h1 class = "title">Messaging</h1>
             <div class = "chat_area">
-                <div class="contact_list_container">
+                <div id="contact_list" class="contact_list_container">
                     <h2 class="contact_list_title">Contact list</h2>
-                    <button class = "btn_user_name">[UserName1]</button>
-                    <button class = "btn_user_name">[UserName2]</button>
-                    <button class = "btn_user_name">[UserName3]</button>
-                    <button class = "btn_user_name">[UserName4]</button>
-                    <button class = "btn_user_name">[UserName5]</button>
-                    <button class = "btn_user_name">[UserName6]</button>
                 </div>
                 <div id = "msgs_container">
                     <p class="msg_header">You are chatting with [OtherUserName]</p>
@@ -37,7 +32,6 @@
                     <textarea id="textarea_msg"></textarea>
                     <button id="btn_send_msg">Send</button>
                 </div>
-
             </div>
         </div>
     </body>
