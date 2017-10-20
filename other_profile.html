@@ -3,6 +3,7 @@
 	<head>
 		<link type="text/css" rel= "stylesheet" href="css/global.css">
 		<link type="text/css" rel= "stylesheet" href="css/profile.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	</head>
 	<body>
 		<div class = "header_container">
@@ -48,16 +49,10 @@
 			</div>
 		</div>
 
-		<div class="other_users_list_container">
+		<div id="matched_users_container" class="other_users_list_container">
 			<h2>Related Matches:</h2>
-			<div class="other_user_container">
-                <a href="other_profile.html"><img class = "other_user_img" src="./img/logo.jpg"></a>
-                <a href="other_profile.html" class = "other_user_name">[Name]</a>
-			</div>
-			<div class="other_user_container">
-                <a href="other_profile.html"><img class = "other_user_img" src="./img/logo.jpg"></a>
-                <a href="other_profile.html" class = "other_user_name">[Name]</a>
-			</div>
+			<!-- AJAX fills this spot with database-->
 		</div>
 	</body>
 </html>
+<script src="./js/other_profile.js"></script>

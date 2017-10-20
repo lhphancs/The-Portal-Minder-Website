@@ -45,7 +45,6 @@ var insert_tag_response =  function(){
             //Now set it so that when they click ele_remove_btn, it will remove parent
             ele_remove_btn.onclick = remove_parent_response;
         }
-
 };
 
 var remove_parent_response = function(){

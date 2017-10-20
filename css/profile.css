@@ -52,6 +52,7 @@ p.info{
 .other_user_container{
     display:inline-block;
     margin-left:10px;
+    padding:10px;
 }
 
 .other_user_img{
