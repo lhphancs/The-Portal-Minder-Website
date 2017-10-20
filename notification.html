@@ -3,6 +3,7 @@
 	<head>
 		<link type="text/css" rel= "stylesheet" href="css/global.css">
 		<link type="text/css" rel= "stylesheet" href="css/notification.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	</head>
 	<body>
 		<div class = "header_container">
@@ -18,21 +19,10 @@
 		</div>
 
 		<h1 class = "title">Notification</h1>
-		<div class = "notifications_container">
-			<button class = "single_notification_container">
-				<h4 class = "notification_user">[User1]</h4>
-				<p class = "nodification_message">This is some paragraph message</p>
-			</button>
-
-			<button class = "single_notification_container">
-				<h4 class = "notification_user">[User2]</h4>
-				<p class = "nodification_message">This is some paragraph message</p>
-			</button>
-
-			<button class = "single_notification_container">
-				<h4 class = "notification_user">[User3]</h4>
-				<p class = "nodification_message">This is some paragraph message</p>
-			</button>
+		<div id="notifications_container" class = "notifications_container">
+			<!-- AJAX fills this spot with database-->
 		</div>
 	</body>
 </html>
+
+<script src="./js/notification.js"></script>
