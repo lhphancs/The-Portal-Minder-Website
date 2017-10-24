@@ -6,24 +6,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
-var signup = require('./routes/signup');
+var user = require('./routes/user');
+var profile = require('./routes/profile');
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/minder');
-
 var db = mongoose.connection;
+
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  // we're connected!
-});
-
-var userSchema = mongoose.Schema({
-  first_name: String,
-  last_name: String,
-  email:String,
-  password:String,
-  city:String
+  console.log("Connected to mongodb!");
 });
 
 var app = express();
@@ -41,8 +33,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
-app.use('/signup', signup);
+app.use('/user', user);
+app.use('/profile', profile);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

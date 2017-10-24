@@ -5,7 +5,7 @@
 		<link type="text/css" rel= "stylesheet" href="css/homepage.css">
 		<link type="text/css" rel= "stylesheet" href="css/signup.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="js/signup.js"></script>
+		<script src="signup.js"></script>
 	</head>
 	<body>
 		<div id = "nav_bar">
@@ -20,34 +20,37 @@
 		<div class="container">
 			<h1 class = "title">Sign up</h1>
 
-
-			<form id="signup_form" method="get" action="./profile.html" onsubmit="return is_successful_registration()">
-				<div class = "top_form_container">
-					<div>
-						First Name:
-						<input type="text" id="input_first_name">
-					</div>
-					<div>
-						Last Name:
-						<input type="text" id="input_last_name">
-					</div>
-				</div>
-
+			<form id="signup_form" method="POST" action="/user/add">
 				<div class = "btm_form_container">
 					<div>
 						Email:
-						<input type="text" id="input_email">
+						<input type="text" id="input_email" name="email">
 					</div>
 					<div>
 						Password:
-						<input type="password" id="input_password1">
+						<input type="password" id="input_password1" name="password1">
 					</div>
 					<div>
 						Re-enter Password:
 						<input type="password" id="input_password2">
 					</div>
-					<input type="submit" class="form_submit" value="Sign Up">
 				</div>
+
+				<div class = "top_form_container">
+					<div>
+						First Name:
+						<input type="text" id="input_first_name" name="firstName">
+					</div>
+					<div>
+						Last Name:
+						<input type="text" id="input_last_name" name=lastName>
+					</div>
+					<div>
+						City:
+						<input type="text" id="input_city" name=city>
+					</div>
+				</div>
+				<input type="submit" class="form_submit" value="Sign Up">
 			</form>
 		</div>
 	</body>
