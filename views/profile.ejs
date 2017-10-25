@@ -1,21 +1,13 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <link type="text/css" rel= "stylesheet" href="css/global.css">
-        <link type="text/css" rel= "stylesheet" href="css/profile.css">
+        <link type="text/css" rel= "stylesheet" href="stylesheets/global.css">
+        <link type="text/css" rel= "stylesheet" href="stylesheets/profile.css">
+        <script type="text/javascript" src="ejs_production.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </head>
     <body>
-        <div class="header_container">
-            <nav class="left_header_container">
-                <a href="./discover.html" >Discover Users</a>
-            </nav>
-
-            <nav class="right_header_container">
-                <a href="./notification.html">Notifications</a>
-                <a href="./profile.html">Profile</a>
-                <a href="./homepage.html">Logout</a>
-            </nav>
-        </div>
+        <% include header_navs.html %>
 
         <div class="profile_container">
             <h1 class="title">
@@ -70,4 +62,4 @@
     </body>
 </html>
 
-<script src="./js/profile.js"></script>
+<script src="client-js/profile.js"></script>

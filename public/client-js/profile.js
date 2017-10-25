@@ -1,12 +1,3 @@
-/*This function disables all textarea fields at start*/
-var textarea_disable = function(){
-    var eles_textarea = document.getElementsByTagName("textarea");
-    for(var i = 0; i<eles_textarea.length; ++i)
-    {
-        eles_textarea[i].disabled = true;
-    }
-};
-
 var insert_tag_response =  function(){
         const TAG_MAX_AMOUNT = 10;
 
@@ -52,27 +43,6 @@ var remove_parent_response = function(){
     ele_parent.parentNode.removeChild(ele_parent);
 };
 
-var set_event_edit_and_save_textarea_response = function()
-{
-    var editable_containers_eles = document.getElementsByClassName("editable_container");
-    for(var i=0; i<editable_containers_eles.length; ++i)
-    {
-        var ele_btn_edit = editable_containers_eles[i].getElementsByTagName("button")[0];
-        ele_btn_edit.onclick = function(){
-            var ele_textarea = this.parentNode.getElementsByTagName('textarea')[0];
-            if(ele_textarea.disabled){
-                this.innerHTML = "Save";
-            }
-                
-            else{
-                this.innerHTML = "Edit";
-                update_map();
-            }
-            ele_textarea.disabled = !ele_textarea.disabled;
-                
-        };
-    }
-};
 
 var save_profile_response = function(){
     alert("This needs to be filled out later.");
@@ -144,9 +114,6 @@ var update_map = function(){
 
 var local_stream;
 var main = function(){
-    textarea_disable();
-    set_event_edit_and_save_textarea_response();
-
     //Set tag insert listener for keyboard
     document.querySelector("#input_tag").addEventListener("keydown", function(){
         if(event.key === "Enter")

@@ -24,6 +24,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+// User registers
 router.post('/add'
 , function(req, res, next) {
 
@@ -40,6 +41,16 @@ router.post('/add'
       res.redirect("/profile");
     }
   });
+});
+
+//User edits profile
+router.post('/profile', function(req, res, next) {
+  res.render('profile');
+  
+  //Now we need to load their data
+  User.findOne( { email: req.body.email }, function(err, user){
+    
+  } );
 });
 
 module.exports = router;

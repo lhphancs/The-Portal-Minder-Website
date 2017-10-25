@@ -1,32 +1,33 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<link type="text/css" rel= "stylesheet" href="css/global.css">
-		<link type="text/css" rel= "stylesheet" href="css/homepage.css">
+		<link type="text/css" rel= "stylesheet" href="stylesheets/global.css">
+		<link type="text/css" rel= "stylesheet" href="stylesheets/index.css">
+		<script type="text/javascript" src="ejs_production.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	</head>
 	<body>
 		<div id = "nav_bar">
-			<a href="#"><img class = "logo" src="./img/logo.jpg"></a>
+			<a href="#"><img class="logo" src="images//logo.jpg"></a>
 			<div class="right_header">
-				<a class = "header_anchor" href="about">About</a>
-				<a class = "header_anchor" href="homepage">Login</a>
-				<a class = "header_anchor" href="user/register">Register</a>
+				<a class="header_anchor" href="about">About</a>
+				<a class="header_anchor" href="index">Login</a>
+				<a class="header_anchor" href="user/register">Register</a>
 			</div>
 		</div>
 
 		<div class="container">
-			<h1 class ="title">Minder Matchmaking</h1>
-			<form id="login_form" method="get" action="./profile.html" onsubmit="is_valid_login()">
-				<div>
-					Username:
-					<input type="text" name="input_user">
+			<h1 class="title">Minder Matchmaking</h1>
+			<form id="login_form" method="post" action="/user/profile" onsubmit="return all_required_inputs_filled()">
+				<div class="input_container">
+					Email:
+					<input type="text" class="required_input" name="email">
 				</div>
-				<div>
+				<div class="input_container">
 					Password:
-					<input type="password" class="input_password" name="input_password">
+					<input type="password" class="required_input" class="input_password" name="password">
 				</div>
-					<button id="btn_login_submit" class="form_submit" type="submit">Login</Button>
+					<input id="btn_login_submit" class="form_submit" type="submit" value="Login">
 			</form>
 			
 		</div>
@@ -34,4 +35,4 @@
 	</body>
 </html>
 
-<script src="./js/homepage.js"></script>
+<script src="client-js/index.js"></script>

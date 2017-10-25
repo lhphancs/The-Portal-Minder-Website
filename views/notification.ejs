@@ -3,20 +3,11 @@
 	<head>
 		<link type="text/css" rel= "stylesheet" href="css/global.css">
 		<link type="text/css" rel= "stylesheet" href="css/notification.css">
+		<script type="text/javascript" src="ejs_production.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	</head>
 	<body>
-		<div class = "header_container">
-			<nav class = "left_header_container">
-				<a href="./discover.html" >Discover Users</a>
-			</nav>
-
-			<nav class = "right_header_container">
-				<a href="./notification.html">Notifications</a>
-				<a href="./profile.html">Profile</a>
-				<a href="./homepage.html">Logout</a>
-			</nav>
-		</div>
+		<% include header_navs.html %>
 
 		<h1 class = "title">Notification</h1>
 		<div id="notifications_container" class = "notifications_container">
@@ -25,4 +16,4 @@
 	</body>
 </html>
 
-<script src="./js/notification.js"></script>
+<script src="client-js/notification.js"></script>
