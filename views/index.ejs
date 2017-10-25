@@ -17,19 +17,18 @@
 		</div>
 
 		<div class="container">
-			<h1 class="title">Minder Matchmaking</h1>
-			<form id="login_form" method="post" action="/user/profile" onsubmit="return all_required_inputs_filled()">
+			<h1 class="title">Minder Matching</h1>
+			<form id="login_form" method="post" action="/user/profile" onsubmit="return all_required_inputs_filled() && is_valid_password()">
 				<div class="input_container">
 					Email:
-					<input type="text" class="required_input" name="email">
+					<input id="user_email" type="text" class="required_input" name="email">
 				</div>
 				<div class="input_container">
 					Password:
-					<input type="password" class="required_input" class="input_password" name="password">
+					<input id="user_password" type="password" class="required_input" class="input_password" name="password">
 				</div>
 					<input id="btn_login_submit" class="form_submit" type="submit" value="Login">
 			</form>
-			
 		</div>
 		<p>Image courtesy of pexels.com by: pixabay.com</p>
 	</body>

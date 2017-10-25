@@ -1,17 +1,17 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <link type="text/css" rel= "stylesheet" href="stylesheets/global.css">
-        <link type="text/css" rel= "stylesheet" href="stylesheets/profile.css">
+        <link type="text/css" rel= "stylesheet" href="../public/stylesheets/global.css">
+        <link type="text/css" rel= "stylesheet" href="../public/stylesheets/profile.css">
         <script type="text/javascript" src="ejs_production.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </head>
     <body>
         <% include header_navs.html %>
-
+        
         <div class="profile_container">
             <h1 class="title">
-                Profile
+                    <% firstName %>
             </h1>
             <div class="user_photo_container">
                 <h1 class="user_name">[MyUserName]</h1>

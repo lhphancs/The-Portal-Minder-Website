@@ -24,6 +24,16 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+// User password check
+router.post('/validation', function(req, res, next) {
+  User.findOne( { email: req.body.email }, function(err, user){
+    if(req.body.password === user.password)
+      res.send(true);
+    else
+      res.send(false);
+  } );
+});
+
 // User registers
 router.post('/add'
 , function(req, res, next) {
@@ -45,12 +55,19 @@ router.post('/add'
 
 //User edits profile
 router.post('/profile', function(req, res, next) {
-  res.render('profile');
-  
-  //Now we need to load their data
   User.findOne( { email: req.body.email }, function(err, user){
-    
-  } );
+    console.log(user);
+    res.render('profile', {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      password: user.password,
+      city: user.city,
+      description: user.description,
+      tags: user.tags,
+      education: user.education,
+    });
+  });
 });
 
 module.exports = router;
