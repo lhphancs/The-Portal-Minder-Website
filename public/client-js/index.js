@@ -26,7 +26,7 @@ var check_password_and_respond = function(){
     }).done(function(json){
         //emulate form click
         var t_form = document.createElement('form');
-        t_form.action = "http://localhost:3000/user/profile";
+        t_form.action = "http://localhost:3000/user/login";
         t_form.method = "POST";
         var ele_email_input = document.createElement("input");
         ele_email_input.name = "email";

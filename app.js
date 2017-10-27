@@ -54,4 +54,12 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+var session = require('client-sessions');
+app.use(session({
+  cookieName: 'session',
+  secret: 'random_string_goes_here',
+  duration: 30 * 60 * 1000,
+  activeDuration: 5 * 60 * 1000,
+}));
+
 module.exports = app;

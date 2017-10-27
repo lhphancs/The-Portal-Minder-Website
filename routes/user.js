@@ -42,6 +42,14 @@ router.post('/validation', function(req, res, next) {
   } );
 });
 
+// User password check
+router.post('/login', function(req, res) {
+  User.findOne({ email: req.body.email }, function(err, user) {
+        req.session.user = user;
+        res.redirect("/profile");
+  });
+});
+
 // User registers
 router.post('/add', function(req, res, next) {
   User.count({ email: req.body.email }, function(err, count){
@@ -51,7 +59,7 @@ router.post('/add', function(req, res, next) {
     else{
       var newUser = new User({
         email:req.body.email,
-        password:req.body.password1,
+        password:req.body.password,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         city:req.body.city,
@@ -74,7 +82,10 @@ router.post('/profile', function(req, res, next) {
 });
 
 router.patch('/profile', function(req, res, next){
-  ;
+  MyModel.findOneAndUpdate({email:req.body.email}, req.newData, {upsert:true}, function(err, doc){
+    if (err) return res.send(500, { error: err });
+    return res.send("succesfully saved");
+});
 });
 
 router.delete('/profile', function(req, res, next){

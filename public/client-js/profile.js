@@ -1,3 +1,4 @@
+var local_stream;
 var insert_tag_response =  function(){
         const TAG_MAX_AMOUNT = 10;
 
@@ -112,7 +113,14 @@ var update_map = function(){
                     + "&key=AIzaSyB4DZ4LgiGs_wHsmkGzgUCB4TJHSomYVFU";
 };
 
-var local_stream;
+var set_save_profile_response = function(){
+    var description = "";
+    var education = "";
+    var city = "";
+
+    //Now get array of tags
+};
+
 var main = function(){
     //Set tag insert listener for keyboard
     document.querySelector("#input_tag").addEventListener("keydown", function(){
@@ -124,10 +132,7 @@ var main = function(){
     document.getElementById("btn_save_profile").onclick = save_profile_response;
     document.getElementById("btn_webcam_toggle").onclick = set_webcam_toggle;
     set_capture_listener();
-};
-
-var update_page = function(){
-    
+    set_save_profile_response();
 };
 
 main();
