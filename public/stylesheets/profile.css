@@ -28,10 +28,6 @@
     display:block;
 }
 
-.header_for_textarea{
-    display:inline-block
-}
-
 textarea{
     margin-top:-5px;
     width:600px;

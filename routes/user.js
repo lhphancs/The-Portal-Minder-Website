@@ -24,6 +24,14 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+/* Return all data for specific user */
+router.get('/user/:email', function(req, res, next){
+  //ME TO DO HERE!
+  User.findOne( { email: req.body.email }, function(err, user){
+    console.log(req.body.email)
+  } );
+});
+
 // User password check
 router.post('/validation', function(req, res, next) {
   User.findOne( { email: req.body.email }, function(err, user){
@@ -35,39 +43,46 @@ router.post('/validation', function(req, res, next) {
 });
 
 // User registers
-router.post('/add'
-, function(req, res, next) {
-
-  var newUser = new User({
-    email:req.body.email,
-    password:req.body.password1,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    city:req.body.city
-  });
-  newUser.save(function (err) {
-    if (err) return console.error(err);
+router.post('/add', function(req, res, next) {
+  User.count({ email: req.body.email }, function(err, count){
+    console.log(err);
+    if(count > 0)
+      res.send(false);
     else{
-      res.redirect("/profile");
+      var newUser = new User({
+        email:req.body.email,
+        password:req.body.password1,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        city:req.body.city,
+        description:"",
+        tags:[],
+        education:""
+      });
+      newUser.save(function (err) {
+        res.send(true);
+      });
     }
+  }); 
+});
+
+// User viewing own
+router.post('/profile', function(req, res, next) {
+  User.findOne( { email: req.body.email }, function(err, user){
+    res.render('profile', user);
   });
 });
 
-//User edits profile
-router.post('/profile', function(req, res, next) {
-  User.findOne( { email: req.body.email }, function(err, user){
-    console.log(user);
-    res.render('profile', {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      password: user.password,
-      city: user.city,
-      description: user.description,
-      tags: user.tags,
-      education: user.education,
-    });
+router.patch('/profile', function(req, res, next){
+  ;
+});
+
+router.delete('/profile', function(req, res, next){
+  User.remove( { email: req.body.email }, function(err, user){
+    if (err) return handleError(err);
+    res.send(user);
   });
+  
 });
 
 module.exports = router;

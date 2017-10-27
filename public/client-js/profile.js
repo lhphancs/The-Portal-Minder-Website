@@ -126,4 +126,8 @@ var main = function(){
     set_capture_listener();
 };
 
+var update_page = function(){
+    
+};
+
 main();

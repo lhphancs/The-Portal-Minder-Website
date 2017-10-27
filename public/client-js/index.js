@@ -1,4 +1,5 @@
 var all_required_inputs_filled = function(){
+    return true;
     var eles_input = $("input.required_input");
     /* Not working for some reason
     for(var i=0; i<eles_input.length; ++i){
@@ -11,14 +12,11 @@ var all_required_inputs_filled = function(){
     }
     return false;
     */
-    return true;
 };
 
-var 
-
-var is_valid_password = function(){
+var check_password_and_respond = function(){
     $.ajax({
-        url:"localhost:3000/user/validation",
+        url:"http://localhost:3000/user/validation",
         data:{
             email:$("#user_email").val(),
             password:$("#user_password").val()
@@ -26,15 +24,33 @@ var is_valid_password = function(){
         dataType:"json",
         type:"POST",
     }).done(function(json){
-        console.log(json);
-        if( json[0].flag)
-            return true;
-        else{
-            alert("Invalid password. Try again.");
-            return false;
-        }
+        //emulate form click
+        var t_form = document.createElement('form');
+        t_form.action = "http://localhost:3000/user/profile";
+        t_form.method = "POST";
+        var ele_email_input = document.createElement("input");
+        ele_email_input.name = "email";
+        ele_email_input.value = $("#user_email").val();
+        t_form.appendChild(ele_email_input);
+        t_form.style.visibility = "hidden";
+        document.body.appendChild(t_form);
+        t_form.submit();
     }).fail(function(){
         alert("Failed to grab data from database");
         return false;
     });
 }
+
+var override_submit_btn = function(){
+    $("#login_form").on("submit", function(e){
+        e.preventDefault();
+        if( all_required_inputs_filled() )
+        check_password_and_respond();
+    });
+};
+
+var main = function(){
+    override_submit_btn();
+};
+
+main();

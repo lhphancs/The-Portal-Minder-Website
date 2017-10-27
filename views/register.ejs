@@ -1,16 +1,12 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<link type="text/css" rel= "stylesheet" href="css/global.css">
-		<link type="text/css" rel= "stylesheet" href="css/homepage.css">
-		<link type="text/css" rel= "stylesheet" href="css/signup.css">
-		<script type="text/javascript" src="ejs_production.js"></script>
+		<link type="text/css" rel= "stylesheet" href="/stylesheets/global.css">
+		<link type="text/css" rel= "stylesheet" href="/stylesheets/register.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="signup.js"></script>
 	</head>
 	<body>
 		<% include header_navs.html %>
-
 		<div class="container">
 			<h1 class = "title">Sign up</h1>
 
@@ -18,30 +14,30 @@
 				<div class = "btm_form_container">
 					<div>
 						Email:
-						<input type="text" id="input_email" name="email">
+						<input id="input_email" class="required_input" type="text" name="email">
 					</div>
 					<div>
 						Password:
-						<input type="password" id="input_password1" name="password1">
+						<input id="input_password1" class="required_input" type="password" name="password1">
 					</div>
 					<div>
 						Re-enter Password:
-						<input type="password" id="input_password2">
+						<input id="input_password2" class="required_input" type="password">
 					</div>
 				</div>
 
 				<div class = "top_form_container">
 					<div>
 						First Name:
-						<input type="text" id="input_first_name" name="firstName">
+						<input id="input_first_name" class="required_input" type="text" name="firstName">
 					</div>
 					<div>
 						Last Name:
-						<input type="text" id="input_last_name" name=lastName>
+						<input id="input_last_name" class="required_input" type="text" name=lastName>
 					</div>
 					<div>
 						City:
-						<input type="text" id="input_city" name=city>
+						<input id="input_city" class="required_input" type="text" name=city>
 					</div>
 				</div>
 				<input type="submit" class="form_submit" value="Sign Up">
@@ -49,3 +45,4 @@
 		</div>
 	</body>
 </html>
+<script src="/client-js/register.js"></script>

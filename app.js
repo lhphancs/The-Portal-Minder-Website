@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var user = require('./routes/user');
-var profile = require('./routes/profile');
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/minder');
@@ -15,6 +14,8 @@ var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
+  /*We put stuff in here if we want to ensure that stuff runs only if mongo is open.
+  If we put stuff outside, we can't ensure that mongo is opened.*/
   console.log("Connected to mongodb!");
 });
 
@@ -34,7 +35,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/user', user);
-app.use('/profile', profile);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
