@@ -24,17 +24,12 @@ var check_password_and_respond = function(){
         dataType:"json",
         type:"POST",
     }).done(function(json){
-        //emulate form click
-        var t_form = document.createElement('form');
-        t_form.action = "http://localhost:3000/user/login";
-        t_form.method = "POST";
-        var ele_email_input = document.createElement("input");
-        ele_email_input.name = "email";
-        ele_email_input.value = $("#user_email").val();
-        t_form.appendChild(ele_email_input);
-        t_form.style.visibility = "hidden";
-        document.body.appendChild(t_form);
-        t_form.submit();
+        if(json){
+            window.location.replace("http://localhost:3000/user/profile");
+        }
+            
+        else
+            alert("WRONG PASSWORD");//Do something that says invalid
     }).fail(function(){
         alert("Failed to grab data from database");
         return false;

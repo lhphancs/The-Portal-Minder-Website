@@ -2,6 +2,32 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 
+function requireLogin (req, res, next) {
+  if (!req.user) {
+    console.log("REDIRECTING NO COOKIE");
+    res.redirect('/');
+  } else {
+    next();
+  }
+};
+
+router.use(function(req, res, next) {
+  if (req.session && req.session.user) {
+    User.findOne({ email: req.session.user.email }, function(err, user) {
+      if (user) {
+        req.user = user;
+        delete req.user.password; // delete the password from the session
+        req.session.user = user;  //refresh the session value
+        res.locals.user = user;
+      }
+      // finishing processing the middleware and run the route
+      next();
+    });
+  } else {
+    next();
+  }
+});
+
 var userSchema = mongoose.Schema({
   firstName: String,
   lastName: String,
@@ -35,19 +61,13 @@ router.get('/user/:email', function(req, res, next){
 // User password check
 router.post('/validation', function(req, res, next) {
   User.findOne( { email: req.body.email }, function(err, user){
-    if(req.body.password === user.password)
+    if(req.body.password === user.password){
+      req.session.user = user;
       res.send(true);
+    }
     else
       res.send(false);
   } );
-});
-
-// User password check
-router.post('/login', function(req, res) {
-  User.findOne({ email: req.body.email }, function(err, user) {
-        req.session.user = user;
-        res.redirect("/profile");
-  });
 });
 
 // User registers
@@ -75,9 +95,10 @@ router.post('/add', function(req, res, next) {
 });
 
 // User viewing own
-router.post('/profile', function(req, res, next) {
-  User.findOne( { email: req.body.email }, function(err, user){
-    res.render('profile', user);
+router.get('/profile', function(req, res, next) {
+  var user_email = req.user.email;
+  User.findOne( { email: user_email }, function(err, user){
+    res.render("profile", user);
   });
 });
 
@@ -93,7 +114,6 @@ router.delete('/profile', function(req, res, next){
     if (err) return handleError(err);
     res.send(user);
   });
-  
 });
 
 module.exports = router;
