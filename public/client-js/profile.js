@@ -114,7 +114,7 @@ var update_map = function(){
 };
 
 var set_save_profile_response = function(){
-    var description = "";
+    var description = $("#");
     var education = "";
     var city = "";
 

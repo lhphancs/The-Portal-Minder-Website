@@ -40,7 +40,7 @@ var override_submit_btn = function(){
                 return false;
             });
             if(register_successful)
-            redirect_to_profile();
+                redirect_to_profile();
             else
                 alert("Email duplicate exist. Try again.")
         }
@@ -51,11 +51,12 @@ var override_submit_btn = function(){
 
 var redirect_to_profile = function(){
     var t_form = document.createElement('form');
-    t_form.action = "http://localhost:3000/user/register";
+    t_form.action = "http://localhost:3000/user/profile";
     t_form.method = "POST";
     var ele_email_input = document.createElement("input");
     ele_email_input.name = "email";
     ele_email_input.value = $("#input_email").val();
+    setTimeout(1); //Needs delay for some reason.
     t_form.appendChild(ele_email_input);
     t_form.style.visibility = "hidden";
     document.body.appendChild(t_form);
