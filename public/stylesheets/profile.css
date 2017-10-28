@@ -1,6 +1,17 @@
+/* This is a shared css between profile and other_profile */
 .profile_container{
     padding:0px 20px;
 }
+
+.input_container{
+    font-size:1.2em;
+    font-weight:bold;
+}
+
+.input_user{
+    font-size:0.9em;
+}
+
 
 .user_name{
     text-align:center;
@@ -21,11 +32,6 @@
     font-size:2em;
     border:2px solid #F75D59;
     padding:10px;
-
-}
-
-.editable_container{
-    display:block;
 }
 
 textarea{
@@ -61,10 +67,6 @@ p.info{
     display:block;
 }
 
-.insert_tag_container{
-    margin-top:10px;
-}
-
 .tag_txt{
     margin-left:5px;
     height:100%;
@@ -97,10 +99,6 @@ p.info{
     margin:10px auto;
 }
 
-.display_none{
-    display:none;
-}
-
 .map_display{
     width:500px;
     height:500px;
@@ -112,7 +110,19 @@ p.info{
     display:block;
 }
 
-.last_editable_container{
+.editable_container{
     display:inline-block;
-    vertical-align: top;
+    vertical-align:top;
+}
+
+#textarea_city{
+    display:block;
+}
+
+#btn_large{
+    margin-top:10px;
+}
+
+.display_none{
+    display:none;
 }

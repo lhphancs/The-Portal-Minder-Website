@@ -1,7 +1,8 @@
 var local_stream;
-var insert_tag_response =  function(){
+var set_insert_tag_response =  function(){
+    $("#btn_add_tag").click(function(){
         const TAG_MAX_AMOUNT = 10;
-
+        
         var input_txt = document.getElementById("input_tag").value;
         if(input_txt === ""){
             alert("Must enter text before adding tag. Try again.")
@@ -24,8 +25,7 @@ var insert_tag_response =  function(){
             //Create a button that user can click to remove tag
             var ele_remove_btn = document.createElement("button");
             ele_remove_btn.classList.add("btn_tag_remove");
-            var btn_node = document.createTextNode("x");
-            ele_remove_btn.appendChild(btn_node);
+            ele_remove_btn.innerHTML = "x";
 
             //Append these the paragraph and the remove btn to new div
             var div_to_insert = document.createElement("div");
@@ -37,6 +37,7 @@ var insert_tag_response =  function(){
             //Now set it so that when they click ele_remove_btn, it will remove parent
             ele_remove_btn.onclick = remove_parent_response;
         }
+    });
 };
 
 var remove_parent_response = function(){
@@ -44,29 +45,23 @@ var remove_parent_response = function(){
     ele_parent.parentNode.removeChild(ele_parent);
 };
 
-
-var save_profile_response = function(){
-    alert("This needs to be filled out later.");
-};
-
 var activate_video = function(){
     var video = document.querySelector("#video_webcam");
-
-    //This checks for which one will browser match first
-    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
-
-    if (navigator.getUserMedia) {
-        navigator.getUserMedia({video: true}, handleVideo, videoError);
-    }
-
-    function handleVideo(stream) {
-        local_stream = stream;
-        video.src = window.URL.createObjectURL(stream);
-    }
-
-    function videoError(e) {
-        // do something
-    }
+    
+   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
+    
+   if (navigator.getUserMedia) {       
+       navigator.getUserMedia({video: true}, handleVideo, videoError);
+   }
+    
+   function handleVideo(stream) {
+       video.src = window.URL.createObjectURL(stream);
+       local_stream = stream;
+   }
+    
+   function videoError(e) {
+       // do something
+   }
 };
 
 var set_capture_listener = function(){
@@ -81,32 +76,30 @@ var set_capture_listener = function(){
     });
 };
 
-var set_webcam_toggle = function(){
-    var ele_video = document.querySelector("#video_webcam");
-    var ele_canvas = document.querySelector("#canvas_user");
-    var btn_webcam_toggle = document.querySelector("#btn_webcam_toggle");
-    //This will turn on webcam
-    if(ele_video.classList.contains("display_none") ){
-        btn_webcam_toggle.innerHTML = "Take picture";
-        ele_video.classList.remove("display_none");
-        ele_canvas.classList.add("display_none");
-        activate_video();
-    }
+var set_webcam_toggle_response = function(){
+    $("#btn_webcam_toggle").click(function(e){
+        e.preventDefault();
 
-    //This will turn off webcam and display picture taken
-    else{
-        btn_webcam_toggle.innerHTML = "Activate webcam";
-        setTimeout(function() {
-            local_stream.stop();
-            ele_video.classList.add("display_none");
-            ele_canvas.classList.remove("display_none");
-        }, 0); //Why do I need a set timeout of 0? breaks if I remove setTimeout 
-    }
+        //This will turn on webcam
+        if( $("#video_webcam").hasClass("display_none") ){
+            activate_video();
+        }
+            
+        //This will turn off webcam and display picture taken
+        else{
+            btn_webcam_toggle.innerHTML = "Activate webcam";
+            setTimeout(function() {
+                ;
+            }, 0); //Why do I need a set timeout of 0? breaks if I remove setTimeout 
+        }
+        $("#canvas_user").toggleClass("display_none");
+        $("#video_webcam").toggleClass("display_none");
+    });
 };
 
 var update_map = function(){
     var img_map = document.querySelector("#map");
-    var str_city = document.querySelector("#textarea_address").value;
+    var str_city = $("#textarea_city").val();
     var query = "center=" + str_city;
     img_map.src = "https://maps.googleapis.com/maps/api/staticmap?" + query
                     + "&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794"
@@ -114,11 +107,32 @@ var update_map = function(){
 };
 
 var set_save_profile_response = function(){
-    var description = "";
-    var education = "";
-    var city = "";
-
-    //Now get array of tags
+    $("#btn_save_profile").click(function(){
+        $.ajax({
+            url:"http://localhost:3000/user",
+            data:{
+                email: $("#textarea_email").val(),
+                password: $("#").val(),
+                firstName: $("#").val(),
+                lastName: $("#").val(),
+                city: $("#").val(),
+                description: $("#").val(),
+                tags:[],
+                education: $("#").val(),
+            },
+            dataType:"json",
+            type:"PATCH",
+        }).done(function(json){
+            if(json){
+                window.location.replace("http://localhost:3000/user/profile");
+            }
+            else
+                alert("WRONG PASSWORD");//Do something that says invalid
+        }).fail(function(){
+            alert("Failed to grab data from database");
+            return false;
+        });
+    });
 };
 
 var main = function(){
@@ -128,11 +142,13 @@ var main = function(){
             insert_tag_response(event);
     })
     //Set tag insert listener for buton
-    document.getElementById("btn_add_tag").onclick = insert_tag_response;
-    document.getElementById("btn_save_profile").onclick = save_profile_response;
-    document.getElementById("btn_webcam_toggle").onclick = set_webcam_toggle;
-    set_capture_listener();
+    set_insert_tag_response();
     set_save_profile_response();
+    update_map();
+    set_webcam_toggle_response();
+    set_capture_listener();
 };
 
-main();
+$(document).ready(function(){
+    main();
+});

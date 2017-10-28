@@ -82,10 +82,21 @@ router.get('/profile', requireLogin, function(req, res, next) {
 });
 
 router.patch('/profile', function(req, res, next){
-  User.findOneAndUpdate({email:req.body.email}, req.newData, {upsert:true}, function(err, doc){
+  var tags = [];
+
+  User.findOneAndUpdate({email:req.body.email}, req.newData, {$set:{
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    city: "",
+    description: "",
+    tags:[""],
+    education: ""}
+  }, function(err, doc){
     if (err) return res.send(500, { error: err });
     return res.send("succesfully saved");
-});
+  });
 });
 
 router.delete('/profile', function(req, res, next){
