@@ -27,7 +27,6 @@ var check_password_and_respond = function(){
         if(json){
             window.location.replace("http://localhost:3000/user/profile");
         }
-            
         else
             alert("WRONG PASSWORD");//Do something that says invalid
     }).fail(function(){

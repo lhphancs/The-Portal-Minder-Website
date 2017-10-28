@@ -1,10 +1,22 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+var User = require('../models/User');
 
-function requireLogin (req, res, next) {
+// User password check & cookie assignment if match
+router.post('/validation', function(req, res, next) {
+  User.findOne( { email: req.body.email }, function(err, user){
+    if(req.body.password === user.password){
+      req.session.user = user;
+      res.send(true);
+    }
+    else
+      res.send(false);
+  } );
+});
+
+function requireLogin(req, res, next) {
   if (!req.user) {
-    console.log("REDIRECTING NO COOKIE");
     res.redirect('/');
   } else {
     next();
@@ -24,22 +36,9 @@ router.use(function(req, res, next) {
       next();
     });
   } else {
-    next();
+    res.redirect('/');
   }
 });
-
-var userSchema = mongoose.Schema({
-  firstName: String,
-  lastName: String,
-  email:String,
-  password:String,
-  city:String,
-  description:String,
-  tags:[String],
-  education:String,
-});
-
-var User = mongoose.model('User', userSchema);
 
 router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Minder Registration' });
@@ -48,26 +47,6 @@ router.get('/register', function(req, res, next) {
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
-});
-
-/* Return all data for specific user */
-router.get('/user/:email', function(req, res, next){
-  //ME TO DO HERE!
-  User.findOne( { email: req.body.email }, function(err, user){
-    console.log(req.body.email)
-  } );
-});
-
-// User password check
-router.post('/validation', function(req, res, next) {
-  User.findOne( { email: req.body.email }, function(err, user){
-    if(req.body.password === user.password){
-      req.session.user = user;
-      res.send(true);
-    }
-    else
-      res.send(false);
-  } );
 });
 
 // User registers
@@ -95,7 +74,7 @@ router.post('/add', function(req, res, next) {
 });
 
 // User viewing own
-router.get('/profile', function(req, res, next) {
+router.get('/profile', requireLogin, function(req, res, next) {
   var user_email = req.user.email;
   User.findOne( { email: user_email }, function(err, user){
     res.render("profile", user);
@@ -103,7 +82,7 @@ router.get('/profile', function(req, res, next) {
 });
 
 router.patch('/profile', function(req, res, next){
-  MyModel.findOneAndUpdate({email:req.body.email}, req.newData, {upsert:true}, function(err, doc){
+  User.findOneAndUpdate({email:req.body.email}, req.newData, {upsert:true}, function(err, doc){
     if (err) return res.send(500, { error: err });
     return res.send("succesfully saved");
 });
@@ -114,6 +93,19 @@ router.delete('/profile', function(req, res, next){
     if (err) return handleError(err);
     res.send(user);
   });
+});
+
+router.get('/logout', function(req, res, next){
+  req.session.reset();
+  res.redirect('/');
+});
+
+/* Return all data for specific user */
+router.get('/user/:email', function(req, res, next){
+  //ME TO DO HERE!
+  User.findOne( { email: req.body.email }, function(err, user){
+    console.log(req.body.email)
+  } );
 });
 
 module.exports = router;
