@@ -11,4 +11,9 @@ router.get('/about', function(req, res, next) {
   res.render('about', { title: 'Minder About' });
 });
 
+router.get('/logout', function(req, res, next){
+  req.session.reset();
+  res.redirect('/');
+});
+
 module.exports = router;

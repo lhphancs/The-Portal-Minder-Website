@@ -15,6 +15,10 @@ router.post('/validation', function(req, res, next) {
   } );
 });
 
+router.get('/register', function(req, res, next) {
+  res.render('register', { title: 'Minder Registration' });
+});
+
 function requireLogin(req, res, next) {
   if (!req.user) {
     res.redirect('/');
@@ -22,6 +26,33 @@ function requireLogin(req, res, next) {
     next();
   }
 };
+
+// User registers
+router.post('/add', function(req, res, next) {
+  User.count({ email: req.body.email }, function(err, count){
+    console.log(err);
+    if(count > 0){
+      res.send(false);
+    }
+      
+    else{
+      var newUser = new User({
+        email:req.body.email,
+        password:req.body.password,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        city:req.body.city,
+        description:"",
+        tags:[],
+        education:""
+      });
+      req.session.user = newUser; //save cookie
+      newUser.save(function (err) {
+        res.send(true);
+      });
+    }
+  }); 
+});
 
 router.use(function(req, res, next) {
   if (req.session && req.session.user) {
@@ -40,38 +71,13 @@ router.use(function(req, res, next) {
   }
 });
 
-router.get('/register', function(req, res, next) {
-  res.render('register', { title: 'Minder Registration' });
-});
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-// User registers
-router.post('/add', function(req, res, next) {
-  User.count({ email: req.body.email }, function(err, count){
-    console.log(err);
-    if(count > 0)
-      res.send(false);
-    else{
-      var newUser = new User({
-        email:req.body.email,
-        password:req.body.password,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        city:req.body.city,
-        description:"",
-        tags:[],
-        education:""
-      });
-      newUser.save(function (err) {
-        res.send(true);
-      });
-    }
-  }); 
-});
+
 
 // User viewing own
 router.get('/profile', requireLogin, function(req, res, next) {
@@ -95,6 +101,7 @@ router.patch('/profile', function(req, res, next){
     education: ""}
   }, function(err, doc){
     if (err) return res.send(500, { error: err });
+
     return res.send("succesfully saved");
   });
 });
@@ -106,10 +113,6 @@ router.delete('/profile', function(req, res, next){
   });
 });
 
-router.get('/logout', function(req, res, next){
-  req.session.reset();
-  res.redirect('/');
-});
 
 /* Return all data for specific user */
 router.get('/user/:email', function(req, res, next){
