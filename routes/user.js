@@ -15,39 +15,8 @@ router.post('/validation', function(req, res, next) {
   } );
 });
 
-function requireLogin(req, res, next) {
-  if (!req.user) {
-    res.redirect('/');
-  } else {
-    next();
-  }
-};
-
-
-router.use(function(req, res, next) {
-  if (req.session && req.session.user) {
-    User.findOne({ email: req.session.user.email }, function(err, user) {
-      if (user) {
-        req.user = user;
-        delete req.user.password; // delete the password from the session
-        req.session.user = user;  //refresh the session value
-        res.locals.user = user;
-      }
-      // finishing processing the middleware and run the route
-      next();
-    });
-  } else {
-    res.redirect('/');
-  }
-});
-
 router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Minder Registration' });
-});
-
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
 });
 
 // User registers
@@ -67,6 +36,7 @@ router.post('/add', function(req, res, next) {
         tags:[],
         education:""
       });
+      req.session.user = newUser;
       newUser.save(function (err) {
         res.send(true);
       });
@@ -74,30 +44,65 @@ router.post('/add', function(req, res, next) {
   }); 
 });
 
+
+function requireLogin(req, res, next) {
+  if (!req.user) {
+    res.redirect('/');
+  } else {
+    next();
+  }
+};
+
+router.use(function(req, res, next) {
+  if (req.session && req.session.user) {
+    User.findOne({ email: req.session.user.email }, function(err, user) {
+      if (user) {
+        req.user = user;
+        delete req.user.password; // delete the password from the session
+        req.session.user = user;  //refresh the session value
+        res.locals.user = user;
+      }
+      // finishing processing the middleware and run the route
+      next();
+    });
+  } else {
+    res.redirect('/');
+  }
+});
+
+
+
+/* GET users listing. */
+router.get('/', function(req, res, next) {
+  res.send('respond with a resource');
+});
+
+
+
 // User viewing own
 router.get('/profile', requireLogin, function(req, res, next) {
   var user_email = req.user.email;
   User.findOne( { email: user_email }, function(err, user){
     res.render("profile", user);
+    console.log(user);
   });
 });
 
 router.patch('/profile', function(req, res, next){
-  var tags = [];
-
-  User.findOneAndUpdate({email:req.body.email}, req.newData, {$set:{
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    city: "",
-    description: "",
-    tags:[""],
-    education: ""}
-  }, function(err, doc){
-    if (err) return res.send(500, { error: err });
-    return res.send("succesfully saved");
-  });
+  User.findOneAndUpdate({email:req.user.email},
+    { 
+    $set: {firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      city: req.body.city,
+      description: req.body.description,
+      tags:req.body.tags,
+      education: req.body.education}
+    }, function(err, doc){
+      ;
+    }
+  );
+  console.log(req.body);
+  res.send(true);
 });
 
 router.delete('/profile', function(req, res, next){

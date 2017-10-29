@@ -18,9 +18,8 @@ var set_insert_tag_response =  function(){
         else{
             //Create a new paragraph with input as text
             var ele_div = document.createElement("div");
+            ele_div.innerText = input_txt;
             ele_div.classList.add("tag_txt");
-            var para_node = document.createTextNode(input_txt);
-            ele_div.appendChild(para_node);
 
             //Create a button that user can click to remove tag
             var ele_remove_btn = document.createElement("button");
@@ -109,28 +108,29 @@ var update_map = function(){
 
 var set_save_profile_response = function(){
     $("#btn_save_profile").click(function(){
+        var all_tags = [];
+        $("div.tag_txt").each(function(){
+            all_tags.push(this.innerText);
+        });
+
         $.ajax({
-            url:"http://localhost:3000/user",
+            url:"http://localhost:3000/user/profile",
             data:{
-                email: $("#textarea_email").val(),
-                password: $("#").val(),
-                firstName: $("#").val(),
-                lastName: $("#").val(),
-                city: $("#").val(),
-                description: $("#").val(),
-                tags:[],
-                education: $("#").val(),
+                firstName: $("#input_first_name").val(),
+                lastName: $("#input_last_name").val(),
+                city: $("#input_city").val(),
+                description: $("#textarea_description").val(),
+                tags: all_tags,
+                education: $("#input_education").val(),
             },
             dataType:"json",
             type:"PATCH",
         }).done(function(json){
-            if(json){
-                window.location.replace("http://localhost:3000/user/profile");
-            }
-            else
-                alert("WRONG PASSWORD");//Do something that says invalid
+            alert(json);
+            window.location.replace("http://localhost:3000/user/profile");
+        
         }).fail(function(){
-            alert("Failed to grab data from database");
+            alert("Failed to grab data from database!!");
             return false;
         });
     });

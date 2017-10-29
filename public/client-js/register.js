@@ -24,7 +24,7 @@ var override_submit_btn = function(){
     $("#signup_form").on("submit", function(e){
         e.preventDefault();
         if( is_filled_form() ){
-            var register_successful = $.ajax({
+            $.ajax({
                 url:"http://localhost:3000/user/add",
                 data: {
                     email: $("#input_email").val(),
@@ -35,32 +35,20 @@ var override_submit_btn = function(){
                 },
                 type:"POST",
                 dataType: "json"
-            }).done(function(){
-                return true;
+            }).done(function(json){
+                if(json){
+                    window.location.replace("/user/profile");
+                }
+                else{
+                    alert("Email duplicate exist. Try again.")
+                } 
             }).fail(function(){
                 return false;
-            });
-            if(register_successful)
-            redirect_to_profile();
-            else
-                alert("Email duplicate exist. Try again.")
+            });   
         }
         else
             alert("All required inputs must be filled");
     });
-};
-
-var redirect_to_profile = function(){
-    var t_form = document.createElement('form');
-    t_form.action = "http://localhost:3000/user/register";
-    t_form.method = "POST";
-    var ele_email_input = document.createElement("input");
-    ele_email_input.name = "email";
-    ele_email_input.value = $("#input_email").val();
-    t_form.appendChild(ele_email_input);
-    t_form.style.visibility = "hidden";
-    document.body.appendChild(t_form);
-    t_form.submit();
 };
 
 var main = function(){

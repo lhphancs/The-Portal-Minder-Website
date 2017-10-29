@@ -9,56 +9,57 @@
     <body>
         <% include header_navs.html %>
         <div class="profile_container">
-            <form>
-                <h1 class="title">Profile</h1>
-                <div class="user_photo_container">
-                    <h1 class="user_name"><%= firstName %> <%= lastName %></h1>
-                    <video class="user_photo display_none" id="video_webcam" autoplay="true"></video>
-                    <canvas id="canvas_user" class="user_photo" width="100" height="100"></canvas>
-                    <button id="btn_webcam_toggle">Activate Webcam</button>
-                </div>
 
-                <form action ="other_profile.html">
-                    <input class ="btn_search_users" type="submit" value="Match with Others">
-                </form>
+            <h1 class="title">Profile</h1>
+            <div class="user_photo_container">
+                <h1 class="user_name"><%= firstName %> <%= lastName %></h1>
+                <video class="user_photo display_none" id="video_webcam" autoplay="true"></video>
+                <canvas id="canvas_user" class="user_photo" width="100" height="100"></canvas>
+                <button id="btn_webcam_toggle">Activate Webcam</button>
+            </div>
 
-                <div class="input_container">
-                    First Name: 
-                    <input id="user_first_name" class="input_user" value=<%= firstName %>>
-                </div>
-                
-                <div class="input_container">
-                    Last Name: 
-                    <input id="user_first_name" class="input_user" value=<%= lastName %>>
-                </div>
+            <form action ="other_profile.html">
+                <input class ="btn_search_users" type="submit" value="Match with Others">
+            </form>
 
-                <div class="input_container">
-                    Education: 
-                    <input id="user_first_name" class="input_user" value=<%= education %>>
-                </div>
+            <h3>Tags</h3>
+            <div id="tag_list_container">
+                <!-- Javascript will add tags in this container -->
+            </div>
 
-                <h3>Description</h3>
-                <textarea id="textarea_description"><%= description %></textarea>
+            <div class="input_user">
+                <input id="input_tag" type="text">
+                <button id="btn_add_tag" class="btn">Add Tag</button>
+            </div>
 
-                <h3>Tags</h3>
-                <div id="tag_list_container">
-                    <!-- Javascript will add tags in this container -->
-                </div>
+            <div class="input_container">
+                First Name: 
+                <input id="input_first_name" class="input_user" value=<%= firstName %>>
+            </div>
+            
+            <div class="input_container">
+                Last Name: 
+                <input id="input_last_name" class="input_user" value=<%= lastName %>>
+            </div>
 
-                <div class="input_user">
-                    <input id="input_tag" type="text">
-                    <button id="btn_add_tag" class="btn">Add Tag</button>
-                </div>
+            <div class="input_container">
+                Education: 
+                <input id="input_education" class="input_user" value=<%= education %>>
+            </div>
 
+            <h3>Description</h3>
+            <textarea id="textarea_description"><%= description %></textarea>
+
+            
+            <div class="input_container">
+                Location (City):
+                <input id="input_city" class="input_user" value=<%= city %>>
                 <div>
-                    <div class="editable_container">
-                        <h3>Location (City)</h3>
-                        <textarea id="textarea_city"><%= city %></textarea>
-                        <input id="btn_save_profile" class="btn_large" type="submit" value="Save Profile">
-                    </div>
+                    <button id="btn_save_profile" class="btn_large">Save Profile</button>
                     <img class="map_display" id="map">
                 </div>
-            </form>    
+            </div>
+        </div>
     </body>
 </html>
 

@@ -88,6 +88,7 @@ p.info{
 }
 
 #btn_save_profile{
+    vertical-align:top;
     margin-top:40px;
     font-size:1.5em;
 }
