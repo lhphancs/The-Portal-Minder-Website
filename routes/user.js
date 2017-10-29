@@ -6,12 +6,20 @@ var User = require('../models/User');
 // User password check & cookie assignment if match
 router.post('/validation', function(req, res, next) {
   User.findOne( { email: req.body.email }, function(err, user){
-    if(req.body.password === user.password){
-      req.session.user = user;
-      res.send(true);
+    //Check if user exists
+    if(user){
+      //Check if password matches
+      if(req.body.password === user.password){
+        req.session.user = user;
+        res.send(true);
+      }
+      else{
+        res.send(false);
+      }
     }
-    else
+    else{
       res.send(false);
+    }
   } );
 });
 
@@ -118,6 +126,10 @@ router.get('/logout', function(req, res, next){
   res.redirect('/');
 });
 
+router.get('/search', requireLogin, function(req, res, next){
+  res.render("user_search");
+});
+
 /* Return all data for specific user */
 router.get('/user/:email', function(req, res, next){
   //ME TO DO HERE!
@@ -125,5 +137,19 @@ router.get('/user/:email', function(req, res, next){
     console.log(req.body.email)
   } );
 });
+
+
+
+//Below is all other user search
+router.get('/match-local', requireLogin, function(req, res, next){
+  User.find({
+    email: {'$ne': req.user.email},
+    city: req.user.city
+  }, function(err, users){
+    console.log(users);
+    res.render("other_profile", {users:users});
+  });
+});
+
 
 module.exports = router;
