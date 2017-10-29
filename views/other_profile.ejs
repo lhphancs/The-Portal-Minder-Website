@@ -2,16 +2,14 @@
 <html>
 	<head>
 		<link type="text/css" rel= "stylesheet" href="/stylesheets/global.css">
-		<link type="text/css" rel= "stylesheet" href="css/profile.css">
-		<script type="text/javascript" src="ejs_production.js"></script>
+		<link type="text/css" rel= "stylesheet" href="/stylesheets/profile.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	</head>
 	
 	<body>
 		<% include header_navs.html %>
-
-		<div class = "profile_container">
-			<h1 class ="title">
+		<div class="profile_container">
+			<h1 class="title">
 				Profile
 			</h1>
 			<div class = "user_photo_container">
@@ -22,27 +20,36 @@
 				<input class = "btn_connect" type = "submit" value = "Connect/Invite">
 			</form>
 
-
-			<div class = "editable_container">
+			<% if(users.length > 0){ %>
 				<h3 class = "header_for_textarea">Description</h3>
-				<p class ="info">[Description to be filled]</p>
-			</div>
-			<div class = "editable_container">
+				<p class ="info"><%= users[0].description %></p>
+				
 				<h3 class = "header_for_textarea">Tags</h3>
-				<p class ="info">[Tags, separated by space]</p>
-			</div>
-			<div class = "editable_container">
+				<p class ="info"><% users[0].tags.forEach(function(tag) { %>
+					<div>
+						<%= tag %>
+					</div>
+				<% }); %>
+				</p>
+				
 				<h3 class = "header_for_textarea">Education</h3>
-				<p class ="info">[Education to be filled]</p>
-			</div>
-			<div class = "editable_container">
+				<p class ="info"><%= users[0].education %></p>
+				
 				<h3 class = "header_for_textarea">Location (City)</h3>
-				<p class ="info">[Location to be filled]</p>
-			</div>
+				<p class ="info"><%= users[0].city %></p>
+			<% } %>
 		</div>
 
 		<div id="matched_users_container" class="other_users_list_container">
 			<h2>Related Matches:</h2>
+			<% users.forEach(function(user) { %>
+				<div class="other_user_container">
+					<a href="#" class="other_user_name">
+						<%= user.firstName + " " + user.lastName %></a>
+					<img class="other_user_img" src="/images/logo.jpg" href="#">
+				</div>
+			<% }); %>
+
 			<!-- AJAX fills this spot with database-->
 		</div>
 	</body>

@@ -105,7 +105,7 @@ var set_webcam_toggle_response = function(){
 
 var update_map = function(){
     var img_map = document.querySelector("#map");
-    var str_city = $("#textarea_city").val();
+    var str_city = $("#input_city").val();
     var query = "center=" + str_city;
     img_map.src = "https://maps.googleapis.com/maps/api/staticmap?" + query
                     + "&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794"
@@ -168,10 +168,10 @@ var main = function(){
     //Set tag insert listener for buton
     set_insert_tag_response();
     set_save_profile_response();
-    update_map();
     set_webcam_toggle_response();
     set_capture_listener();
     load_tags();
+    update_map();
 };
 
 $(document).ready(function(){

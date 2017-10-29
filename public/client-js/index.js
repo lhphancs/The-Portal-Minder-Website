@@ -1,19 +1,3 @@
-var all_required_inputs_filled = function(){
-    return true;
-    var eles_input = $("input.required_input");
-    /* Not working for some reason
-    for(var i=0; i<eles_input.length; ++i){
-        if(eles_input[i].val() === ""){
-            alert(eles_input[i].val());
-            alert("All fields in form must be filled");
-            return false;
-        }
-        alert( eles_input[i].val() );
-    }
-    return false;
-    */
-};
-
 var check_password_and_respond = function(){
     $.ajax({
         url:"http://localhost:3000/user/validation",
@@ -40,7 +24,7 @@ var override_submit_btn = function(){
     $("#login_form").on("submit", function(e){
         e.preventDefault();
         if( all_required_inputs_filled() )
-        check_password_and_respond();
+            check_password_and_respond();
     });
 };
 
@@ -48,4 +32,6 @@ var main = function(){
     override_submit_btn();
 };
 
-main();
+$(document).ready(function(){
+    main();
+});

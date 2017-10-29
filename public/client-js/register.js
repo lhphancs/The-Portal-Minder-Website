@@ -1,15 +1,3 @@
-//These two functions are in form_check.js as well
-//BROKEN ATM. Trouble detecting blank.
-var is_filled_form = function(){
-    $("input.required_input").each(function() {
-        if ($(this).val() === "") {
-            return false;
-        }
-    });
-    return true;
-}
-
-
 var check_if_matching_password = function(){
     var ele_input_password1 = document.getElementById("input_password1");
     var ele_input_password2 = document.getElementById("input_password2");
@@ -23,7 +11,7 @@ var check_if_matching_password = function(){
 var override_submit_btn = function(){
     $("#signup_form").on("submit", function(e){
         e.preventDefault();
-        if( is_filled_form() ){
+        if( all_required_inputs_filled() ){
             $.ajax({
                 url:"http://localhost:3000/user/add",
                 data: {
@@ -46,8 +34,6 @@ var override_submit_btn = function(){
                 return false;
             });   
         }
-        else
-            alert("All required inputs must be filled");
     });
 };
 
@@ -55,4 +41,6 @@ var main = function(){
     override_submit_btn();
 };
 
-main();
+$(document).ready(function(){
+    main();
+});

@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link type="text/css" rel= "stylesheet" href="/stylesheets/global.css">
+		<link type="text/css" rel= "stylesheet" href="/stylesheets/user_search.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	</head>
+	
+	<body>
+		<% include header_navs.html %>
+
+        <form action="/user/match-local">
+            <input class="submit_search" type="submit" value="Local Search">
+        </form>
+        <form action="/user/match-tags">
+            <input class="submit_search" type="submit" value="Matching Tags Search">
+        </form>
+        <form action="/user/match-random">
+            <input class="submit_search" type="submit" value="Random Search">
+        </form>
+
+		<div class="search_person_container">
+			<form class="form_container" method="GET" action="/user/match-search">Search Person:
+				<input type="text" id="input_person">
+				<input type="submit" value="Search">
+			</form>
+		</div>
+	</body>
+</html>
