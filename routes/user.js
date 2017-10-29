@@ -77,14 +77,15 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-
+router.get('/tags', function(req, res, next) {
+  res.send(req.user.tags);
+});
 
 // User viewing own
 router.get('/profile', requireLogin, function(req, res, next) {
   var user_email = req.user.email;
   User.findOne( { email: user_email }, function(err, user){
     res.render("profile", user);
-    console.log(user);
   });
 });
 

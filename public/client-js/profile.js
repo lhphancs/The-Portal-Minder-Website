@@ -1,4 +1,28 @@
 var local_stream;
+
+var add_tag_to_container = function(word){
+    var tag_list_container = document.getElementById("tag_list_container");
+
+    var ele_div = document.createElement("div");
+    ele_div.innerText = word;
+    ele_div.classList.add("tag_txt");
+
+    //Create a button that user can click to remove tag
+    var ele_remove_btn = document.createElement("button");
+    ele_remove_btn.classList.add("btn_tag_remove");
+    ele_remove_btn.innerHTML = "x";
+
+    //Append these the paragraph and the remove btn to new div
+    var div_to_insert = document.createElement("div");
+    div_to_insert.classList.add("div_tag_container");
+    div_to_insert.appendChild(ele_div);
+    div_to_insert.appendChild(ele_remove_btn);
+    tag_list_container.appendChild(div_to_insert);
+
+    //Now set it so that when they click ele_remove_btn, it will remove parent
+    ele_remove_btn.onclick = remove_parent_response;
+};
+
 var set_insert_tag_response =  function(){
     $("#btn_add_tag").click(function(){
         const TAG_MAX_AMOUNT = 10;
@@ -8,33 +32,14 @@ var set_insert_tag_response =  function(){
             alert("Must enter text before adding tag. Try again.")
             return;
         }
-        var tag_list_container = document.getElementById("tag_list_container");
-
+        
         //Check if past tag limit
         if(document.getElementsByClassName("div_tag_container").length >= TAG_MAX_AMOUNT)
             alert("Max amount of tag is " + TAG_MAX_AMOUNT);
 
         //Add new removable tag based on input
         else{
-            //Create a new paragraph with input as text
-            var ele_div = document.createElement("div");
-            ele_div.innerText = input_txt;
-            ele_div.classList.add("tag_txt");
-
-            //Create a button that user can click to remove tag
-            var ele_remove_btn = document.createElement("button");
-            ele_remove_btn.classList.add("btn_tag_remove");
-            ele_remove_btn.innerHTML = "x";
-
-            //Append these the paragraph and the remove btn to new div
-            var div_to_insert = document.createElement("div");
-            div_to_insert.classList.add("div_tag_container");
-            div_to_insert.appendChild(ele_div);
-            div_to_insert.appendChild(ele_remove_btn);
-            tag_list_container.appendChild(div_to_insert);
-
-            //Now set it so that when they click ele_remove_btn, it will remove parent
-            ele_remove_btn.onclick = remove_parent_response;
+            add_tag_to_container(input_txt);
         }
     });
 };
@@ -82,11 +87,12 @@ var set_webcam_toggle_response = function(){
         //This will turn on webcam
         if( $("#video_webcam").hasClass("display_none") ){
             activate_video();
+            this.innerHTML = "Take picture";
         }
             
         //This will turn off webcam and display picture taken
         else{
-            btn_webcam_toggle.innerHTML = "Activate webcam";
+            this.innerHTML = "Activate webcam";
             setTimeout(function() {
                 ;
             }, 0); //Why do I need a set timeout of 0? breaks if I remove setTimeout 
@@ -124,15 +130,32 @@ var set_save_profile_response = function(){
                 education: $("#input_education").val(),
             },
             dataType:"json",
-            type:"PATCH",
+            type:"PATCH"
         }).done(function(json){
-            alert(json);
             window.location.replace("http://localhost:3000/user/profile");
         
         }).fail(function(){
             alert("Failed to grab data from database!!");
             return false;
         });
+    });
+};
+
+var load_tags = function(){
+    $.ajax({
+        url:"http://localhost:3000/user/tags",
+        data:{
+            
+        },
+        dataType:"json",
+        type:"get"
+    }).done(function(json){
+        for(var i=0; i<json.length; ++i){
+            add_tag_to_container(json[i]);
+        }
+    }).fail(function(){
+        alert("Failed to grab data from database!!");
+        return false;
     });
 };
 
@@ -148,6 +171,7 @@ var main = function(){
     update_map();
     set_webcam_toggle_response();
     set_capture_listener();
+    load_tags();
 };
 
 $(document).ready(function(){
