@@ -35,6 +35,7 @@ var check_password_and_respond = function(){
     });
 }
 
+
 var override_submit_btn = function(){
     $("#login_form").on("submit", function(e){
         e.preventDefault();

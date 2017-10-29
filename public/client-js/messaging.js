@@ -47,6 +47,7 @@ var set_event_chat_with_other_user = function(){
     }
 };
 
+
 var load_all_users = function(){
     //First get json of all users
     $.ajax({

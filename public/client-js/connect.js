@@ -40,6 +40,7 @@ var load_matched_users_with_database = function(){
     });
 };
 
+
 /*At the moment, this is same as "load_matched_users_with_database" function.
 The database call should be different and href should be different. */
 var load_pending_users_with_database = function(){

@@ -97,6 +97,7 @@ var set_webcam_toggle_response = function(){
     });
 };
 
+
 var update_map = function(){
     var img_map = document.querySelector("#map");
     var str_city = $("#textarea_city").val();

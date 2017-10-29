@@ -2,6 +2,7 @@ var btn_notification_response = function(){
     alert("btn response. Need to fill");
 };
 
+
 var load_notifications_with_database = function(){
     $.ajax({
         url:"http://thiman.me:1337/lee/users",

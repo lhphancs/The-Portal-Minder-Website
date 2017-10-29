@@ -23,6 +23,7 @@ function requireLogin(req, res, next) {
   }
 };
 
+
 router.use(function(req, res, next) {
   if (req.session && req.session.user) {
     User.findOne({ email: req.session.user.email }, function(err, user) {

@@ -9,6 +9,7 @@ var session = require('client-sessions');
 var index = require('./routes/index');
 var user = require('./routes/user');
 
+
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/minder');
 var db = mongoose.connection;

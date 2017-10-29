@@ -9,6 +9,7 @@ var is_filled_form = function(){
     return true;
 }
 
+
 var check_if_matching_password = function(){
     var ele_input_password1 = document.getElementById("input_password1");
     var ele_input_password2 = document.getElementById("input_password2");
