@@ -25,7 +25,7 @@
     display:block;
 }
 
-.btn_search_users, .btn_connect{
+.btn_search_users, #btn_add_friend{
     background-color:#FFEBCD ;
     display:block;
     margin:10px auto;

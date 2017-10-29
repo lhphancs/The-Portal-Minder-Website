@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link type="text/css" rel= "stylesheet" href="/stylesheets/global.css">
+		<link type="text/css" rel= "stylesheet" href="/stylesheets/profile.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	</head>
+	
+	<body>
+		<% include header_navs.html %>
+
+		<div id="matched_users_container" class="other_users_list_container">
+			<h2>Related Matches:</h2>
+			<% users.forEach(function(user) { %>
+				<div class="other_user_container">
+					<a href="/user/<%= user._id %>" class="other_user_name">
+						<%= user.firstName + " " + user.lastName %></a>
+					<img class="other_user_img" src="/images/logo.jpg"
+						href="/user/<%= user._id %>"/>
+				</div>
+			<% }); %>
+			<!-- AJAX fills this spot with database-->
+		</div>
+	</body>
+</html>
+<script src="/client-js/other_profile.js"></script>

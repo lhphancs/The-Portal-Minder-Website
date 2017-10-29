@@ -42,7 +42,9 @@ router.post('/add', function(req, res, next) {
         city:req.body.city,
         description:"",
         tags:[],
-        education:""
+        education:"",
+        friends:[],
+        pendingFriends:[]
       });
       req.session.user = newUser;
       newUser.save(function (err) {
@@ -147,9 +149,14 @@ router.get('/match-local', requireLogin, function(req, res, next){
     city: req.user.city
   }, function(err, users){
     console.log(users);
-    res.render("other_profile", {users:users});
+    res.render("search_results", {users:users});
   });
 });
 
+router.get('/:id', requireLogin, function(req, res, next){
+  User.findOne( { _id: req.param('id') }, function(err, user){
+    res.render("other_profile", {user: user});
+  });
+});
 
 module.exports = router;

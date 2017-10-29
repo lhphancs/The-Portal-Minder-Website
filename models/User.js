@@ -9,6 +9,8 @@ var userSchema = mongoose.Schema({
   description:String,
   tags:[String],
   education:String,
+  friends:[String],
+  pendingFriends:[String]
 });
 
 module.exports = mongoose.model('User', userSchema);
