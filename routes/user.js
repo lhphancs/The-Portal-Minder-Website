@@ -55,7 +55,7 @@ router.post('/add', function(req, res, next) {
 });
 
 
-function requireLogin(req, res, next) {
+function require_login(req, res, next) {
   if (!req.user) {
     res.redirect('/');
   } else {
@@ -87,19 +87,19 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get('/tags', function(req, res, next) {
+router.get('/tags', require_login, function(req, res, next) {
   res.send(req.user.tags);
 });
 
 // User viewing own
-router.get('/profile', requireLogin, function(req, res, next) {
+router.get('/profile', require_login, function(req, res, next) {
   var user_email = req.user.email;
   User.findOne( { email: user_email }, function(err, user){
     res.render("profile", user);
   });
 });
 
-router.patch('/profile', function(req, res, next){
+router.patch('/profile', require_login, function(req, res, next){
   User.findOneAndUpdate({email:req.user.email},
     { 
     $set: {firstName: req.body.firstName,
@@ -116,7 +116,7 @@ router.patch('/profile', function(req, res, next){
   res.send(true);
 });
 
-router.delete('/profile', function(req, res, next){
+router.delete('/profile', require_login, function(req, res, next){
   User.remove( { email: req.body.email }, function(err, user){
     if (err) return handleError(err);
     res.send(user);
@@ -128,22 +128,12 @@ router.get('/logout', function(req, res, next){
   res.redirect('/');
 });
 
-router.get('/search', requireLogin, function(req, res, next){
+router.get('/search', require_login, function(req, res, next){
   res.render("user_search");
 });
 
-/* Return all data for specific user */
-router.get('/user/:email', function(req, res, next){
-  //ME TO DO HERE!
-  User.findOne( { email: req.body.email }, function(err, user){
-    console.log(req.body.email)
-  } );
-});
-
-
-
 //Below is all other user search
-router.get('/match-local', requireLogin, function(req, res, next){
+router.get('/match-local', require_login, function(req, res, next){
   User.find({
     email: {'$ne': req.user.email},
     city: req.user.city
@@ -153,9 +143,24 @@ router.get('/match-local', requireLogin, function(req, res, next){
   });
 });
 
-router.get('/:id', requireLogin, function(req, res, next){
+router.get('/:id', require_login, function(req, res, next){
   User.findOne( { _id: req.param('id') }, function(err, user){
     res.render("other_profile", {user: user});
+  });
+});
+
+router.get('/add-friend/:id', require_login, function(req, res, next){
+  User.findOne( { _id: req.user._id }, function(err, user){
+    user.friends.push(req.param('id'));
+    user.save();
+    res.send(true);
+  });
+});
+
+router.get('/friends', require_login, function(req, res, next){
+  User.findOne( { _id: req.user._id }, function(err, user){
+    console.log(user.friends);
+    res.send(user.friends);
   });
 });
 

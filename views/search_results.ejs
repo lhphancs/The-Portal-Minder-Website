@@ -17,10 +17,10 @@
 						<%= user.firstName + " " + user.lastName %></a>
 					<img class="other_user_img" src="/images/logo.jpg"
 						href="/user/<%= user._id %>"/>
+					<button class="btn_add_friend add-mode" value="<%= user._id %>">Add</button>
 				</div>
 			<% }); %>
-			<!-- AJAX fills this spot with database-->
 		</div>
 	</body>
 </html>
-<script src="/client-js/other_profile.js"></script>
+<script src="/client-js/search_result.js"></script>
