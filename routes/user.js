@@ -157,6 +157,13 @@ router.get('/add-friend/:id', require_login, function(req, res, next){
   });
 });
 
+router.get('/remove-friend/:id', require_login, function(req, res, next){
+  User.update( { _id: req.user._id }, { $pull: {friends: req.param('id')} }, function(){
+    ;
+  });
+  res.send(true)
+});
+
 router.get('/friends', require_login, function(req, res, next){
   User.findOne( { _id: req.user._id }, function(err, user){
     console.log(user.friends);
