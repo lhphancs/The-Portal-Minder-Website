@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var User = require('../models/User');
+var Message = require('../models/Message');
 
 // User password check & cookie assignment if match
 router.post('/validation', function(req, res, next) {
@@ -54,7 +55,6 @@ router.post('/add', function(req, res, next) {
   }); 
 });
 
-
 function require_login(req, res, next) {
   if (!req.user) {
     res.redirect('/');
@@ -79,8 +79,6 @@ router.use(function(req, res, next) {
     res.redirect('/');
   }
 });
-
-
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -143,12 +141,6 @@ router.get('/match-local', require_login, function(req, res, next){
   });
 });
 
-router.get('/:id', require_login, function(req, res, next){
-  User.findOne( { _id: req.param('id') }, function(err, user){
-    res.render("other_profile", {user: user});
-  });
-});
-
 router.get('/add-friend/:id', require_login, function(req, res, next){
   User.findOne( { _id: req.user._id }, function(err, user){
     user.friends.push(req.param('id'));
@@ -164,10 +156,50 @@ router.get('/remove-friend/:id', require_login, function(req, res, next){
   res.send(true)
 });
 
+router.get('/get-self', require_login, function(req, res, next){
+  res.send(req.user);
+});
+
 router.get('/friends', require_login, function(req, res, next){
   User.findOne( { _id: req.user._id }, function(err, user){
-    console.log(user.friends);
-    res.send(user.friends);
+    res.render("friends");
+  });
+});
+
+router.get('/get-friends-list', require_login, function(req, res, next){
+  User.findOne( { _id: req.user._id }, function(err, user){
+    var friends_dictionary = {};
+    var friends_id_list = user.friends;
+    /*
+    for(var i=0; i<friends_id_list.length; ++i){
+      User.findOne( { _id: friends_id_list[i] }, function(err, friend_user){
+        friends_dictionary[friend_user._id] = friend_user.firstName + " " + friend_user.lastName;
+      });
+    }
+    console.log(friends_dictionary);
+    */
+
+    res.send(friends_id_list);
+  });
+});
+
+router.post('/save-message', require_login, function(req, res, next){
+  console.log( req.body.message);
+  var MessageModel = mongoose.model('Message', Message.schema);
+  var new_message = new MessageModel({
+    from:req.user.firstName,
+    to:"TEMPT TO",
+    message: req.body.message
+  });
+  new_message.save(function (err) {
+    if (err) return handleError(err);
+  });
+  res.send(true);
+});
+
+router.get('/:id', function(req, res, next){
+  User.findOne( { _id: req.param('id') }, function(err, user){
+    res.render("other_profile", {user: user});
   });
 });
 

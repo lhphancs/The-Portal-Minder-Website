@@ -2,22 +2,21 @@
 <html>
     <head>
         <link type="text/css" rel= "stylesheet" href="/stylesheets/global.css">
-        <link type="text/css" rel= "stylesheet" href="css/profile.css">
-        <link type="text/css" rel= "stylesheet" href="css/messaging.css">
-        <script type="text/javascript" src="ejs_production.js"></script>
+        <link type="text/css" rel= "stylesheet" href="/stylesheets/friends.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </head>
     
     <body>
         <% include header_navs.html %>
 
-        <div class = "entire_container">
-            <h1 class = "title">Messaging</h1>
-            <div class = "chat_area">
+        <div class="entire_container">
+            <h1 class="title">Friends</h1>
+            <div class="chat_area">
+				<h2 class="contact_list_title">Contact list</h2>
                 <div id="contact_list" class="contact_list_container">
-                    <h2 class="contact_list_title">Contact list</h2>
+                    <!-- Ajax will load friends list goes in here -->
                 </div>
-                <div id = "msgs_container">
+                <div id="msgs_container">
                     <p class="msg_header">You are chatting with [OtherUserName]</p>
                 </div>
                 <div class="send_msg_container">
@@ -28,4 +27,4 @@
         </div>
     </body>
 </html>
-<script src="client-js/messaging.js"></script>
+<script src="/client-js/friends.js"></script>

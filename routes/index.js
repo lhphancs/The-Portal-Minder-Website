@@ -7,11 +7,6 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET home page. */
-router.get('/friends', function(req, res, next) {
-  res.render('friends_list', { title: 'Friends' });
-});
-
-/* GET home page. */
 router.get('/about', function(req, res, next) {
   res.render('about', { title: 'Minder About' });
 });
