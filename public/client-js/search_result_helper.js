@@ -32,11 +32,3 @@ var set_btn_response_add_friend = function(){
         $(this).toggleClass("add-mode");
     });
 };
-
-var main = function(){
-    set_btn_response_add_friend();
-};
-
-$(document).ready(function(){
-    main();
-});

@@ -132,15 +132,31 @@ router.get('/search', require_login, function(req, res, next){
   res.render("user_search");
 });
 
-//Below is all other user search
-router.get('/match-local', require_login, function(req, res, next){
+router.get('/get-all-users', require_login, function(req, res, next){
+  User.find({
+    email: {'$ne': req.user.email},
+  }, function(err, users){
+    res.send(users);
+  });
+});
+
+router.get('/get-all-local-users', require_login, function(req, res, next){
   User.find({
     email: {'$ne': req.user.email},
     city: req.user.city
   }, function(err, users){
     console.log(users);
-    res.render("search_results", {users:users});
+    res.send(users);
   });
+});
+
+router.get('/discover-all-users', require_login, function(req, res, next){
+    res.render("search_result_all_users");
+});
+
+//Below is all other user search
+router.get('/discover-local-users', require_login, function(req, res, next){
+    res.render("search_result_local_users");
 });
 
 router.get('/add-friend/:id', require_login, function(req, res, next){

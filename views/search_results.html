@@ -11,16 +11,8 @@
 
 		<div id="matched_users_container" class="other_users_list_container">
 			<h2>Related Matches:</h2>
-			<% users.forEach(function(user) { %>
-				<div class="other_user_container">
-					<a href="/user/<%= user._id %>" class="other_user_name">
-						<%= user.firstName + " " + user.lastName %></a>
-					<img class="other_user_img" src="/images/logo.jpg"
-						href="/user/<%= user._id %>"/>
-					<button class="btn_add_friend add-mode" value="<%= user._id %>">Add</button>
-				</div>
-			<% }); %>
+			<!-- Ajax will insert here -->
 		</div>
 	</body>
 </html>
-<script src="/client-js/search_result.js"></script>
+<script src="/client-js/search_result_helper.js"></script>
