@@ -9,18 +9,19 @@
 	<body>
 		<% include header_navs.html %>
 
+		<form action="/user/discover-all-users">
+			<input class ="submit_search" type="submit" value="All search">
+		</form>
+
         <form action="/user/discover-local-users">
             <input class="submit_search" type="submit" value="Local Search">
         </form>
-        <form action="/user/match-tags">
-            <input class="submit_search" type="submit" value="Matching Tags Search">
-        </form>
-        <form action="/user/match-random">
-            <input class="submit_search" type="submit" value="Random Search">
+        <form action="/user/discover-tag-users">
+            <input class="submit_search" type="submit" value="Tags Search">
         </form>
 
 		<div class="search_person_container">
-			<form class="form_container" method="GET" action="/user/match-search">Search Person:
+			<form class="form_container" method="GET" action="/user/discover-search-input-users">Search Person:
 				<input type="text" id="input_person">
 				<input type="submit" value="Search">
 			</form>

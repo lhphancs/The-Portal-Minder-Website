@@ -88,7 +88,11 @@ router.get('/profile', require_login, function(req, res, next) {
   });
 });
 
-/* GET users listing. */
+router.get('/notification', require_login, function(req, res, next){
+  res.render("notification");
+});
+
+/* GET users listing. */ //This is what they started with.
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
@@ -96,8 +100,6 @@ router.get('/', function(req, res, next) {
 router.get('/tags', require_login, function(req, res, next) {
   res.send(req.user.tags);
 });
-
-
 
 router.patch('/profile', require_login, function(req, res, next){
   User.findOneAndUpdate({email:req.user.email},
@@ -128,8 +130,8 @@ router.get('/logout', function(req, res, next){
   res.redirect('/');
 });
 
-router.get('/search', require_login, function(req, res, next){
-  res.render("user_search");
+router.get('/discover', require_login, function(req, res, next){
+  res.render("discover");
 });
 
 router.get('/get-all-users', require_login, function(req, res, next){
@@ -145,7 +147,6 @@ router.get('/get-all-local-users', require_login, function(req, res, next){
     email: {'$ne': req.user.email},
     city: req.user.city
   }, function(err, users){
-    console.log(users);
     res.send(users);
   });
 });
@@ -159,16 +160,16 @@ router.get('/discover-local-users', require_login, function(req, res, next){
     res.render("search_result_local_users");
 });
 
-router.get('/add-friend/:id', require_login, function(req, res, next){
+router.post('/add-friend', require_login, function(req, res, next){
   User.findOne( { _id: req.user._id }, function(err, user){
-    user.friends.push(req.param('id'));
+    user.friends.push(req.body.id);
     user.save();
     res.send(true);
   });
 });
 
-router.get('/remove-friend/:id', require_login, function(req, res, next){
-  User.update( { _id: req.user._id }, { $pull: {friends: req.param('id')} }, function(){
+router.post('/remove-friend', require_login, function(req, res, next){
+  User.update( { _id: req.user._id }, { $pull: {friends: req.body.id} }, function(){
     ;
   });
   res.send(true)
@@ -220,5 +221,8 @@ router.get('/:id', function(req, res, next){
     res.render("other_profile", {user: user});
   });
 });
+
+
+
 
 module.exports = router;

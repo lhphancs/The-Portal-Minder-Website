@@ -1,11 +1,13 @@
-var btn_notification_response = function(){
-    alert("btn response. Need to fill");
+var set_btn_notification_response = function(){
+    $("#notifications_container").on("click", ".single_notification_container", function(){
+        message = $(this).children("p").text();
+        alert("MESSAGE: " + message);
+    });
 };
-
 
 var load_notifications_with_database = function(){
     $.ajax({
-        url:"http://thiman.me:1337/lee/users",
+        url:"http://localhost:3000/user/get-all-users",
         data:{},
         dataType:"json",
         type:"GET"
@@ -17,10 +19,9 @@ var load_notifications_with_database = function(){
             var ele_btn = document.createElement("button");
             ele_btn.id = json[i].id; //Need to insert id from database later
             ele_btn.classList.add("single_notification_container");
-            ele_btn.onclick = btn_notification_response;
             var ele_header = document.createElement("h4");
-            ele_header.classList.add("notification_user");
-            ele_header.innerText = json[i].first_name + " " + json[i].last_name;
+            ele_header.classList.add("notification_header");
+            ele_header.innerText = json[i].firstName + " " + json[i].lastName;
             ele_btn.appendChild(ele_header);
 
             var ele_paragraph = document.createElement("p");
@@ -36,6 +37,7 @@ var load_notifications_with_database = function(){
 
 var main = function(){
     load_notifications_with_database();
+    set_btn_notification_response();
 };
 
 main();
