@@ -73,11 +73,19 @@ router.use(function(req, res, next) {
         res.locals.user = user;
       }
       // finishing processing the middleware and run the route
-      next();
+      next(); //This must be here as well. This is asynchronous.
     });
   } else {
-    res.redirect('/');
+    next();
   }
+});
+
+// User viewing own
+router.get('/profile', require_login, function(req, res, next) {
+  var user_email = req.user.email;
+  User.findOne( { email: user_email }, function(err, user){
+    res.render("profile", user);
+  });
 });
 
 /* GET users listing. */
@@ -89,13 +97,7 @@ router.get('/tags', require_login, function(req, res, next) {
   res.send(req.user.tags);
 });
 
-// User viewing own
-router.get('/profile', require_login, function(req, res, next) {
-  var user_email = req.user.email;
-  User.findOne( { email: user_email }, function(err, user){
-    res.render("profile", user);
-  });
-});
+
 
 router.patch('/profile', require_login, function(req, res, next){
   User.findOneAndUpdate({email:req.user.email},
