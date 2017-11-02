@@ -1,3 +1,4 @@
+var user_chatting_with;
 var get_self = function(){
     var user_self;
     $.ajax({
@@ -14,7 +15,7 @@ var get_self = function(){
     return user_self;
 }
 
-var load_friends = function(){
+var load_friends_and_click_first = function(){
     $.ajax({
         url:"http://localhost:3000/user/get-friends-list",
         data:{},
@@ -22,13 +23,19 @@ var load_friends = function(){
         type:"GET"
     }).done( function(json){
         var json_size = json.length;
-        var contact_list_container = document.getElementById("contact_list");
+        var contact_list = $("#contact_list");
         for(var i=0; i<json_size; ++i){
-            var ele_new_btn = document.createElement("button");
-            ele_new_btn.classList.add("btn_user_name");
-            ele_new_btn.innerHTML = json[i];
-            contact_list_container.appendChild(ele_new_btn);
-            ele_new_btn.onclick = btn_user_messaging_response;
+            var id = json[i]._id;
+            var first_name = json[i].firstName;
+            var last_name = json[i].lastName;
+
+            var ele_new_btn = $("<button>").addClass(
+                "btn_user_name").val(id).click(
+                switch_user_chat_response).text(first_name + " " + last_name);
+                contact_list.append(ele_new_btn);
+            //Click first after it loads first while it loads rest of users
+            if(i === 0)
+                $("#contact_list button:first-child").click();
         }
     }).fail( function(json){
         alert("Fetching user_matches from database failed.")
@@ -70,7 +77,8 @@ var send_msg_response = function(user_self){
     ele_textarea_msg.value = "";
 };
 
-var btn_user_messaging_response = function(){
+var switch_user_chat_response = function(){
+    user_chatting_with = this.value; //update global user's id we are chatting with
     //Clear all old stuff first
     var msg_container = document.getElementById("msgs_container");
     do
@@ -81,7 +89,6 @@ var btn_user_messaging_response = function(){
         }
         catch (e) {
         }
-
     } while(child_node);
     document.getElementById("textarea_msg").value = "";
 
@@ -96,18 +103,23 @@ var set_event_chat_with_other_user = function(){
     var eles_btn_user_messaging = document.getElementsByClassName("btn_user_name");
     for(var i=0; i<eles_btn_user_messaging.length; ++i)
     {
-        eles_btn_user_messaging[i].onclick = btn_user_messaging_response;
+        eles_btn_user_messaging[i].onclick = switch_user_chat_response;
     }
 };
 
-var main = function(){
-    load_friends();
-};
-
-$(document).ready(function(){
-    main();
+var set_btn_send_msg_response = function(){
     $("#btn_send_msg").click(function(){
         var user_self = get_self();
         send_msg_response(user_self);
     });
+};
+
+var main = function(){
+    load_friends_and_click_first();
+    set_btn_send_msg_response();
+};
+
+
+$(document).ready(function(){
+    main();
 });

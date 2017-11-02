@@ -13,7 +13,7 @@
 				<h1 class="user_name"><%= user.firstName + "" + user.lastName %></h1>
 				<img class="user_photo" src="/images/logo.jpg"/>
 			</div>
-			<button id="btn_add_friend" type="submit">Add Friend</button>
+			<button id="btn_add_friend" class="add-mode" value="<%= user._id %>" type="submit">Add Friend</button>
 
 			<h3 class = "header_for_textarea">Description</h3>
 			<p class ="info"><%= user.description %></p>

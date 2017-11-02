@@ -186,19 +186,8 @@ router.get('/friends', require_login, function(req, res, next){
 });
 
 router.get('/get-friends-list', require_login, function(req, res, next){
-  User.findOne( { _id: req.user._id }, function(err, user){
-    var friends_dictionary = {};
-    var friends_id_list = user.friends;
-    /*
-    for(var i=0; i<friends_id_list.length; ++i){
-      User.findOne( { _id: friends_id_list[i] }, function(err, friend_user){
-        friends_dictionary[friend_user._id] = friend_user.firstName + " " + friend_user.lastName;
-      });
-    }
-    console.log(friends_dictionary);
-    */
-
-    res.send(friends_id_list);
+  User.find( { _id: {$in: req.user.friends} }, ["_id", "firstName", "lastName"], function(err, users){
+    res.send(users);
   });
 });
 

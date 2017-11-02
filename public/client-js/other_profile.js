@@ -1,18 +1,32 @@
 
 var set_toggle_friend_response = function(){
     $("#btn_add_friend").click(function(){
-        $.ajax({
-            url:"http://localhost:3000/user/friends/add",
-            data:{
-            },
-            dataType:"json",
-            type:"POST"
-        }).done(function(json){
-            ;
-        }).fail(function(){
-            alert("Failed to grab data from database!!");
-            return false;
-        });
+        if( $(this).hasClass("add-mode") ){
+            $(this).text("Remove Friend");
+            $.ajax({
+                url:"http://localhost:3000/user/add-friend",
+                data:{id:this.value},
+                type:"POST",
+                dataType:"json"
+            }).done(function(json){
+                ;
+            }).fail(function(){
+                alert("FAILED ADD");
+            });
+        }
+        else{
+            $(this).text("Add Friend");
+            $.ajax({
+                url:"http://localhost:3000/user/remove-friend",
+                data:{id:this.value},
+                type:"POST",
+                dataType:"json"
+            }).done(function(){
+            }).fail(function(){
+                alert("FAILED REMOVE");
+            });
+        }
+        $(this).toggleClass("add-mode");
     });
 };
 
