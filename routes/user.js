@@ -45,7 +45,8 @@ router.post('/add', function(req, res, next) {
         tags:[],
         education:"",
         friends:[],
-        pendingFriends:[]
+        pendingFriends:[],
+        photoURL:""
       });
       req.session.user = newUser;
       newUser.save(function (err) {

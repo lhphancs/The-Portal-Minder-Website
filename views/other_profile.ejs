@@ -8,18 +8,29 @@
 	
 	<body>
 		<% include header_navs.html %>
+		<%
+		var firstName = user.firstName?user.firstName:"[firstPlaceHolder]";
+		var lastName = user.lastName?user.lastName:"[lastPlaceHolder]";
+		var entireName = firstName + " " + lastName;
+		var photoURL = user.photoURL?user.photoURL:"[photoPlaceHolder]";
+		var description = user.description?user.description:"[descriptPlaceHolder]";
+		var education = user.education?user.education:"[educationPlaceHolder]";
+		var city = user.city?user.city:"[cityPlaceHolder]";
+		var tags = user.tags?user.tags:[];
+		%>
+
 		<div class="profile_container">
 			<div class="user_photo_container">
-				<h1 class="user_name"><%= user.firstName + "" + user.lastName %></h1>
-				<img class="user_photo" src="/images/logo.jpg"/>
+				<h1 class="user_name"><%= entireName %></h1>
+				<img class="user_photo" src="<%= photoURL %>"
 			</div>
 			<button id="btn_add_friend" class="add-mode" value="<%= user._id %>" type="submit">Add Friend</button>
 
 			<h3 class = "header_for_textarea">Description</h3>
-			<p class ="info"><%= user.description %></p>
+			<p class ="info"><%= description %></p>
 			
 			<h3 class = "header_for_textarea">Tags</h3>
-			<p class ="info"><% user.tags.forEach(function(tag) { %>
+			<p class ="info"><% tags.forEach(function(tag) { %>
 				<div>
 					<%= tag %>
 				</div>
@@ -27,10 +38,10 @@
 			</p>
 			
 			<h3 class = "header_for_textarea">Education</h3>
-			<p class ="info"><%= user.education %></p>
+			<p class ="info"><%= education %></p>
 			
 			<h3 class = "header_for_textarea">Location (City)</h3>
-			<p class ="info"><%= user.city %></p>
+			<p class ="info"><%= city %></p>
 			
 		</div>
 	</body>

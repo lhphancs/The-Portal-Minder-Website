@@ -11,13 +11,15 @@ var load_all_users = function(){
             var user_first_name = json[i].firstName;
             var user_last_name = json[i].lastName;
             var user_id = json[i]._id;
-            display_name = user_first_name + " " + user_last_name;
-            user_profile_href = "/user/" + user_id;
+            var photo_url = json[i].photoURL;
+
+            var display_name = user_first_name + " " + user_last_name;
+            var user_profile_href = "/user/" + user_id;
 
             //Create elements to add to container
             var other_user_container = $("<div>").addClass("other_user_container");
             other_user_container.append( $("<a>").addClass("other_user_name").attr("href", user_profile_href).text(display_name) );
-            other_user_container.append( $("<img>").addClass("other_user_img").attr("src", "/images/logo.jpg") );
+            other_user_container.append( $("<img>").addClass("other_user_img").attr("src", photo_url) );
             other_user_container.append( $("<button>").addClass("btn_add_friend add-mode").attr("value", user_id).text("ADD") );
     
             matched_users_container.append(other_user_container);

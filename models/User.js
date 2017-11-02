@@ -10,7 +10,8 @@ var userSchema = mongoose.Schema({
   tags:[String],
   education:String,
   friends:[String],
-  pendingFriends:[String]
+  pendingFriends:[String],
+  photoURL:String
 });
 
 module.exports = mongoose.model('User', userSchema);
