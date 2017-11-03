@@ -31,7 +31,6 @@ router.get('/register', function(req, res, next) {
 // User registers
 router.post('/add', function(req, res, next) {
   User.count({ email: req.body.email }, function(err, count){
-    console.log(err);
     if(count > 0)
       res.send(false);
     else{
@@ -46,7 +45,7 @@ router.post('/add', function(req, res, next) {
         education:"",
         friends:[],
         pendingFriends:[],
-        photoURL:""
+        photoURL:req.body.photoURL
       });
       req.session.user = newUser;
       newUser.save(function (err) {
@@ -115,7 +114,6 @@ router.patch('/profile', require_login, function(req, res, next){
       ;
     }
   );
-  console.log(req.body);
   res.send(true);
 });
 
@@ -193,7 +191,6 @@ router.get('/get-friends-list', require_login, function(req, res, next){
 });
 
 router.post('/save-message', require_login, function(req, res, next){
-  console.log( req.body.message);
   var MessageModel = mongoose.model('Message', Message.schema);
   var new_message = new MessageModel({
     from:req.user.firstName,
