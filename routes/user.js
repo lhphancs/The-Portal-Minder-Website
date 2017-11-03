@@ -141,6 +141,15 @@ router.get('/get-all-users', require_login, function(req, res, next){
   });
 });
 
+router.get('/get-all-tags-users', require_login, function(req, res, next){
+  User.find(
+    { tags: {$in: req.user.tags},
+    email: {'$ne': req.user.email}, }
+    , function(err, users){
+    res.send(users);
+  });
+} );
+
 router.get('/get-all-local-users', require_login, function(req, res, next){
   User.find({
     email: {'$ne': req.user.email},
@@ -151,12 +160,16 @@ router.get('/get-all-local-users', require_login, function(req, res, next){
 });
 
 router.get('/discover-all-users', require_login, function(req, res, next){
-    res.render("search_result_all_users");
+    res.render( "search_result", {scriptFileName:"search_result_all_users.js"} );
 });
 
 //Below is all other user search
 router.get('/discover-local-users', require_login, function(req, res, next){
-    res.render("search_result_local_users");
+  res.render( "search_result", {scriptFileName:"search_result_local_users.js"} );
+});
+
+router.get('/discover-tags-users', require_login, function(req, res, next){
+  res.render( "search_result", {scriptFileName:"search_result_tags_users.js"} );
 });
 
 router.post('/add-friend', require_login, function(req, res, next){
@@ -208,8 +221,5 @@ router.get('/:id', function(req, res, next){
     res.render("other_profile", {user: user});
   });
 });
-
-
-
 
 module.exports = router;

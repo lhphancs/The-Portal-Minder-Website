@@ -42,7 +42,6 @@ var add_user_to_database = function(parsed_json){
 var set_generate_random_users_response = function(){
     $("#form_generate_random_users").on("submit", function(e){
         e.preventDefault();
-
         var amt_of_random_users = $("#input_amt_of_random_users").val();
         if(amt_of_random_users <= 0 ){
             alert("Must enter positive integer to insert random users.");
@@ -51,7 +50,7 @@ var set_generate_random_users_response = function(){
         for(var i=0; i<amt_of_random_users; ++i){
             $.ajax({
                 url: 'https://randomuser.me/api/',
-                dataType: 'json',
+                dataType:'json',
                 success: function(json) {
                     var user_json = json.results[0];
                     var parsed_json = {

@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<link type="text/css" rel= "stylesheet" href="/stylesheets/global.css">
-		<link type="text/css" rel= "stylesheet" href="/stylesheets/user_search.css">
+		<link type="text/css" rel= "stylesheet" href="/stylesheets/discover.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	</head>
 	
@@ -10,21 +10,14 @@
 		<% include header_navs.html %>
 
 		<form action="/user/discover-all-users">
-			<input class ="submit_search" type="submit" value="All search">
+			<input class="submit_search" type="submit" value="All search">
 		</form>
 
         <form action="/user/discover-local-users">
             <input class="submit_search" type="submit" value="Local Search">
         </form>
-        <form action="/user/discover-tag-users">
+        <form action="/user/discover-tags-users">
             <input class="submit_search" type="submit" value="Tags Search">
         </form>
-
-		<div class="search_person_container">
-			<form class="form_container" method="GET" action="/user/discover-search-input-users">Search Person:
-				<input type="text" id="input_person">
-				<input type="submit" value="Search">
-			</form>
-		</div>
 	</body>
 </html>
