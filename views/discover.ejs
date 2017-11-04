@@ -9,14 +9,14 @@
 	<body>
 		<% include header_navs.html %>
 
-		<form action="/user/discover-all-users">
+		<form action="/user/discover-results/all" method="GET">
 			<input class="submit_search" type="submit" value="All search">
 		</form>
 
-        <form action="/user/discover-local-users">
+		<form action="/user/discover-results/local">
             <input class="submit_search" type="submit" value="Local Search">
         </form>
-        <form action="/user/discover-tags-users">
+		<form action="/user/discover-results/tags">
             <input class="submit_search" type="submit" value="Tags Search">
         </form>
 	</body>

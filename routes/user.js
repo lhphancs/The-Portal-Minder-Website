@@ -159,17 +159,8 @@ router.get('/get-all-local-users', require_login, function(req, res, next){
   });
 });
 
-router.get('/discover-all-users', require_login, function(req, res, next){
-    res.render( "search_result", {scriptFileName:"search_result_all_users.js"} );
-});
-
-//Below is all other user search
-router.get('/discover-local-users', require_login, function(req, res, next){
-  res.render( "search_result", {scriptFileName:"search_result_local_users.js"} );
-});
-
-router.get('/discover-tags-users', require_login, function(req, res, next){
-  res.render( "search_result", {scriptFileName:"search_result_tags_users.js"} );
+router.get('/discover-results/:mode', require_login, function(req, res, next){
+  res.render("discover_results", {mode:req.param('mode')} );
 });
 
 router.post('/add-friend', require_login, function(req, res, next){
