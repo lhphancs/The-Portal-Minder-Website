@@ -3,14 +3,17 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var User = require('../models/User');
 var Message = require('../models/Message');
+var bcrypt = require('bcrypt');
 
+var saltRounds = 10;
 // User password check & cookie assignment if match
 router.post('/validation', function(req, res, next) {
   User.findOne( { email: req.body.email }, function(err, user){
     //Check if user exists
     if(user){
       //Check if password matches
-      if(req.body.password === user.password){
+      is_matching_password = bcrypt.compareSync(req.body.password, user.password);
+      if(is_matching_password){
         req.session.user = user;
         res.send(true);
       }
@@ -34,18 +37,19 @@ router.post('/add', function(req, res, next) {
     if(count > 0)
       res.send(false);
     else{
+      var hash_password = bcrypt.hashSync(req.body.password, saltRounds);
       var newUser = new User({
-        email:req.body.email,
-        password:req.body.password,
+        email: req.body.email,
+        password: hash_password,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        city:req.body.city,
-        description:"",
-        tags:[],
-        education:"",
-        friends:[],
-        pendingFriends:[],
-        photoURL:req.body.photoURL
+        city: req.body.city,
+        description: "",
+        tags: [],
+        education: "",
+        friends: [],
+        pendingFriends: [],
+        photoURL: req.body.photoURL
       });
       req.session.user = newUser;
       newUser.save(function (err) {
