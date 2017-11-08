@@ -186,9 +186,9 @@ router.get('/get-self', require_login, function(req, res, next){
   res.send(req.user);
 });
 
-router.get('/friends', require_login, function(req, res, next){
+router.get('/chat', require_login, function(req, res, next){
   User.findOne( { _id: req.user._id }, function(err, user){
-    res.render("friends");
+    res.render("chat");
   });
 });
 

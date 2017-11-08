@@ -8,15 +8,7 @@
 	</head>
 	
 	<body>
-		<div id="nav_bar">
-			<a href="#"><img class="logo" src="images/logo.jpg"></a>
-			<div class="right_header">
-				<a class="header_anchor" href="/about">About</a>
-				<a class="header_anchor" href="/">Login</a>
-				<a class="header_anchor" href="/user/register">Register</a>
-			</div>
-		</div>
-
+		<% include no_logged_in_header_navs %>
 		<div class="container">
 			<h1 class="title">Minder Matching</h1>
 			<form id="login_form" method="post">

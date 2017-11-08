@@ -1,2 +1,19 @@
-<% include discover_results.html %>
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link type="text/css" rel= "stylesheet" href="/stylesheets/global.css">
+		<link type="text/css" rel= "stylesheet" href="/stylesheets/profile.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	</head>
+	
+	<body>
+		<% include logged_in_header_navs %>
+
+		<div id="matched_users_container" class="other_users_list_container">
+			<h2>Related Matches:</h2>
+			<!-- Ajax will insert here -->
+		</div>
+	</body>
+</html>
+<script>var mode = "<%= mode %>";</script>
 <script src="/client-js/discover_results.js"></script>
