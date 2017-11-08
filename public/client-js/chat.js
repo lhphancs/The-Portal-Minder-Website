@@ -1,3 +1,4 @@
+var socket = io();
 var user_chatting_with;
 var get_self = function(){
     var user_self;
@@ -43,38 +44,32 @@ var load_friends_and_click_first = function(){
 };
 
 var send_msg_response = function(user_self){
-    var messages_container = document.getElementById("msgs_container")
-    var ele_textarea_msg = document.getElementById("textarea_msg");
+    //Add msg to the chatbox
+    var first_and_last_name = user_self.firstName + " " + user_self.lastName;
+    var msg = $("#textarea_msg").val();
 
-    var new_div = document.createElement("div");
-    new_div.classList.add("row");
-
-    var para = document.createElement("p");
-    para.classList.add("chat_bubble");
-    para.innerText = user_self.firstName + " "
-        + user_self.lastName + ": " + ele_textarea_msg.value;
-
-    new_div.appendChild(para);
-    messages_container.appendChild(new_div);
-    messages_container.scrollTop = messages_container.scrollHeight; //Scrolls to bottom
+    var p_msg = $("<p>").addClass("chat_bubble").text(first_and_last_name + ": " + msg);
+    var div_msg = $("<div>").addClass("row").append(p_msg);
+    $("#msgs_container").append(div_msg);
 
     //Now store message in database
     $.ajax({
-        url:"http://localhost:3000/user/save-message",
-        data:{
-            to:user_self._id,
-            message:ele_textarea_msg.value
+        url: "http://localhost:3000/user/save-message",
+        data: {
+            to: user_self._id,
+            message: msg
         },
-        dataType:"json",
-        type:"POST"
-    }).done( function(json){
-        ;
+        dataType: "json",
+        type: "POST"
     }).fail( function(json){
         alert("Fetching user_matches from database failed.")
     });
 
+    //Now use socket to send to all
+    socket.emit('chat message', msg);
+
     //clear textarea
-    ele_textarea_msg.value = "";
+    $("#textarea_msg").val("");
 };
 
 var switch_user_chat_response = function(){
