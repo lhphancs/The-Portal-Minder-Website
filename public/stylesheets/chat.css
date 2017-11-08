@@ -64,3 +64,7 @@
     border:1px solid black;
     border-radius:90%;
 }
+
+p.msg_right_align{
+    text-align: right;
+}

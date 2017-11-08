@@ -1,4 +1,11 @@
 var socket = io();
+socket.on('chat message', function(msg){
+    //Update chatbox to contain incoming msg
+    var single_msg_container = create_and_get_single_msg_container(msg);
+    single_msg_container.children("p").addClass("msg_right_align");
+    $("#msgs_container").append(single_msg_container);
+  });
+
 var user_chatting_with;
 var get_self = function(){
     var user_self;
@@ -43,21 +50,25 @@ var load_friends_and_click_first = function(){
     });
 };
 
+var create_and_get_single_msg_container = function(msg){
+    var p_msg = $("<p>").addClass("chat_bubble").text(msg);
+    var div_msg = $("<div>").addClass("row").append(p_msg);
+    return div_msg;
+};
+
 var send_msg_response = function(user_self){
     //Add msg to the chatbox
     var first_and_last_name = user_self.firstName + " " + user_self.lastName;
-    var msg = $("#textarea_msg").val();
-
-    var p_msg = $("<p>").addClass("chat_bubble").text(first_and_last_name + ": " + msg);
-    var div_msg = $("<div>").addClass("row").append(p_msg);
-    $("#msgs_container").append(div_msg);
-
+    var msg_from_chat_box = $("#textarea_msg").val();
+    var msg_line = first_and_last_name + ": " + msg_from_chat_box
+    var single_msg_container = create_and_get_single_msg_container(msg_line);
+    $("#msgs_container").append(single_msg_container);
     //Now store message in database
     $.ajax({
         url: "http://localhost:3000/user/save-message",
         data: {
-            to: user_self._id,
-            message: msg
+            to: user_chatting_with,
+            message: msg_from_chat_box
         },
         dataType: "json",
         type: "POST"
@@ -66,7 +77,7 @@ var send_msg_response = function(user_self){
     });
 
     //Now use socket to send to all
-    socket.emit('chat message', msg);
+    socket.emit('chat message', msg_line);
 
     //clear textarea
     $("#textarea_msg").val("");

@@ -9,7 +9,7 @@ module.exports = {
               });
 
             socket.on('chat message', function(msg){
-                console.log('message: ' + msg);
+                socket.broadcast.emit('chat message', msg);
             });
         });
         

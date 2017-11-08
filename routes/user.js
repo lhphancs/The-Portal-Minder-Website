@@ -201,8 +201,8 @@ router.get('/get-friends-list', require_login, function(req, res, next){
 router.post('/save-message', require_login, function(req, res, next){
   var MessageModel = mongoose.model('Message', Message.schema);
   var new_message = new MessageModel({
-    from:req.user.firstName,
-    to:"TEMPT TO",
+    from: req.user._id,
+    to: req.body.to,
     message: req.body.message
   });
   new_message.save(function (err) {
@@ -216,5 +216,7 @@ router.get('/:id', function(req, res, next){
     res.render("other_profile", {user: user});
   });
 });
+
+
 
 module.exports = router;
