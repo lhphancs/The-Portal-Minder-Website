@@ -192,6 +192,13 @@ router.get('/chat', require_login, function(req, res, next){
   });
 });
 
+router.get('/chat-load-history', require_login, function(req, res, next){
+  var current_user_chatting_with = req.query.current_user_chatting_with;
+  Message.find( { $or:[ {from_id:""}, {to_id:""} ] }, function(err, user){
+    res.render("chat");
+  });
+});
+
 router.get('/get-friends-list', require_login, function(req, res, next){
   User.find( { _id: {$in: req.user.friends} }, ["_id", "firstName", "lastName"], function(err, users){
     res.send(users);
@@ -201,8 +208,8 @@ router.get('/get-friends-list', require_login, function(req, res, next){
 router.post('/save-message', require_login, function(req, res, next){
   var MessageModel = mongoose.model('Message', Message.schema);
   var new_message = new MessageModel({
-    from: req.user._id,
-    to: req.body.to,
+    from_id: req.user._id,
+    to_id: req.body.to_id,
     message: req.body.message
   });
   new_message.save(function (err) {
