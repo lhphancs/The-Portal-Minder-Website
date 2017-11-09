@@ -2,7 +2,7 @@ var socket = io();
 socket.on('chat message', function(msg){
     //Update chatbox to contain incoming msg
     var single_msg_container = create_and_get_single_msg_container(msg);
-    single_msg_container.children("p").addClass("msg_right_align");
+    single_msg_container.addClass("d-flex align-items-end flex-column");;
     $("#msgs_container").append(single_msg_container);
   });
 
@@ -51,8 +51,8 @@ var load_friends_and_click_first = function(){
 };
 
 var create_and_get_single_msg_container = function(msg){
-    var p_msg = $("<p>").addClass("chat_bubble").text(msg);
-    var div_msg = $("<div>").addClass("row").append(p_msg);
+    var span_msg = $("<span>").addClass("border border-primary rounded px-2").text(msg);
+    var div_msg = $("<div>").addClass("mt-2").append(span_msg);
     return div_msg;
 };
 
