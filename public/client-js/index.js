@@ -12,7 +12,7 @@ var check_password_and_respond = function(){
             window.location.replace("http://localhost:3000/user/profile");
         }
         else
-            alert("WRONG PASSWORD");//Do something that says invalid
+            $("#alert_wrong_password").removeClass("invisible");//Do something that says invalid
     }).fail(function(){
         alert("Failed to grab data from database");
         return false;
@@ -23,8 +23,7 @@ var check_password_and_respond = function(){
 var override_login_submit = function(){
     $("#login_form").on("submit", function(e){
         e.preventDefault();
-        if( all_required_inputs_filled() )
-            check_password_and_respond();
+        check_password_and_respond();
     });
 };
 
