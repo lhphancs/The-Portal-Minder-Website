@@ -1,7 +1,12 @@
-var current_user_chatting_with;
+//Global variable that keeps track of user currently chatting with
+var current_user_chatting_with = {
+    id: "",
+    name: ""
+};
 
-var set_current_user_chatting_with = function(new_user){
-    current_user_chatting_with = new_user;
+var set_current_user_chatting_with = function(id, name){
+    current_user_chatting_with.id = id;
+    current_user_chatting_with.name = name;
 };
 
 var get_current_user_chatting_with = function(){
@@ -50,10 +55,19 @@ var load_friends_and_click_first = function(){
     });
 };
 
-var create_and_get_single_msg_container = function(msg){
-    var span_msg = $("<span>").addClass("border border-primary rounded px-2").text(msg);
+var create_and_get_single_msg_container = function(from_name, msg){
+    var span_msg = $("<span>").addClass("border border-primary rounded px-2").text(from_name + ": " + msg);
     var div_msg = $("<div>").addClass("mt-2").append(span_msg);
     return div_msg;
+};
+
+var add_sent_msg_to_container = function(ele){
+    $("#msgs_container").append(ele);
+};
+
+var add_received_msg_to_container = function(ele){
+    ele.addClass("d-flex align-items-end flex-column");
+    $("#msgs_container").append(ele);
 };
 
 var send_msg_response = function(socket){
@@ -61,14 +75,13 @@ var send_msg_response = function(socket){
     var user_self = get_self();
     var first_and_last_name = user_self.firstName + " " + user_self.lastName;
     var msg_from_chat_box = $("#textarea_msg").val();
-    var msg_line = first_and_last_name + ": " + msg_from_chat_box
-    var single_msg_container = create_and_get_single_msg_container(msg_line);
-    $("#msgs_container").append(single_msg_container);
+    var single_msg_container = create_and_get_single_msg_container(first_and_last_name, msg_from_chat_box);
+    add_sent_msg_to_container(single_msg_container);
     //Now store message in database
     $.ajax({
         url: "http://localhost:3000/user/save-message",
         data: {
-            to_id: current_user_chatting_with,
+            to_id: current_user_chatting_with.id,
             message: msg_from_chat_box
         },
         dataType: "json",
@@ -85,13 +98,15 @@ var send_msg_response = function(socket){
 };
 
 var switch_user_chat_response = function(){
-    set_current_user_chatting_with(this.value); //update global user's id we are chatting with
+    var user_id = this.value;
+    var user_name = this.innerHTML;
+    set_current_user_chatting_with(user_id, user_name); //update global user's id we are chatting with
     //Clear all old stuff first
     $("#msgs_container").empty();
     $("#textarea_msg").val("");
     
     //Add header for chatting with
-    var ele_header = $("<p>").addClass("msg_header").text("Chatting with: " + this.innerHTML);
+    var ele_header = $("<p>").addClass("msg_header").text("Chatting with: " + user_name);
     $("#msgs_container").append(ele_header);
     load_chat_history();
 };
@@ -101,9 +116,25 @@ var set_socket_settings = function(socket){
     socket.on('chat message', function(msg){
         //Update chatbox to contain incoming msg
         var single_msg_container = create_and_get_single_msg_container(msg);
-        single_msg_container.addClass("d-flex align-items-end flex-column");;
-        $("#msgs_container").append(single_msg_container);
+        add_received_msg_to_container(single_msg_container);
     });
+};
+
+var fill_chat_container_with_history_json = function(json){
+    var user_self = get_self();
+    var self_name = user_self.firstName + " " + user_self.lastName;
+    var current_user_chatting_with_name = get_current_user_chatting_with().name;
+    var current_user_chatting_with_id = get_current_user_chatting_with().id;
+    for(var i=0; i<json.length; ++i){
+        if( json[i].to_id === current_user_chatting_with_id ){ //If sent msg
+            var single_msg_container = create_and_get_single_msg_container(self_name, json[i].message);
+            add_sent_msg_to_container(single_msg_container);
+        } 
+        else{ //else it is received msg
+            var single_msg_container = create_and_get_single_msg_container(current_user_chatting_with_name, json[i].message);
+            add_received_msg_to_container(single_msg_container);
+        }    
+    }
 };
 
 var load_chat_history = function(){
@@ -111,9 +142,9 @@ var load_chat_history = function(){
         url: "http://localhost:3000/user/chat-load-history",
         type: "GET",
         dataType: "json",
-        data: { current_user_chatting_with: get_current_user_chatting_with() }
+        data: { current_user_chatting_with: get_current_user_chatting_with().id }
     }).done(function(json){
-        ;
+        fill_chat_container_with_history_json(json);
     });
 };
 

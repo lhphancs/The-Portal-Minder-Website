@@ -194,8 +194,11 @@ router.get('/chat', require_login, function(req, res, next){
 
 router.get('/chat-load-history', require_login, function(req, res, next){
   var current_user_chatting_with = req.query.current_user_chatting_with;
-  Message.find( { $or:[ {from_id:""}, {to_id:""} ] }, function(err, user){
-    res.render("chat");
+  Message.find( { 
+    $or:[ {from_id: current_user_chatting_with, to_id: req.user._id}
+          ,{from_id: req.user._id, to_id: current_user_chatting_with}] }
+    , function(err, messages){
+    res.send(messages);
   });
 });
 
