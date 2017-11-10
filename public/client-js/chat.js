@@ -1,40 +1,60 @@
-//Global variable that keeps track of user currently chatting with
-var current_user_chatting_with = {
+//Global variables
+var self_user;
+
+var other_user = { //Keeps track of user currently chatting with
     id: "",
     name: ""
 };
 
-var set_current_user_chatting_with = function(id, name){
-    current_user_chatting_with.id = id;
-    current_user_chatting_with.name = name;
+var set_other_user = function(id, name){
+    other_user.id = id;
+    other_user.name = name;
 };
 
-var get_current_user_chatting_with = function(){
-    return current_user_chatting_with;
+var get_other_user = function(){
+    return other_user;
+};
+
+var set_self = function(){
+    $.ajax({
+        async: false,
+        url: "http://localhost:3000/user/get-self",
+        data: {},
+        dataType: "json",
+        type: "GET"
+    }).done(function(json){
+        self_user = json;
+    }).fail(function(json){
+        alert("Fetching user_matches from database failed.")
+    });
 };
 
 var get_self = function(){
-    var user_self;
-    $.ajax({
-        async: false,
-        url:"http://localhost:3000/user/get-self",
-        data:{},
-        dataType:"json",
-        type:"GET"
-    }).done( function(json){
-        user_self = json;
-    }).fail( function(json){
-        alert("Fetching user_matches from database failed.")
+    return self_user;
+};
+
+var get_room_id_with_other_user = function(){
+    var self_id = get_self()._id;
+    var other_user_id = other_user.id;
+    // return ids alphabetically concatenated to create unique name
+    return self_id < other_user_id ? self_id + other_user_id : other_user_id + self_id;
+}
+
+var set_socket_settings = function(socket){
+    socket.on('received_chat_msg', function(msg){
+        console.log(msg);
+        //Update chatbox to contain incoming msg
+        var single_msg_container = create_and_get_single_msg_container(other_user.name, msg);
+        add_received_msg_to_container(single_msg_container);
     });
-    return user_self;
 };
 
 var load_friends_and_click_first = function(){
     $.ajax({
-        url:"http://localhost:3000/user/get-friends-list",
-        data:{},
-        dataType:"json",
-        type:"GET"
+        url: "http://localhost:3000/user/get-friends-list",
+        data: {},
+        dataType: "json",
+        type: "GET"
     }).done( function(json){
         var json_size = json.length;
         var contact_list = $("#contact_list");
@@ -44,7 +64,7 @@ var load_friends_and_click_first = function(){
             var last_name = json[i].lastName;
 
             var ele_new_btn = $("<button>").addClass(
-                "btn_user_name").val(id).click(switch_user_chat_response).text(first_name + " " + last_name);
+                "btn_user_name").val(id).text(first_name + " " + last_name);
                 contact_list.append(ele_new_btn);
             //User may have long list of friends, so after load one, click it
             if(i==0)
@@ -81,7 +101,7 @@ var send_msg_response = function(socket){
     $.ajax({
         url: "http://localhost:3000/user/save-message",
         data: {
-            to_id: current_user_chatting_with.id,
+            to_id: other_user.id,
             message: msg_from_chat_box
         },
         dataType: "json",
@@ -89,72 +109,77 @@ var send_msg_response = function(socket){
     }).fail( function(json){
         alert("Fetching user_matches from database failed.")
     });
-
-    //Now use socket to send to all
-    socket.emit('chat message', msg_line);
+    //Now use socket to send to to user
+    socket.emit('sent_chat_msg', {
+        room_id: get_room_id_with_other_user(),
+        msg: msg_from_chat_box
+    });
 
     //clear textarea
     $("#textarea_msg").val("");
 };
 
-var switch_user_chat_response = function(){
-    var user_id = this.value;
-    var user_name = this.innerHTML;
-    set_current_user_chatting_with(user_id, user_name); //update global user's id we are chatting with
-    //Clear all old stuff first
-    $("#msgs_container").empty();
-    $("#textarea_msg").val("");
-    
-    //Add header for chatting with
-    var ele_header = $("<p>").addClass("msg_header").text("Chatting with: " + user_name);
-    $("#msgs_container").append(ele_header);
-    load_chat_history();
-};
+//Uses event delegation
+var set_switch_user_chat_response = function(socket){
+    $("#contact_list").on("click", ".btn_user_name", function(){
+        var user_id = this.value;
+        var user_name = this.innerHTML;
+        set_other_user(user_id, user_name); //update global user's id we are chatting with
+        //Clear all old stuff first
+        $("#msgs_container").empty();
+        $("#textarea_msg").val("");
+        
+        //Display who chatting with and load history msgs
+        var ele_header = $("<p>").addClass("msg_header").text("Chatting with: " + user_name);
+        $("#msgs_container").append(ele_header);
+        load_chat_history();
 
-//This function uses global variable
-var set_socket_settings = function(socket){
-    socket.on('chat message', function(msg){
-        //Update chatbox to contain incoming msg
-        var single_msg_container = create_and_get_single_msg_container(msg);
-        add_received_msg_to_container(single_msg_container);
+        //Set socket to join unique room
+        socket.emit("subscribe", get_room_id_with_other_user() );
     });
 };
 
 var fill_chat_container_with_history_json = function(json){
     var user_self = get_self();
     var self_name = user_self.firstName + " " + user_self.lastName;
-    var current_user_chatting_with_name = get_current_user_chatting_with().name;
-    var current_user_chatting_with_id = get_current_user_chatting_with().id;
+    var other_user_name = get_other_user().name;
+    var other_user_id = get_other_user().id;
     for(var i=0; i<json.length; ++i){
-        if( json[i].to_id === current_user_chatting_with_id ){ //If sent msg
+        console.log("AAAAA");
+        if( json[i].to_id === other_user_id ){ //If sent msg
             var single_msg_container = create_and_get_single_msg_container(self_name, json[i].message);
             add_sent_msg_to_container(single_msg_container);
         } 
         else{ //else it is received msg
-            var single_msg_container = create_and_get_single_msg_container(current_user_chatting_with_name, json[i].message);
+            var single_msg_container = create_and_get_single_msg_container(other_user_name, json[i].message);
             add_received_msg_to_container(single_msg_container);
-        }    
+        }
     }
 };
 
 var load_chat_history = function(){
+    var other_user_id = get_other_user().id;
     $.ajax({
         url: "http://localhost:3000/user/chat-load-history",
         type: "GET",
         dataType: "json",
-        data: { current_user_chatting_with: get_current_user_chatting_with().id }
+        data: { other_user_id: other_user_id }
     }).done(function(json){
         fill_chat_container_with_history_json(json);
     });
 };
 
 var main = function(){
+    set_self();
+
     var socket = io();
     set_socket_settings(socket);
+
     load_friends_and_click_first();
     $("#btn_send_msg").click(function(){
         send_msg_response(socket);
     });
+    set_switch_user_chat_response(socket);
 };
 
 $(document).ready(function(){
