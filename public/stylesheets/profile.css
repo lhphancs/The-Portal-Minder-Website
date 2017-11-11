@@ -1,131 +1,65 @@
+
 /* This is a shared css between profile and other_profile */
-.profile_container{
-    padding:0px 20px;
-}
-
-.input_container{
-    font-size:1.2em;
-    font-weight:bold;
-}
-
-.input_user{
-    font-size:0.9em;
-}
-
-
 .user_name{
-    text-align:center;
+    text-align: center;
 }
 .user_photo{
-    margin:auto;
+    margin: auto;
     border: 1px solid black;
-    border-radius:50%;
-    width:100px;
-    height:100px;
-    display:block;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: block;
 }
 
-.btn_search_users, #btn_add_friend{
-    background-color:#FFEBCD ;
-    display:block;
-    margin:10px auto;
-    font-size:2em;
-    border:2px solid #F75D59;
-    padding:10px;
+.text_right_align{
+    text-align: right;
+}
+
+#tag_list_container{
+    margin: 10px;
+}
+
+.tag{
+    margin: 10px;
+    padding: 5px;
+    display: inline-block;
+    border-radius: 40%;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.tag-delete{
+    margin: 5px;
+    color: red;
 }
 
 textarea{
-    margin-top:-5px;
-    width:600px;
-    overflow:scroll;
-    resize:none;
-    height:100px;
-}
-
-p.info{
-    margin-top:-20px;
-}
-
-.other_users_list_container{
-    padding:0px 10px;
-    border: 2px dashed black;
-    overflow:scroll;
-}
-.other_user_container{
-    display:inline-block;
-    margin-left:10px;
-    padding:10px;
-}
-
-.other_user_img{
-    width:100px;
-    height:100px;
-    display:block;
-}
-
-.other_user_name{
-    display:block;
-    text-align:center;
-}
-
-.tag_txt{
-    margin-left:5px;
-    height:100%;
-    display:inline-block;
-    background-color:#FFEBCD;
-    border:1px solid black;
-}
-.btn_tag_remove{
-    height:50%;
-    font-size:.6em;
-    background-color:#FFEBCD;
-    border:1px solid black;
-    vertical-align:top;
-}
-
-.div_tag_container{
-    display:inline-block;
-    height:30px;
-}
-
-#btn_save_profile{
-    vertical-align:top;
-    margin-top:40px;
-    font-size:1.5em;
+    margin-top: -5px;
+    width: 600px;
+    overflow: scroll;
+    resize: none;
+    height: 100px;
 }
 
 #btn_webcam_toggle{
-    display:block;
-    width:200px;
-    font-size:1.3em;
-    margin:10px auto;
+    display: block;
+    width: 200px;
+    font-size: 1.3em;
+    margin: 10px auto;
 }
 
 .map_display{
-    width:500px;
-    height:500px;
-    border:1px solid black;
-    margin:10px;
+    width: 500px;
+    height: 500px;
+    border: 1px solid black;
+    margin: 10px;
 }
 
 #textarea_address{
-    display:block;
+    display: block;
 }
-
-.editable_container{
-    display:inline-block;
-    vertical-align:top;
-}
-
-#textarea_city{
-    display:block;
-}
-
-#btn_large{
-    margin-top:10px;
-}
-
 
 .display_none{
-    display:none;
+    display: none;
 }

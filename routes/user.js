@@ -106,16 +106,21 @@ router.get('/tags', require_login, function(req, res, next) {
 });
 
 router.patch('/profile', require_login, function(req, res, next){
-  User.findOneAndUpdate({email:req.user.email},
-    { 
+  //If tags empty, is undefined. Must set it as empty array to prevent crash
+  var tags = req.body.tags;
+  tags = tags?tags:[];
+
+  console.log(tags);
+  User.findOneAndUpdate({email: req.user.email},
+    {
     $set: {firstName: req.body.firstName,
       lastName: req.body.lastName,
       city: req.body.city,
       description: req.body.description,
-      tags:req.body.tags,
+      tags: tags,
       education: req.body.education}
     }, function(err, doc){
-      ;
+      console.log(req.body);
     }
   );
   res.send(true);
@@ -163,8 +168,8 @@ router.get('/get-all-local-users', require_login, function(req, res, next){
   });
 });
 
-router.get('/discover-results/:mode', require_login, function(req, res, next){
-  res.render("discover_results", {mode:req.param('mode')} );
+router.get('/discover-results/: mode', require_login, function(req, res, next){
+  res.render("discover_results", {mode: req.param('mode')} );
 });
 
 router.post('/add-friend', require_login, function(req, res, next){
@@ -195,7 +200,7 @@ router.get('/chat', require_login, function(req, res, next){
 router.get('/chat-load-history', require_login, function(req, res, next){
   var other_user_id = req.query.other_user_id;
   Message.find( { 
-    $or:[ {from_id: other_user_id, to_id: req.user._id}
+    $or: [ {from_id: other_user_id, to_id: req.user._id}
           ,{from_id: req.user._id, to_id: other_user_id}] }
     , function(err, messages){
     res.send(messages);
@@ -221,7 +226,7 @@ router.post('/save-message', require_login, function(req, res, next){
   res.send(true);
 });
 
-router.get('/:id', function(req, res, next){
+router.get('/: id', function(req, res, next){
   User.findOne( { _id: req.param('id') }, function(err, user){
     res.render("other_profile", {user: user});
   });

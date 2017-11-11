@@ -2,15 +2,16 @@
 <html>
 	<head>
 		<% include bootstrap %>
+		<link type="text/css" rel= "stylesheet" href="/stylesheets/global.css">
 		<script src="/client-js/all_inputs_required.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	</head>
 	
 	<body>
 		<% include no_logged_in_header_navs %>
+		
+		<h1 class="title">Minder Matching</h1>
 		<div class="container">
-			<h1 class="title">Minder Matching</h1>
-			
 			<form id="login_form" method="post">
 				<div class="form-group">
 					<label for="user_email">Email address</label>
@@ -25,8 +26,6 @@
 					Wrong password. Try again.
 				</div>
 			</form>
-			
-
 		</div>
 		
 		<form id="form_generate_random_users">
