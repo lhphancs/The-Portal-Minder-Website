@@ -109,18 +109,15 @@ router.patch('/profile', require_login, function(req, res, next){
   //If tags empty, is undefined. Must set it as empty array to prevent crash
   var tags = req.body.tags;
   tags = tags?tags:[];
-
-  console.log(tags);
   User.findOneAndUpdate({email: req.user.email},
     {
-    $set: {firstName: req.body.firstName,
+      firstName: req.body.firstName,
       lastName: req.body.lastName,
       city: req.body.city,
       description: req.body.description,
       tags: tags,
-      education: req.body.education}
-    }, function(err, doc){
-      console.log(req.body);
+      education: req.body.education
+    }, function(err, doc){;
     }
   );
   res.send(true);
