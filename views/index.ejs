@@ -3,7 +3,6 @@
 	<head>
 		<% include bootstrap %>
 		<link type="text/css" rel= "stylesheet" href="/stylesheets/global.css">
-		<script src="/client-js/all_inputs_required.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	</head>
 	
@@ -15,11 +14,11 @@
 			<form id="login_form" method="post">
 				<div class="form-group">
 					<label for="user_email">Email address</label>
-					<input id="user_email" name="email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+					<input id="user_email" name="email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" required>
 				</div>
 				<div class="form-group">
 					<label for="exampleInputPassword1">Password</label>
-					<input id="user_password" class="form-control" name="password" type="password" placeholder="Password">
+					<input id="user_password" class="form-control" name="password" type="password" placeholder="Password" required>
 				</div>
 				<button type="submit" class="btn btn-primary">Submit</button>
 				<div id="alert_wrong_password" class="alert alert-danger mt-2 invisible" role="alert">

@@ -4,7 +4,6 @@
 		<% include bootstrap %>
 		<link type="text/css" rel= "stylesheet" href="/stylesheets/global.css">
 		<link type="text/css" rel= "stylesheet" href="/stylesheets/register.css">
-		<script src="/client-js/all_inputs_required.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	</head>
 	<body>
@@ -16,15 +15,15 @@
 				<div class = "btm_form_container">
 					<div>
 						Email:
-						<input id="input_email" class="required_input" type="text" name="email">
+						<input id="input_email" class="required_input" type="text" name="email" required>
 					</div>
 					<div>
 						Password:
-						<input id="input_password1" class="required_input" type="password" name="password1">
+						<input id="input_password1" class="required_input" type="password" name="password1" required>
 					</div>
 					<div>
 						Re-enter Password:
-						<input id="input_password2" class="required_input" type="password">
+						<input id="input_password2" class="required_input" type="password" required>
 					</div>
 				</div>
 
@@ -32,15 +31,15 @@
 				<div class = "top_form_container">
 					<div>
 						First Name:
-						<input id="input_first_name" class="required_input" type="text" name="firstName">
+						<input id="input_first_name" class="required_input" type="text" name="firstName" required>
 					</div>
 					<div>
 						Last Name:
-						<input id="input_last_name" class="required_input" type="text" name=lastName>
+						<input id="input_last_name" class="required_input" type="text" name=lastName required>
 					</div>
 					<div>
 						City:
-						<input id="input_city" class="required_input" type="text" name=city>
+						<input id="input_city" class="required_input" type="text" name=city required>
 					</div>
 				</div>
 				<input type="submit" class="form_submit" value="Sign Up">
