@@ -9,7 +9,7 @@ var check_if_matching_password = function(){
 }
 
 var override_submit_btn = function(){
-    $("#signup_form").on("submit", function(e){
+    $("#form_register").on("submit", function(e){
         e.preventDefault();
 
         $.ajax({

@@ -39,7 +39,7 @@ router.post('/add', function(req, res, next) {
       res.send(false);
     else{
       var hash_password = bcrypt.hashSync(req.body.password, saltRounds);
-      var newUser = new User({
+      var newUser = new UserModel({
         email: req.body.email,
         password: hash_password,
         firstName: req.body.firstName,

@@ -16,8 +16,8 @@ var load_all_users = function(mode){
         var matched_users_container = $("#matched_users_container");
         //Show each user
         for(var i=0; i<json.length; ++i){
-            var user_first_name = json[i].firstName?json[i].firstName:"[FirstNamePlaceHolder]";
-            var user_last_name = json[i].lastName?json[i].lastName:"[LastNamePlaceHolder]";
+            var user_first_name = json[i].firstName;
+            var user_last_name = json[i].lastName;
             var user_id = json[i]._id;
             var photo_url = json[i].photoURL?json[i].photoURL:"/images/logo.jpg";
 
@@ -25,11 +25,12 @@ var load_all_users = function(mode){
             var user_profile_href = "/discover/profile/" + user_id;
 
             //Create elements to add to container
-            var other_user_container = $("<div>").addClass("other_user_container");
-            other_user_container.append( $("<a>").addClass("other_user_name").attr("href", user_profile_href).text(display_name) );
-            other_user_container.append( $("<img>").addClass("other_user_img").attr("src", photo_url) );
-            other_user_container.append( $("<button>").addClass("btn_add_friend add-mode").attr("value", user_id).text("ADD") );
-    
+            var other_user_container = `<div class="other_user_container">
+                <a class="other_user_name" href="${user_profile_href}">${display_name}</a>
+                <img class="other_user_img" src="${photo_url}">
+                <button class="btn btn-secondary btn-block btn_add_friend add-mode" data-other-id="${user_id}">Add</button>
+            </div>`;
+
             matched_users_container.append(other_user_container);
         }
     }).fail(function(){
@@ -43,10 +44,10 @@ var set_btn_response_toggle_add_friend = function(){
         if( $(this).hasClass("add-mode") ){
             $(this).text("Remove");
             $.ajax({
-                url:"http://localhost:3000/user/add-friend",
-                data:{id:this.value},
-                type:"POST",
-                dataType:"json"
+                url: "http://localhost:3000/user/add-friend",
+                data: {id:this.value},
+                type: "POST",
+                dataType: "json"
             }).fail(function(){
                 alert("FAILED ADD");
             });
@@ -54,10 +55,10 @@ var set_btn_response_toggle_add_friend = function(){
         else{
             $(this).text("Add");
             $.ajax({
-                url:"http://localhost:3000/user/remove-friend",
-                data:{id:this.value},
-                type:"POST",
-                dataType:"json"
+                url: "http://localhost:3000/user/remove-friend",
+                data: {id: $(this).attr("data-other-id")},
+                type: "POST",
+                dataType: "json"
             }).fail(function(){
                 alert("FAILED REMOVE");
             });

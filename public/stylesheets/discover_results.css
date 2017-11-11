@@ -3,6 +3,7 @@
     padding: 0px 10px;
     border: 2px dashed black;
     overflow: scroll;
+    overflow-x: hidden;
 }
 .other_user_container{
     display: inline-block;
