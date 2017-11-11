@@ -13,7 +13,7 @@ var override_submit_btn = function(){
         e.preventDefault();
 
         $.ajax({
-            url:"http://localhost:3000/user/add",
+            url:"http://localhost:3000/user/register-add",
             data: {
                 email: $("#input_email").val(),
                 password: $("#input_password1").val(),

@@ -9,7 +9,10 @@ var session = require('client-sessions');
 var index = require('./routes/index');
 var user = require('./routes/user');
 var discover = require('./routes/discover');
-var User = require('./models/User');
+var chat = require('./routes/chat');
+var notification = require('./routes/notification');
+
+var UserModel = require('./models/UserModel');
 
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/minder');
@@ -45,7 +48,7 @@ app.use(session({
 
 app.use(function(req, res, next) {
   if (req.session && req.session.user) {
-    User.findOne({ email: req.session.user.email }, function(err, user) {
+    UserModel.findOne({ email: req.session.user.email }, function(err, user) {
       if (user) {
         req.user = user;
         delete req.user.password; // delete the password from the session
@@ -63,6 +66,8 @@ app.use(function(req, res, next) {
 app.use('/', index);
 app.use('/user', user);
 app.use('/discover', discover);
+app.use('/chat', chat);
+app.use('/notification', notification);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

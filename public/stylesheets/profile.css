@@ -30,6 +30,7 @@ textarea{
     margin-top: -5px;
     width: 600px;
     overflow: scroll;
+    overflow-x: hidden;
     resize: none;
     height: 100px;
 }

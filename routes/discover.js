@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var auth = require('../util/auth');
-var UserModel = require('../models/User');
+var UserModel = require('../models/UserModel');
 
 router.use(auth.require_login);
 

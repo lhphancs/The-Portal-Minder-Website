@@ -99,7 +99,7 @@ var send_msg_response = function(socket){
     add_sent_msg_to_container(single_msg_container);
     //Now store message in database
     $.ajax({
-        url: "http://localhost:3000/user/save-message",
+        url: "http://localhost:3000/chat/save-message",
         data: {
             to_id: other_user.id,
             message: msg_from_chat_box
@@ -160,7 +160,7 @@ var fill_chat_container_with_history_json = function(json){
 var load_chat_history = function(){
     var other_user_id = get_other_user().id;
     $.ajax({
-        url: "http://localhost:3000/user/chat-load-history",
+        url: "http://localhost:3000/chat/get-chat-history",
         type: "GET",
         dataType: "json",
         data: { other_user_id: other_user_id }

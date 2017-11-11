@@ -9,15 +9,18 @@
 	
 	<body>
 		<% include nav_logged %>
-		<form action="/discover/all">
-			<input class="submit_search" type="submit" value="All search">
-		</form>
+		<div class="container">
+				<h1 class = "title">Discover</h1>
+			<form action="/discover/all">
+				<input class="submit_search" type="submit" value="All search">
+			</form>
 
-		<form action="/discover/local">
-            <input class="submit_search" type="submit" value="Local Search">
-        </form>
-		<form action="/discover/tags">
-            <input class="submit_search" type="submit" value="Tags Search">
-        </form>
+			<form action="/discover/local">
+				<input class="submit_search" type="submit" value="Local Search">
+			</form>
+			<form action="/discover/tags">
+				<input class="submit_search" type="submit" value="Tags Search">
+			</form>
+		</div>
 	</body>
 </html>

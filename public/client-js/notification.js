@@ -7,7 +7,7 @@ var set_btn_notification_response = function(){
 
 var load_notifications_with_database = function(){
     $.ajax({
-        url:"http://localhost:3000/user/get-all-users",
+        url:"http://localhost:3000/discover/get-all-users",
         data:{},
         dataType:"json",
         type:"GET"

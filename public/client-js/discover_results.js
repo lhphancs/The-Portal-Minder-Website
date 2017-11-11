@@ -45,7 +45,7 @@ var set_btn_response_toggle_add_friend = function(){
             $(this).text("Remove");
             $.ajax({
                 url: "http://localhost:3000/user/add-friend",
-                data: {id:this.value},
+                data: {id: $(this).attr("data-other-id")},
                 type: "POST",
                 dataType: "json"
             }).fail(function(){
