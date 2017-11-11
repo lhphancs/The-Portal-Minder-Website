@@ -7,11 +7,12 @@ var load_all_users = function(mode){
         default: alert("load_all_users() did not detect any modes!");
     }
     $.ajax({
-        url:"http://localhost:3000/user/" + ending_path,
+        url:"http://localhost:3000/discover/" + ending_path,
         data:{},
         dataType:"json",
         type:"GET",
     }).done(function(json){
+        console.log(json);
         var matched_users_container = $("#matched_users_container");
         //Show each user
         for(var i=0; i<json.length; ++i){
@@ -21,7 +22,7 @@ var load_all_users = function(mode){
             var photo_url = json[i].photoURL?json[i].photoURL:"/images/logo.jpg";
 
             var display_name = user_first_name + " " + user_last_name;
-            var user_profile_href = "/user/" + user_id;
+            var user_profile_href = "/discover/profile/" + user_id;
 
             //Create elements to add to container
             var other_user_container = $("<div>").addClass("other_user_container");

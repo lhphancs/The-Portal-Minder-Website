@@ -8,16 +8,15 @@
 	</head>
 	
 	<body>
-		<% include logged_in_header_navs %>
-
-		<form action="/user/discover-results/all" method="GET">
+		<% include nav_logged %>
+		<form action="/discover/all">
 			<input class="submit_search" type="submit" value="All search">
 		</form>
 
-		<form action="/user/discover-results/local">
+		<form action="/discover/local">
             <input class="submit_search" type="submit" value="Local Search">
         </form>
-		<form action="/user/discover-results/tags">
+		<form action="/discover/tags">
             <input class="submit_search" type="submit" value="Tags Search">
         </form>
 	</body>

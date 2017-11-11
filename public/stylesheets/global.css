@@ -1,11 +1,11 @@
 body{
-    background-color:#ffe6e6;
+    background-color:#eae5ff;
 }
 
 .invisible{
-    visibility:hidden;
+    visibility: hidden;
 }
 
 .title{
-    text-align:center;
+    text-align: center;
 }
