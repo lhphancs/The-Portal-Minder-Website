@@ -1,64 +1,33 @@
-.entire_container{
-    margin: 10px;
-    background-color: white;
-    border: 2px solid black;
-}
-
-.chat_area{
-    height: 400px;
-}
 .contact_list_container{
-    height: 80%;
-    margin: 10px;
     padding: 10px;
-    width: 30%;
     border: 1px solid black;
-    display: inline-block;
 }
 
-.contact_list_title{
+#contact_list_title{
     text-align: center;
-}
-
-.btn_user_name{
-    margin-top: 5px;
-    width: 100%;
-    display: block;
-}
-.msg_header{
     font-weight: bold;
 }
 
-#msgs_container{
-    height: 80%;
-    width: 65%;
-
-    padding: 10px;
-    margin-top: 10px;
-    vertical-align: top;
-    border: 1px solid black;
-    display: inline-block;
-    overflow: scroll;
-    overflow-x: hidden;
+#msg_header{
+    font-weight: bold;
 }
 
-.send_msg_container{
-    margin: 10px;
-    width: 400px;
-    height: 100px;
+#right_msgs_container{
+    border: 1px solid black;
+}
+
+#msgs_container{
+    padding: 0px 15px;
+    overflow: scroll;
+    overflow-x: hidden;
+    border: 1px solid #a1a1a1;
+}
+
+#msgs_list{
+    padding:0px;
+    list-style-type: none;
 }
 
 #textarea_msg{
-    width: 80%;
-    height: 100%;
-}
-
-
-#btn_send_msg{
-    vertical-align: top;
-    height: 100%;
-}
-
-p.msg_right_align{
-    text-align: right;
+    resize: none;
 }

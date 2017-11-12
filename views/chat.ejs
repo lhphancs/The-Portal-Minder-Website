@@ -10,21 +10,26 @@
     
     <body>
         <% include nav_logged %>
-        <div class="entire_container">
+        <div class="container">
             <h1 class="title">Friends</h1>
-            <div class="chat_area">
-				<h2 class="contact_list_title">Contact list</h2>
-                <div id="contact_list" class="contact_list_container">
+            <div class="row" style="height:500px">
+                <div id="contact_list" class="contact_list_container col-md-4 h-100">
+                    <h3 id="contact_list_title">Contact list</h3>
                     <!-- Ajax will load friends list goes in here -->
                 </div>
-                <div id="msgs_container">
-                    <p class="msg_header row"></p> <!-- User chatting with...Handle by javascript -->
-                    <!-- Ajax populates here as msgs come -->
+
+                <div id="right_msgs_container" class="ml-3 col-md h-100">
+                    <p id="msg_header"></p> <!-- User chatting with...Handle by javascript -->
+                    <div id="msgs_container" class="h-75">
+                        <ul id="msgs_list" class="d-flex flex-column justify-content-end">
+                            <!-- Ajax populates here as msgs come -->
+                        </ul>
+                    </div>
                 </div>
-                <div class="send_msg_container">
-                    <textarea id="textarea_msg"></textarea>
-                    <button id="btn_send_msg">Send</button>
-                </div>
+            </div>
+            <div class="row mt-2 justify-content-end" style="height:50px">
+                <textarea id="textarea_msg" class="col-md-6"></textarea>
+                <button id="btn_send_msg" type="button" class="btn btn-secondary col-md-1">Send</button>
             </div>
         </div>
     </body>

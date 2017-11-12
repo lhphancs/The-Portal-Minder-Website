@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/get-chat-history', function(req, res, next){
   var other_user_id = req.query.other_user_id;
-  Message.find( { 
+  MessageModel.find( { 
     $or: [ {from_id: other_user_id, to_id: req.user._id}
           ,{from_id: req.user._id, to_id: other_user_id}] }
     , function(err, messages){
@@ -23,7 +23,6 @@ router.get('/get-chat-history', function(req, res, next){
 });
 
 router.post('/save-message', function(req, res, next){
-  var MessageModel = mongoose.model('Message', Message.schema);
   var new_message = new MessageModel({
     from_id: req.user._id,
     to_id: req.body.to_id,

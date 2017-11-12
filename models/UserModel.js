@@ -12,7 +12,7 @@ var userSchema = mongoose.Schema({
   friends: [String],
   pendingFriends: [String],
   blockedUsers: [String],
-  notification : {id: String, message: String},
+  notification: [{id: String, message: String}],
   photoURL: String
 });
 
