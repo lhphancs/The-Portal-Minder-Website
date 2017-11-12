@@ -44,8 +44,7 @@ var set_socket_settings = function(socket){
     socket.on('received_chat_msg', function(msg){
         console.log(msg);
         //Update chatbox to contain incoming msg
-        var single_msg_container = create_and_get_single_msg_container(other_user.name, msg);
-        add_received_msg_to_container(single_msg_container);
+        add_msg_to_container(other_user.name, msg, false);
     });
 };
 
@@ -116,7 +115,6 @@ var send_msg_response = function(socket){
             room_id: get_room_id_with_other_user(),
             msg: msg_from_chat_box
         });
-
         //clear textarea
         $("#textarea_msg").val("");
     }).fail( function(json){
