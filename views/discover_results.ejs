@@ -3,16 +3,18 @@
 	<head>
 		<% include bootstrap %>
 		<link type="text/css" rel= "stylesheet" href="/stylesheets/global.css">
-		<link type="text/css" rel= "stylesheet" href="/stylesheets/profile.css">
+		<link type="text/css" rel= "stylesheet" href="/stylesheets/discover_results.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	</head>
 	
 	<body>
-		<% include logged_in_header_navs %>
+		<% include nav_logged %>
 
-		<div id="matched_users_container" class="other_users_list_container">
-			<h2>Related Matches:</h2>
-			<!-- Ajax will insert here -->
+		<div class="container">
+			<h1 class="title">Discover Results</h1>
+			<div id="matched_users_container" class="other_users_list_container">
+				<!-- Ajax will insert here -->
+			</div>
 		</div>
 	</body>
 </html>

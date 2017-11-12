@@ -44,8 +44,7 @@ var set_socket_settings = function(socket){
     socket.on('received_chat_msg', function(msg){
         console.log(msg);
         //Update chatbox to contain incoming msg
-        var single_msg_container = create_and_get_single_msg_container(other_user.name, msg);
-        add_received_msg_to_container(single_msg_container);
+        add_msg_to_container(other_user.name, msg, false);
     });
 };
 
@@ -60,34 +59,35 @@ var load_friends_and_click_first = function(){
         var contact_list = $("#contact_list");
         for(var i=0; i<json_size; ++i){
             var id = json[i]._id;
-            var first_name = json[i].firstName;
-            var last_name = json[i].lastName;
+            var name = json[i].firstName + " " + json[i].lastName;
 
-            var ele_new_btn = $("<button>").addClass(
-                "btn_user_name").val(id).text(first_name + " " + last_name);
-                contact_list.append(ele_new_btn);
+            contact_list.append(
+                `<button class="btn btn-secondary btn-sm btn-block btn_user_name"
+                data-user-id="${id}">${name}</button>`);
+
             //User may have long list of friends, so after load one, click it
             if(i==0)
-                $("#contact_list button:first-child").click();
+                $("#contact_list > button")[0].click();
         }
     }).fail( function(json){
         alert("Fetching user_matches from database failed.")
     });
 };
 
-var create_and_get_single_msg_container = function(from_name, msg){
-    var span_msg = $("<span>").addClass("border border-primary rounded px-2").text(from_name + ": " + msg);
-    var div_msg = $("<div>").addClass("mt-2").append(span_msg);
-    return div_msg;
+var add_msg_to_container = function(from_name, msg, is_sender){
+    send_class = "justify-content-md-end";
+    receive_class = "justify-content-md-start";
+    var class_to_add = is_sender?send_class:receive_class;
+    $("#msgs_list").append(
+        $(`<li class="row ${class_to_add}">
+                <div class="border border-primary rounded px-2 mt-2 mx-2" style="display:inline-block;">${from_name + ": " + msg}</div>
+            </li>`
+        ));
 };
 
-var add_sent_msg_to_container = function(ele){
-    $("#msgs_container").append(ele);
-};
-
-var add_received_msg_to_container = function(ele){
-    ele.addClass("d-flex align-items-end flex-column");
-    $("#msgs_container").append(ele);
+var scroll_to_bottom_of_msgs = function(){
+    var objDiv = document.getElementById("msgs_container");
+    objDiv.scrollTop = objDiv.scrollHeight;
 };
 
 var send_msg_response = function(socket){
@@ -95,43 +95,46 @@ var send_msg_response = function(socket){
     var user_self = get_self();
     var first_and_last_name = user_self.firstName + " " + user_self.lastName;
     var msg_from_chat_box = $("#textarea_msg").val();
-    var single_msg_container = create_and_get_single_msg_container(first_and_last_name, msg_from_chat_box);
-    add_sent_msg_to_container(single_msg_container);
+    add_msg_to_container(first_and_last_name, msg_from_chat_box, true);
+
+    //Scroll to bottom of msg  
+    scroll_to_bottom_of_msgs();
+
     //Now store message in database
     $.ajax({
-        url: "http://localhost:3000/user/save-message",
+        url: "http://localhost:3000/chat/save-message",
         data: {
             to_id: other_user.id,
             message: msg_from_chat_box
         },
         dataType: "json",
         type: "POST"
+    }).done(function(json){
+        //Now use socket to send to to user
+        socket.emit('sent_chat_msg', {
+            room_id: get_room_id_with_other_user(),
+            msg: msg_from_chat_box
+        });
+        //clear textarea
+        $("#textarea_msg").val("");
     }).fail( function(json){
         alert("Fetching user_matches from database failed.")
     });
-    //Now use socket to send to to user
-    socket.emit('sent_chat_msg', {
-        room_id: get_room_id_with_other_user(),
-        msg: msg_from_chat_box
-    });
-
-    //clear textarea
-    $("#textarea_msg").val("");
 };
 
 //Uses event delegation
 var set_switch_user_chat_response = function(socket){
     $("#contact_list").on("click", ".btn_user_name", function(){
-        var user_id = this.value;
+        var user_id = $(this).attr('data-user-id');
         var user_name = this.innerHTML;
         set_other_user(user_id, user_name); //update global user's id we are chatting with
+
         //Clear all old stuff first
-        $("#msgs_container").empty();
+        $("#msgs_list").empty();
         $("#textarea_msg").val("");
         
         //Display who chatting with and load history msgs
-        var ele_header = $("<p>").addClass("msg_header").text("Chatting with: " + user_name);
-        $("#msgs_container").append(ele_header);
+        $("#msg_header").text("Chatting with: " + user_name);
         load_chat_history();
 
         //Set socket to join unique room
@@ -145,14 +148,11 @@ var fill_chat_container_with_history_json = function(json){
     var other_user_name = get_other_user().name;
     var other_user_id = get_other_user().id;
     for(var i=0; i<json.length; ++i){
-        console.log("AAAAA");
         if( json[i].to_id === other_user_id ){ //If sent msg
-            var single_msg_container = create_and_get_single_msg_container(self_name, json[i].message);
-            add_sent_msg_to_container(single_msg_container);
+            add_msg_to_container(self_name, json[i].message, true);
         } 
         else{ //else it is received msg
-            var single_msg_container = create_and_get_single_msg_container(other_user_name, json[i].message);
-            add_received_msg_to_container(single_msg_container);
+            add_msg_to_container(other_user_name, json[i].message, false);
         }
     }
 };
@@ -160,12 +160,13 @@ var fill_chat_container_with_history_json = function(json){
 var load_chat_history = function(){
     var other_user_id = get_other_user().id;
     $.ajax({
-        url: "http://localhost:3000/user/chat-load-history",
+        url: "http://localhost:3000/chat/get-chat-history",
         type: "GET",
         dataType: "json",
         data: { other_user_id: other_user_id }
     }).done(function(json){
         fill_chat_container_with_history_json(json);
+        scroll_to_bottom_of_msgs();
     });
 };
 

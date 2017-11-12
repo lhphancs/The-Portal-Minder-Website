@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<% include bootstrap %>
+		<link type="text/css" rel= "stylesheet" href="/stylesheets/global.css">
+		<link type="text/css" rel= "stylesheet" href="/stylesheets/profile.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	</head>
+	
+	<body>
+		<% include nav_logged %>
+		<%
+		var firstName = user.firstName;
+		var lastName = user.lastName;
+		var entireName = firstName + " " + lastName;
+		var photoURL = user.photoURL?user.photoURL:"/images/logo.jpg";
+		var description = user.description?user.description:"[None]";
+		var education = user.education?user.education:"[None]";
+		var city = user.city;
+		var tags = user.tags?user.tags:["[None]"];
+		%>
+
+
+		<div class="container">
+            <h1 class="title">Profile</h1>
+            <div class="d-flex flex-column justify-content-center">
+                <h1 class="user_name"><%= entireName %></h1>
+				<img class="user_photo" src="<%= photoURL %>">	
+                <button id="btn_add_friend" type="button" class="btn_under_photo btn btn-secondary btn-sm add-mode" data-user-id="<%= user._id %>">Add Friend</button>
+			</div>
+			
+			<div class="info card" style="width: 20rem;">
+				<div class="card-body">
+					<h4 class="card-title">Description</h4>
+					<p class="card-text"><%= description %></p>
+				</div>
+			</div>
+			
+			<div class="info card">
+				<div class="card-body">
+					<h4 class="card-title">Tags</h4>
+					<ul class="list-group flex-row flex-wrap">
+						<% tags.forEach(function(tag) { %>
+							<li class="list-group-item">
+								<%= tag %>
+							</li>
+						<% }); %>
+					</ul>
+				</div>
+			</div>
+
+			<div class="info card" style="width: 20rem;">
+				<div class="card-body">
+					<h4 class="card-title">Education</h4>
+					<p class="card-text"><%= education %></p>
+				</div>
+			</div>
+
+			<div class="info card" style="width: 20rem;">
+				<div class="card-body">
+					<h4 class="card-title">Location (City)</h4>
+					<p class="card-text"><%= city %></p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+<script src="/client-js/discover_profile.js"></script>

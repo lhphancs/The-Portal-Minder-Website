@@ -1,18 +1,18 @@
 .submit_search{
-    font-size:4em;
-    color:red;
-    display:block;
-    width:50%;
-    margin:50px auto;
+    font-size: 4em;
+    color: black;
+    text-shadow:
+        -2px -2px 0 white,  
+        2px -2px 0 white,
+        -2px 2px 0 white,
+        2px 2px 0 white;
+    display: block;
+    width: 50%;
+    margin: 50px auto;
     background: linear-gradient(#FF7D53, #FFBAAE);
     border: 2px solid black;
 }
 
-.search_person_container{
-    width:50%;
-    margin:20px auto;
-}
-
 .form_container{
-    font-size:2em;
+    font-size: 2em;
 }

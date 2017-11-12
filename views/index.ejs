@@ -1,34 +1,31 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
+		<% include bootstrap %>
 		<link type="text/css" rel= "stylesheet" href="/stylesheets/global.css">
-		<link type="text/css" rel= "stylesheet" href="/stylesheets/index.css">
-		<script src="/client-js/all_inputs_required.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	</head>
 	
 	<body>
-		<% include no_logged_in_header_navs %>
+		<% include nav_no_logged %>
+		
+		<h1 class="title">Minder Matching</h1>
 		<div class="container">
-			<h1 class="title">Minder Matching</h1>
 			<form id="login_form" method="post">
-				<div class="input_container">
-					Email:
-					<input id="user_email" type="text" class="required_input" name="email">
+				<div class="form-group">
+					<label for="user_email">Email address</label>
+					<input id="user_email" name="email" type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email" required>
 				</div>
-				<div class="input_container">
-					Password:
-					<input id="user_password" type="password" class="input_password required_input" name="password">
+				<div class="form-group">
+					<label for="exampleInputPassword1">Password</label>
+					<input id="user_password" class="form-control" name="password" type="password" placeholder="Password" required>
 				</div>
-					<input class="form_submit" type="submit" value="Login">
+				<button type="submit" class="btn btn-primary">Submit</button>
+				<div id="alert_wrong_password" class="alert alert-danger mt-2 invisible" role="alert">
+					Wrong password. Try again.
+				</div>
 			</form>
 		</div>
-		<p>Image courtesy of pexels.com by: pixabay.com</p>
-		<form id="form_generate_random_users">
-			(Developer): How many random users do you want to generate?
-			<input id="input_amt_of_random_users" type="number">
-			<input id="submit_generate_random_users" type="submit" value="Generate Random Users">
-		</form>
 	</body>
 </html>
 

@@ -8,54 +8,60 @@
     </head>
     
     <body>
-        <% include logged_in_header_navs %>
-        <div class="profile_container">
-
+        <% include nav_logged %>
+        <div class="container">
             <h1 class="title">Profile</h1>
-            <div class="user_photo_container">
+            <div>
                 <h1 class="user_name"><%= firstName %> <%= lastName %></h1>
                 <video class="user_photo display_none" id="video_webcam" autoplay="true"></video>
                 <canvas id="canvas_user" class="user_photo" width="100" height="100"></canvas>
-                <button id="btn_webcam_toggle">Activate Webcam</button>
-            </div>
-
-            <h3>Tags</h3>
-            <div id="tag_list_container">
-                <!-- Javascript will add tags in this container -->
-            </div>
-
-            <div class="input_user">
-                <input id="input_tag" type="text">
-                <button id="btn_add_tag" class="btn">Add Tag</button>
-            </div>
-
-            <div class="input_container">
-                First Name: 
-                <input id="input_first_name" class="input_user" value=<%= firstName %>>
+                <button type="button" class="btn_under_photo btn btn-secondary btn-sm" id="btn_webcam_toggle">Activate Webcam</button>
             </div>
             
-            <div class="input_container">
-                Last Name: 
-                <input id="input_last_name" class="input_user" value=<%= lastName %>>
-            </div>
-
-            <div class="input_container">
-                Education: 
-                <input id="input_education" class="input_user" value=<%= education %>>
-            </div>
-
-            <h3>Description</h3>
-            <textarea id="textarea_description"><%= description %></textarea>
-
-            
-            <div class="input_container">
-                Location (City):
-                <input id="input_city" class="input_user" value=<%= city %>>
-                <div>
-                    <button id="btn_save_profile" class="btn_large">Save Profile</button>
-                    <img class="map_display" id="map">
+            <form id="form_profile" method="POST">
+                <div id="tag_list_container">
+                    <!-- Javascript will add tags in this container -->
                 </div>
-            </div>
+                <div class="form-group row">
+                    <label for="input_tag" class="col-sm-2 col-form-label text_right_align">Tag</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="input_tag">
+                    </div>
+                    <button id="btn_add_tag" type="button" class="btn btn-secondary">Add Tag</button>
+                </div>
+                <div class="form-group row">
+                    <label for="input_first_name" class="col-sm-2 col-form-label text_right_align">First Name</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="input_first_name" value="<%= firstName %>" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="input_last_name" class="col-sm-2 col-form-label text_right_align">Last Name</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="input_last_name" value="<%= lastName %>" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="input_education" class="col-sm-2 col-form-label text_right_align">Education</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="input_education" value="<%= education %>">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="textarea_description" class="col-sm-2 col-form-label text_right_align">Description</label>
+                    <div class="col-sm-6">
+                        <textarea class="form-control" id="textarea_description"><%= description %></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="input_city" class="col-sm-2 col-form-label text_right_align">Location (City)</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="input_city" value="<%= city %>" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Profile</button>
+            </form>
+            <img class="map_display" id="map">
         </div>
     </body>
 </html>

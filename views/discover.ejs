@@ -8,17 +8,19 @@
 	</head>
 	
 	<body>
-		<% include logged_in_header_navs %>
+		<% include nav_logged %>
+		<div class="container">
+				<h1 class = "title">Discover</h1>
+			<form action="/discover/all">
+				<input class="submit_search" type="submit" value="All search">
+			</form>
 
-		<form action="/user/discover-results/all" method="GET">
-			<input class="submit_search" type="submit" value="All search">
-		</form>
-
-		<form action="/user/discover-results/local">
-            <input class="submit_search" type="submit" value="Local Search">
-        </form>
-		<form action="/user/discover-results/tags">
-            <input class="submit_search" type="submit" value="Tags Search">
-        </form>
+			<form action="/discover/local">
+				<input class="submit_search" type="submit" value="Local Search">
+			</form>
+			<form action="/discover/tags">
+				<input class="submit_search" type="submit" value="Tags Search">
+			</form>
+		</div>
 	</body>
 </html>

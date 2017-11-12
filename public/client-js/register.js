@@ -9,31 +9,30 @@ var check_if_matching_password = function(){
 }
 
 var override_submit_btn = function(){
-    $("#signup_form").on("submit", function(e){
+    $("#form_register").on("submit", function(e){
         e.preventDefault();
-        if( all_required_inputs_filled() ){
-            $.ajax({
-                url:"http://localhost:3000/user/add",
-                data: {
-                    email: $("#input_email").val(),
-                    password: $("#input_password1").val(),
-                    firstName: $("#input_first_name").val(),
-                    lastName: $("#input_last_name").val(),
-                    city: $("#input_city").val()
-                },
-                type:"POST",
-                dataType: "json"
-            }).done(function(json){
-                if(json){
-                    window.location.replace("/user/profile");
-                }
-                else{
-                    alert("Email duplicate exist. Try again.")
-                } 
-            }).fail(function(){
-                return false;
-            });   
-        }
+
+        $.ajax({
+            url:"http://localhost:3000/user/register-add",
+            data: {
+                email: $("#input_email").val(),
+                password: $("#input_password1").val(),
+                firstName: $("#input_first_name").val(),
+                lastName: $("#input_last_name").val(),
+                city: $("#input_city").val()
+            },
+            type:"POST",
+            dataType: "json"
+        }).done(function(json){
+            if(json){
+                window.location.replace("/user/profile");
+            }
+            else{
+                alert("Email duplicate exist. Try again.")
+            } 
+        }).fail(function(){
+            return false;
+        });  
     });
 };
 

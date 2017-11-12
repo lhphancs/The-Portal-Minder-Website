@@ -1,52 +1,45 @@
 var local_stream;
 
 var add_tag_to_container = function(word){
-    var tag_list_container = document.getElementById("tag_list_container");
-
-    var ele_div = document.createElement("div");
-    ele_div.innerText = word;
-    ele_div.classList.add("tag_txt");
-
-    //Create a button that user can click to remove tag
-    var ele_remove_btn = document.createElement("button");
-    ele_remove_btn.classList.add("btn_tag_remove");
-    ele_remove_btn.innerHTML = "x";
-
-    //Append these the paragraph and the remove btn to new div
-    var div_to_insert = document.createElement("div");
-    div_to_insert.classList.add("div_tag_container");
-    div_to_insert.appendChild(ele_div);
-    div_to_insert.appendChild(ele_remove_btn);
-    tag_list_container.appendChild(div_to_insert);
-
-    //Now set it so that when they click ele_remove_btn, it will remove parent
-    ele_remove_btn.onclick = remove_parent_response;
+    var tag_list_container = $("#tag_list_container");
+    var new_tag = `<span class="tag">${word}<span class="tag-delete">X</span></span>`
+    tag_list_container.append(new_tag);
 };
 
-var set_insert_tag_response =  function(){
-    $("#btn_add_tag").click(function(){
-        const TAG_MAX_AMOUNT = 10;
-        
-        var input_txt = document.getElementById("input_tag").value;
-        if(input_txt === ""){
-            alert("Must enter text before adding tag. Try again.")
-            return;
-        }
-        
-        //Check if past tag limit
-        if(document.getElementsByClassName("div_tag_container").length >= TAG_MAX_AMOUNT)
-            alert("Max amount of tag is " + TAG_MAX_AMOUNT);
+var insert_tag = function(){
+    const TAG_MAX_AMOUNT = 10;
+    //Check if input is empty
+    if( $("#input_tag").val() === "" ){
+        alert("Must enter text before adding tag. Try again.")
+        return;
+    }
+    
+    //Check if past tag limit
+    if( $(".tag").length >= TAG_MAX_AMOUNT )
+        alert("Failed to add tag. Limit is " + TAG_MAX_AMOUNT);
 
-        //Add new removable tag based on input
-        else{
-            add_tag_to_container(input_txt);
+    //Add new removable tag based on input
+    else{
+        add_tag_to_container( $("#input_tag").val() );
+    }
+    $("#input_tag").val("");
+}
+
+var set_insert_tag_response = function(){
+    $("#btn_add_tag").click(function(){
+        insert_tag();
+    });
+    $("#input_tag").on("keypress", function(e){
+        if(e.which === 13){
+            insert_tag();
         }
     });
 };
 
-var remove_parent_response = function(){
-    var ele_parent = this.parentNode;
-    ele_parent.parentNode.removeChild(ele_parent);
+var set_remove_tag_response = function(){
+    $("#tag_list_container").on("click", ".tag-delete", function(){
+        $(this).parent().remove();
+    });
 };
 
 var activate_video = function(){
@@ -112,13 +105,16 @@ var update_map = function(){
                     + "&key=AIzaSyB4DZ4LgiGs_wHsmkGzgUCB4TJHSomYVFU";
 };
 
-var set_save_profile_response = function(){
-    $("#btn_save_profile").click(function(){
-        var all_tags = [];
-        $("div.tag_txt").each(function(){
-            all_tags.push(this.innerText);
-        });
 
+
+var set_save_profile_response = function(){
+    $("#form_profile").on("submit", function(e){
+        e.preventDefault();
+        var all_tags = [];
+        $(".tag").each(function(){
+            var t_text = this.innerText; //This contains the X. Need to slice it off
+            all_tags.push( t_text.slice(0, t_text.length - 1) );
+        });
         $.ajax({
             url:"http://localhost:3000/user/profile",
             data:{
@@ -133,7 +129,6 @@ var set_save_profile_response = function(){
             type:"PATCH"
         }).done(function(json){
             window.location.replace("http://localhost:3000/user/profile");
-        
         }).fail(function(){
             alert("Failed to grab data from database!!");
             return false;
@@ -160,13 +155,9 @@ var load_tags = function(){
 };
 
 var main = function(){
-    //Set tag insert listener for keyboard
-    document.querySelector("#input_tag").addEventListener("keydown", function(){
-        if(event.key === "Enter")
-            insert_tag_response(event);
-    })
     //Set tag insert listener for buton
     set_insert_tag_response();
+    set_remove_tag_response();
     set_save_profile_response();
     set_webcam_toggle_response();
     set_capture_listener();
