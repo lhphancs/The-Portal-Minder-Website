@@ -35,7 +35,7 @@ textarea{
     height: 100px;
 }
 
-#btn_webcam_toggle{
+.btn_under_photo{
     display: block;
     width: 200px;
     font-size: 1.3em;
@@ -51,4 +51,12 @@ textarea{
 
 .display_none{
     display: none;
+}
+
+.card-header{
+    text-align:center;
+}
+
+.info{
+    margin: 10px 0px;
 }

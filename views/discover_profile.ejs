@@ -10,41 +10,61 @@
 	<body>
 		<% include nav_logged %>
 		<%
-		var firstName = user.firstName?user.firstName:"[firstPlaceHolder]";
-		var lastName = user.lastName?user.lastName:"[lastPlaceHolder]";
+		var firstName = user.firstName;
+		var lastName = user.lastName;
 		var entireName = firstName + " " + lastName;
 		var photoURL = user.photoURL?user.photoURL:"/images/logo.jpg";
-		var description = user.description?user.description:"[descriptPlaceHolder]";
-		var education = user.education?user.education:"[educationPlaceHolder]";
-		var city = user.city?user.city:"[cityPlaceHolder]";
-		var tags = user.tags?user.tags:[];
+		var description = user.description?user.description:"[None]";
+		var education = user.education?user.education:"[None]";
+		var city = user.city;
+		var tags = user.tags?user.tags:["[None]"];
 		%>
 
-		<div class="profile_container">
-			<div class="user_photo_container">
-				<h1 class="user_name"><%= entireName %></h1>
-				<img class="user_photo" src="<%= photoURL %>"
-			</div>
-			<button id="btn_add_friend" class="add-mode" value="<%= user._id %>" type="submit">Add Friend</button>
 
-			<h3 class = "header_for_textarea">Description</h3>
-			<p class ="info"><%= description %></p>
+		<div class="container">
+            <h1 class="title">Profile</h1>
+            <div class="d-flex flex-column justify-content-center">
+                <h1 class="user_name"><%= entireName %></h1>
+				<img class="user_photo" src="<%= photoURL %>">	
+                <button id="btn_add_friend" type="button" class="btn_under_photo btn btn-secondary btn-sm add-mode" data-user-id="<%= user._id %>">Add Friend</button>
+			</div>
 			
-			<h3 class = "header_for_textarea">Tags</h3>
-			<p class ="info"><% tags.forEach(function(tag) { %>
-				<div>
-					<%= tag %>
+			<div class="info card" style="width: 20rem;">
+				<div class="card-body">
+					<h4 class="card-title">Description</h4>
+					<p class="card-text"><%= description %></p>
 				</div>
-			<% }); %>
-			</p>
+			</div>
 			
-			<h3 class = "header_for_textarea">Education</h3>
-			<p class ="info"><%= education %></p>
-			
-			<h3 class = "header_for_textarea">Location (City)</h3>
-			<p class ="info"><%= city %></p>
-			
+			<div class="info card">
+				<div class="card-body">
+					<h4 class="card-title">Tags</h4>
+					<ul class="list-group list-group-flush d-flex flex-row flex-wrap w-100">
+						<% tags.forEach(function(tag) { %>
+							<li class="list-group-item">
+								<%= tag %>
+							</li>
+						<% }); %>
+					</ul>
+				</div>
+			</div>
+
+			<div class="info card" style="width: 20rem;">
+				<div class="card-body">
+					<h4 class="card-title">Education</h4>
+					<p class="card-text"><%= education %></p>
+				</div>
+			</div>
+
+			<div class="info card" style="width: 20rem;">
+				<div class="card-body">
+					<h4 class="card-title">Location (City)</h4>
+					<p class="card-text"><%= city %></p>
+				</div>
+			</div>
 		</div>
+		
+
 	</body>
 </html>
-<script src="/client-js/other_profile.js"></script>
+<script src="/client-js/discover_profile.js"></script>
