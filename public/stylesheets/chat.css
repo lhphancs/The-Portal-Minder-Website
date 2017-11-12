@@ -8,6 +8,11 @@
     font-weight: bold;
 }
 
+#contact_list{
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
 #msg_header{
     font-weight: bold;
 }
