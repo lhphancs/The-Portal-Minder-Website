@@ -38,14 +38,14 @@ router.patch('/remove-pending-friend', function(req, res, next){
   UserModel.update( 
     { _id: self_id },
     { $pull: { pendingFriends : selected_user_id } },
-    function removeConnectionsCB(err, obj) {
+    function(err, data) {
         ;
   });
 
   UserModel.update( 
     { _id: selected_user_id },
     { $pull: { friendRequests: self_id } },
-    function removeConnectionsCB(err, obj) {
+    function(err, data) {
         res.send(true);
   });
 });
@@ -53,25 +53,44 @@ router.patch('/remove-pending-friend', function(req, res, next){
 router.patch('/add-friend', function(req, res, next){
   var self_id = req.user._id;
   var selected_user_id = req.body.select_user_id;
-
   //update self
-  UserModel.findOne( { _id: self_id }, function(err, user){
-    user.friends.push(selected_user_id); //add new frined
-    //Remove id from friend request and pending friends
-    user.update({ $pull: {friendRequests: selected_user_id}
-                          , $pull: {pendingFriends: selected_user_id}});
-    user.save();
+  UserModel.update( 
+    { _id: self_id },
+    { $push: {friends: selected_user_id}
+      , $pull: { pendingFriends : selected_user_id } //Why does order matter?
+      , $pull: { friendRequests : selected_user_id } } //Why does order matter?
+      , function(err, data) {
+        console.log("Updated self: added friend/remove pendingFriends + friendRequests");
   });
 
   //update selected_user
-  UserModel.findOne( { selected_user_id }, function(err, selected_user){
-    selected_user.friends.push(self_id); //add new friend
-    //Remove id from friend request and pending friends
-    selected_user.update({ $pull: {friendRequests: self_id}
-                              ,$pull: {pendingFriends: self_id}});
-    selected_user.save();
+  UserModel.update( 
+    { _id: selected_user_id },
+    { $push: {friends: self_id}
+      , $pull: { friendRequests : self_id } //Why does order matter?
+      , $pull: { pendingFriends : self_id }} //Why does order matter?
+      , function(err, data) {
+        console.log("Updated selected_user: added friend/remove pendingFriends + friendRequests");
+  });
+  res.send(true);
+});
+
+router.patch('/reject-friend-request', function(req, res, next){
+  var self_id = req.user._id;
+  var selected_user_id = req.body.select_user_id;
+  //update self
+  UserModel.update( 
+    { _id: self_id }, { $pull: { friendRequests : selected_user_id } }
+      , function(err, data) {
+        console.log("Updated self: removed pendingFriend");
   });
 
+  //update selected_user
+  UserModel.update( 
+    { _id: selected_user_id }, { $pull: { pendingFriends : self_id } }
+      , function(err, data) {
+        console.log("Updated selectedUser: removed friendRequest");
+  });
   res.send(true);
 });
 
