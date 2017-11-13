@@ -1,4 +1,2 @@
-1) For other-profile page and search result, need to display "remove friend" for those already on fl
-2) Disable form enter on tag. It reloads page when enter
-3) Check if need to update req.user when update profile
-4) Send request/accept
+1) Disable form enter on tag. It reloads page when enter
+2) Fix chatroom so chat starts on bottom and works up

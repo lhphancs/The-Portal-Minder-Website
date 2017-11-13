@@ -42,6 +42,7 @@ router.patch('/remove-pending-friend', function(req, res, next){
         ;
   });
 
+  //Remove request for selected_user
   UserModel.update( 
     { _id: selected_user_id },
     { $pull: { friendRequests: self_id } },
@@ -95,10 +96,22 @@ router.patch('/reject-friend-request', function(req, res, next){
 });
 
 router.patch('/remove-friend', function(req, res, next){
-  UserModel.update( { _id: req.user._id }, { $pull: {friends: req.body.id} }, function(){
-    ;
+  var self_id = req.user._id;
+  var selected_user_id = req.body.select_user_id;
+  //update self
+  UserModel.update( 
+    { _id: self_id }, { $pull: { friends : selected_user_id } }
+      , function(err, data) {
+        console.log("Updated self: removed friend");
   });
-  res.send(true)
+
+  //update selected_user
+  UserModel.update( 
+    { _id: selected_user_id }, { $pull: { friends : self_id } }
+      , function(err, data) {
+        console.log("Updated selectedUser: removed friend");
+  });
+  res.send(true);
 });
 
 router.get('/get-friends-list', function(req, res, next){

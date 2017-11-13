@@ -20,12 +20,12 @@
     padding: 5px 5px;
 }
 
-.accept_button{
+.btn_accept_friend_request{
     height: 100%;
     padding: 0px 5px;
 }
 
-.reject_button{
+.btn_reject_friend_request{
     height: 100%;
     padding: 0px 5px;
     margin-left: 5px;
