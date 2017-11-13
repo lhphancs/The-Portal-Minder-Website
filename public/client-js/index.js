@@ -28,7 +28,6 @@ var override_login_submit = function(){
 
 var main = function(){
     override_login_submit();
-    set_generate_random_users_response();
 };
 
 $(document).ready(function(){

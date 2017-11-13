@@ -5,9 +5,9 @@ var set_toggle_friend_response = function(){
         if( $(this).hasClass("add-mode") ){
             $(this).text("Remove Friend");
             $.ajax({
-                url:"http://localhost:3000/user/add-friend",
-                data:{id: discover_user_id},
-                type:"POST",
+                url:"http://localhost:3000/friends/add-pending-friend",
+                data:{select_user_id: discover_user_id},
+                type:"PATCH",
                 dataType:"json"
             }).done(function(json){
                 ;
@@ -18,9 +18,9 @@ var set_toggle_friend_response = function(){
         else{
             $(this).text("Add Friend");
             $.ajax({
-                url:"http://localhost:3000/user/remove-friend",
-                data:{id: discover_user_id},
-                type:"POST",
+                url:"http://localhost:3000/friends/remove-pending-friend",
+                data:{select_user_id: discover_user_id},
+                type:"PATCH",
                 dataType:"json"
             }).done(function(){
             }).fail(function(){

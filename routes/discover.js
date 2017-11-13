@@ -10,9 +10,13 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/get-all-users', function(req, res, next){
-  UserModel.find({
-    email: {'$ne': req.user.email},
-  }, function(err, users){
+  UserModel.find(
+    { 
+    $and: [ {_id: {$nin: req.user.friends}}
+            ,{_id: {$nin: req.user.pendingFriends}}
+            , {_id: {$nin: req.user.blockedUsers}}
+            , {_id: {'$ne': req.user._id}}
+          ]}, function(err, users){
     res.send(users);
   });
 });

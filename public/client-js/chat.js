@@ -50,7 +50,7 @@ var set_socket_settings = function(socket){
 
 var load_friends_and_click_first = function(){
     $.ajax({
-        url: "http://localhost:3000/user/get-friends-list",
+        url: "http://localhost:3000/friends/get-friends-list",
         data: {},
         dataType: "json",
         type: "GET"

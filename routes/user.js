@@ -7,6 +7,8 @@ var bcrypt = require('bcrypt');
 var auth = require('../util/auth');
 var https = require("https");
 
+var require_login = auth.require_login;
+
 var saltRounds = 10;
 // User password check & cookie assignment if match
 router.post('/validation', function(req, res, next) {
@@ -50,6 +52,7 @@ router.post('/register-add', function(req, res, next) {
         tags: [],
         education: "",
         friends: [],
+        friendRequests: [],
         pendingFriends: [],
         blockedUsers: [],
         notification: [],
@@ -63,22 +66,19 @@ router.post('/register-add', function(req, res, next) {
   }); 
 });
 
-/* Everything below this requires login*/
-router.use(auth.require_login);
-
 // User viewing own
-router.get('/profile', function(req, res, next) {
+router.get('/profile', require_login, function(req, res, next) {
   var user_email = req.user.email;
   UserModel.findOne( { email: user_email }, function(err, user){
     res.render("profile", user);
   });
 });
 
-router.get('/tags', function(req, res, next) {
+router.get('/tags', require_login, function(req, res, next) {
   res.send(req.user.tags);
 });
 
-router.patch('/profile', function(req, res, next){
+router.patch('/profile', require_login, function(req, res, next){
   //If tags empty, is undefined. Must set it as empty array to prevent crash
   var tags = req.body.tags;
   tags = tags?tags:[];
@@ -96,43 +96,44 @@ router.patch('/profile', function(req, res, next){
   res.send(true);
 });
 
-router.delete('/profile', function(req, res, next){
+router.delete('/profile', require_login, function(req, res, next){
   UserModel.remove( { email: req.body.email }, function(err, user){
     if (err) return handleError(err);
     res.send(user);
   });
 });
 
-router.get('/logout', function(req, res, next){
+router.get('/logout', require_login, function(req, res, next){
   req.session.reset();
   res.redirect('/');
 });
 
-router.post('/add-friend', function(req, res, next){
-  UserModel.findOne( { _id: req.user._id }, function(err, user){
-    user.friends.push(req.body.id);
-    user.save();
-    res.send(true);
-  });
-});
 
-router.post('/remove-friend', function(req, res, next){
-  UserModel.update( { _id: req.user._id }, { $pull: {friends: req.body.id} }, function(){
-    ;
-  });
-  res.send(true)
-});
 
-router.get('/get-friends-list', function(req, res, next){
-  UserModel.find( { _id: {$in: req.user.friends} }, ["_id", "firstName", "lastName"], function(err, users){
+router.get('/get-blocked-users-list', require_login, function(req, res, next){
+  UserModel.find( { _id: {$in: req.user.blockedUsers} }, ["_id", "firstName", "lastName"], function(err, users){
     res.send(users);
   });
 });
 
-router.get('/get-self', function(req, res, next){
+router.get('/get-self', require_login, function(req, res, next){
   res.send(req.user);
 });
 
+// ########### Below are debugging stuff ###########
+// Add two users, A and B
+router.get('/debug-add-two', function(req, res, next){
+  users = [
+    {
+      firstName: "A", lastName: "A", email: "a@gmail.com", password: hash_password = bcrypt.hashSync("a", saltRounds)
+    }
+    ,{
+      firstName: "B", lastName: "B", email: "b@gmail.com", password: hash_password = bcrypt.hashSync("b", saltRounds)
+    }
+  ];
+  UserModel.insertMany(users, function(error, docs) {});
+  res.send(true);
+});
 
 router.get('/add-randoms', function(req, res, next){
   https.get("https://randomuser.me/api/?results=50&inc=name,email,password,location,picture", function(response){
@@ -156,6 +157,7 @@ router.get('/add-randoms', function(req, res, next){
           tags: get_random_tags(),
           education: "",
           friends: [],
+          friendRequests: [],
           pendingFriends: [],
           blockedUsers: [],
           notification: [],

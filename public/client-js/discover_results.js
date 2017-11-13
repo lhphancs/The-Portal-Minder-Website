@@ -12,7 +12,6 @@ var load_all_users = function(mode){
         dataType:"json",
         type:"GET",
     }).done(function(json){
-        console.log(json);
         var matched_users_container = $("#matched_users_container");
         //Show each user
         for(var i=0; i<json.length; ++i){
@@ -28,7 +27,7 @@ var load_all_users = function(mode){
             var other_user_container = `<div class="other_user_container">
                 <a class="other_user_name" href="${user_profile_href}">${display_name}</a>
                 <img class="other_user_img" src="${photo_url}">
-                <button class="btn btn-secondary btn-block btn_add_friend add-mode" data-other-id="${user_id}">Add</button>
+                <button class="btn btn-secondary btn-block btn_add_friend add-pending-mode" data-other-id="${user_id}">Add</button>
             </div>`;
 
             matched_users_container.append(other_user_container);
@@ -41,12 +40,12 @@ var load_all_users = function(mode){
 
 var set_btn_response_toggle_add_friend = function(){
     $("#matched_users_container").on("click", ".btn_add_friend", function(){
-        if( $(this).hasClass("add-mode") ){
+        if( $(this).hasClass("add-pending-mode") ){
             $(this).text("Remove");
             $.ajax({
-                url: "http://localhost:3000/user/add-friend",
-                data: {id: $(this).attr("data-other-id")},
-                type: "POST",
+                url: "http://localhost:3000/friends/add-pending-friend",
+                data: {select_user_id: $(this).attr("data-other-id")},
+                type: "PATCH",
                 dataType: "json"
             }).fail(function(){
                 alert("FAILED ADD");
@@ -55,15 +54,15 @@ var set_btn_response_toggle_add_friend = function(){
         else{
             $(this).text("Add");
             $.ajax({
-                url: "http://localhost:3000/user/remove-friend",
-                data: {id: $(this).attr("data-other-id")},
-                type: "POST",
+                url: "http://localhost:3000/friends/remove-pending-friend",
+                data: {select_user_id: $(this).attr("data-other-id")},
+                type: "PATCH",
                 dataType: "json"
             }).fail(function(){
                 alert("FAILED REMOVE");
             });
         }
-        $(this).toggleClass("add-mode");
+        $(this).toggleClass("add-pending-mode");
     });
 };
 

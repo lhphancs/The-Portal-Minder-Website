@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <% include bootstrap %>
+        <link type="text/css" rel= "stylesheet" href="/stylesheets/global.css">
+        <link type="text/css" rel= "stylesheet" href="/stylesheets/friends.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </head>
+    
+    <body>
+        <% include nav_logged %>
+        <div class="container">
+            <h1 class="title">Friends</h1>
+            <div id="row_for_lists" class="row">
+                <div class="col-sm-4">
+                    <div class="d-flex justify-content-center list_header">
+                        <div id="header-friends-list">
+                            Friends
+                            <span class="badge badge-primary badge-pill"></span>
+                        </div>
+                    </div>
+                    <ul id="friends-list" class="list-group">
+                        <!-- Ajax will poppulate this area with friend requests -->
+                    </ul>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="d-flex justify-content-center list_header">
+                        <div id="header-friend-requests-list">
+                            Friend Requests
+                            <span class="badge badge-primary badge-pill"></span>
+                        </div>
+                    </div>
+                    <ul id="friend-requests-list" class="list-group">
+                        <!-- Ajax will poppulate this area with friend requests -->
+                    </ul>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="d-flex justify-content-center list_header">
+                        <div id="header-pending-friends-list">
+                            Pending Friends
+                            <span class="badge badge-primary badge-pill"></span>
+                        </div>
+                    </div>
+                    <ul id="pending-friends-list" class="list-group">
+                        <!-- Ajax will poppulate this area with friend requests -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+<script src="/client-js/friends.js"></script>

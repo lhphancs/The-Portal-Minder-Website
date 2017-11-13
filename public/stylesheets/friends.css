@@ -1,0 +1,32 @@
+#row_for_lists{
+    height: 500px;
+}
+
+.list_header{
+    background-color: white;
+    border: 1px solid #a1a1a1;
+    font-weight: bold;
+}
+
+.list-group{
+    height: 90%;
+    padding: 0px;
+    overflow: scroll;
+    overflow-x: hidden;
+    border: 1px solid #a1a1a1;
+}
+
+.list-group-item{
+    padding: 5px 5px;
+}
+
+.accept_button{
+    height: 100%;
+    padding: 0px 5px;
+}
+
+.reject_button{
+    height: 100%;
+    padding: 0px 5px;
+    margin-left: 5px;
+}

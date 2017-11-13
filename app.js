@@ -9,6 +9,7 @@ var session = require('client-sessions');
 var index = require('./routes/index');
 var user = require('./routes/user');
 var discover = require('./routes/discover');
+var friends = require('./routes/friends');
 var chat = require('./routes/chat');
 var notification = require('./routes/notification');
 
@@ -64,9 +65,10 @@ app.use(function(req, res, next) {
 });
 
 app.use('/', index);
+app.use('/friends', friends);
+app.use('/chat', chat);
 app.use('/user', user);
 app.use('/discover', discover);
-app.use('/chat', chat);
 app.use('/notification', notification);
 
 // catch 404 and forward to error handler
