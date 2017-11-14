@@ -87,8 +87,8 @@ var set_webcam_toggle_response = function(){
         else{
             this.innerHTML = "Activate webcam";
             setTimeout(function() {
-                stream_track.stop();;
-            }, 100); //Why do I need a set timeout of 0? breaks if I remove setTimeout 
+                stream_track.stop();
+            }, 100); //Delay needed. Otherwise, it takes picture of pure black. 
         }
         $("#canvas_user").toggleClass("display_none");
         $("#video_webcam").toggleClass("display_none");
