@@ -1,18 +1,18 @@
 //Global variables
 var self_user;
 
-var other_user = { //Keeps track of user currently chatting with
+var selected_user = { //Keeps track of user currently chatting with
     id: "",
     name: ""
 };
 
-var set_other_user = function(id, name){
-    other_user.id = id;
-    other_user.name = name;
+var set_selected_user = function(id, name){
+    selected_user.id = id;
+    selected_user.name = name;
 };
 
-var get_other_user = function(){
-    return other_user;
+var get_selected_user = function(){
+    return selected_user;
 };
 
 var set_self = function(){
@@ -33,18 +33,18 @@ var get_self = function(){
     return self_user;
 };
 
-var get_room_id_with_other_user = function(){
+var get_room_id_with_selected_user = function(){
     var self_id = get_self()._id;
-    var other_user_id = other_user.id;
+    var selected_user_id = selected_user.id;
     // return ids alphabetically concatenated to create unique name
-    return self_id < other_user_id ? self_id + other_user_id : other_user_id + self_id;
+    return self_id < selected_user_id ? self_id + selected_user_id : selected_user_id + self_id;
 }
 
 var set_socket_settings = function(socket){
     socket.on('received_chat_msg', function(msg){
         console.log(msg);
         //Update chatbox to contain incoming msg
-        add_msg_to_container(other_user.name, msg, false);
+        add_msg_to_container(selected_user.name, msg, false);
     });
 };
 
@@ -99,12 +99,18 @@ var send_msg_response = function(socket){
 
     //Scroll to bottom of msg  
     scroll_to_bottom_of_msgs();
+    //clear textarea
+    $("#textarea_msg").val("");
+
+    //If no user_selected, allow only to test chat w/o storing in database.
+    if(selected_user.id === "")
+        return;
 
     //Now store message in database
     $.ajax({
         url: "http://localhost:3000/chat/save-message",
         data: {
-            to_id: other_user.id,
+            to_id: selected_user.id,
             message: msg_from_chat_box
         },
         dataType: "json",
@@ -112,11 +118,9 @@ var send_msg_response = function(socket){
     }).done(function(json){
         //Now use socket to send to to user
         socket.emit('sent_chat_msg', {
-            room_id: get_room_id_with_other_user(),
+            room_id: get_room_id_with_selected_user(),
             msg: msg_from_chat_box
         });
-        //clear textarea
-        $("#textarea_msg").val("");
     }).fail( function(json){
         alert("Fetching user_matches from database failed.")
     });
@@ -127,7 +131,7 @@ var set_switch_user_chat_response = function(socket){
     $("#contact_list").on("click", ".btn_user_name", function(){
         var user_id = $(this).attr('data-user-id');
         var user_name = this.innerHTML;
-        set_other_user(user_id, user_name); //update global user's id we are chatting with
+        set_selected_user(user_id, user_name); //update global user's id we are chatting with
 
         //Clear all old stuff first
         $("#msgs_list").empty();
@@ -138,32 +142,32 @@ var set_switch_user_chat_response = function(socket){
         load_chat_history();
 
         //Set socket to join unique room
-        socket.emit("subscribe", get_room_id_with_other_user() );
+        socket.emit("subscribe", get_room_id_with_selected_user() );
     });
 };
 
 var fill_chat_container_with_history_json = function(json){
     var user_self = get_self();
     var self_name = user_self.firstName + " " + user_self.lastName;
-    var other_user_name = get_other_user().name;
-    var other_user_id = get_other_user().id;
+    var selected_user_name = get_selected_user().name;
+    var selected_user_id = get_selected_user().id;
     for(var i=0; i<json.length; ++i){
-        if( json[i].to_id === other_user_id ){ //If sent msg
+        if( json[i].to_id === selected_user_id ){ //If sent msg
             add_msg_to_container(self_name, json[i].message, true);
         } 
         else{ //else it is received msg
-            add_msg_to_container(other_user_name, json[i].message, false);
+            add_msg_to_container(selected_user_name, json[i].message, false);
         }
     }
 };
 
 var load_chat_history = function(){
-    var other_user_id = get_other_user().id;
+    var selected_user_id = get_selected_user().id;
     $.ajax({
         url: "http://localhost:3000/chat/get-chat-history",
         type: "GET",
         dataType: "json",
-        data: { other_user_id: other_user_id }
+        data: { selected_user_id: selected_user_id }
     }).done(function(json){
         fill_chat_container_with_history_json(json);
         scroll_to_bottom_of_msgs();

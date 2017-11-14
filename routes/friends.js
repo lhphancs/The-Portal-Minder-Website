@@ -73,7 +73,7 @@ router.patch('/add-friend', function(req, res, next){
       , function(err, data) {
         console.log("Updated selected_user: added friend/remove pendingFriends + friendRequests");
   });
-  res.send(true);
+  res.send(req.user);
 });
 
 router.patch('/reject-friend-request', function(req, res, next){
