@@ -12,6 +12,7 @@ var discover = require('./routes/discover');
 var friends = require('./routes/friends');
 var chat = require('./routes/chat');
 var notifications = require('./routes/notifications');
+var debug = require('./routes/debug');
 
 var UserModel = require('./models/UserModel');
 
@@ -70,6 +71,7 @@ app.use('/chat', chat);
 app.use('/user', user);
 app.use('/discover', discover);
 app.use('/notifications', notifications);
+app.use('/debug', debug);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
