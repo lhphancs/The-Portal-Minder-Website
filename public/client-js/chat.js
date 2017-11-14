@@ -80,7 +80,7 @@ var add_msg_to_container = function(from_name, msg, is_sender){
     var class_to_add = is_sender?send_class:receive_class;
     $("#msgs_list").append(
         $(`<li class="row ${class_to_add}">
-                <div class="border border-primary rounded px-2 mt-2 mx-2" style="display:inline-block;">${from_name + ": " + msg}</div>
+                <div class="border border-primary rounded px-2 mt-2 mx-2 msg_container">${from_name + ": " + msg}</div>
             </li>`
         ));
 };
@@ -134,7 +134,7 @@ var set_switch_user_chat_response = function(socket){
         $("#textarea_msg").val("");
         
         //Display who chatting with and load history msgs
-        $("#msg_header").text("Chatting with: " + user_name);
+        $("#msgs_container_header").text("Chatting with: " + user_name);
         load_chat_history();
 
         //Set socket to join unique room
@@ -170,16 +170,25 @@ var load_chat_history = function(){
     });
 };
 
-var main = function(){
-    set_self();
-
-    var socket = io();
-    set_socket_settings(socket);
-
-    load_friends_and_click_first();
+var set_send_msg_resonse = function(socket){
     $("#btn_send_msg").click(function(){
         send_msg_response(socket);
     });
+
+    $("#textarea_msg").on("keypress", function(e){
+        if(e.which === 13 && !e.shiftKey){
+            e.preventDefault(); //Stops it from doing /n before sending msg
+            send_msg_response(socket);
+        }
+    });
+};
+var main = function(){
+    var socket = io();
+    set_socket_settings(socket);
+
+    set_self();
+    load_friends_and_click_first();
+    set_send_msg_resonse(socket);
     set_switch_user_chat_response(socket);
 };
 

@@ -13,7 +13,7 @@
     overflow-x: hidden;
 }
 
-#msg_header{
+#msgs_container_header{
     font-weight: bold;
 }
 
@@ -35,4 +35,9 @@
 
 #textarea_msg{
     resize: none;
+}
+
+.msg_container{
+    display:inline-block;
+    white-space: pre-wrap;
 }
