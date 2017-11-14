@@ -8,7 +8,7 @@ var UserModel = require('../models/UserModel');
 var Message = require('../models/MessageModel');
 
 var require_login = auth.require_login;
-
+var saltRounds = 10;
 // Add two users, A and B
 router.get('/add-two', function(req, res, next){
   users = [
