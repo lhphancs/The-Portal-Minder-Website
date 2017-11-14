@@ -13,24 +13,31 @@ var load_all_users = function(mode){
         type:"GET",
     }).done(function(json){
         var matched_users_container = $("#matched_users_container");
-        //Show each user
-        for(var i=0; i<json.length; ++i){
-            var user_first_name = json[i].firstName;
-            var user_last_name = json[i].lastName;
-            var user_id = json[i]._id;
-            var photo_url = json[i].photoURL?json[i].photoURL:"/images/logo.jpg";
+        if(json.length ===0){
+            matched_users_container.append(
+                `<h1>No match found</h1>`
+            );
+        }
+        else{
+            //Show each user
+            for(var i=0; i<json.length; ++i){
+                var user_first_name = json[i].firstName;
+                var user_last_name = json[i].lastName;
+                var user_id = json[i]._id;
+                var photo_url = json[i].photoURL?json[i].photoURL:"/images/logo.jpg";
 
-            var display_name = user_first_name + " " + user_last_name;
-            var user_profile_href = "/discover/profile/" + user_id;
+                var display_name = user_first_name + " " + user_last_name;
+                var user_profile_href = "/discover/profile/" + user_id;
 
-            //Create elements to add to container
-            var other_user_container = `<div class="other_user_container">
-                <a class="other_user_name" href="${user_profile_href}">${display_name}</a>
-                <img class="other_user_img" src="${photo_url}">
-                <button class="btn btn-secondary btn-block btn_add_friend add-pending-mode" data-other-id="${user_id}">Add</button>
-            </div>`;
+                //Create elements to add to container
+                var other_user_container = `<div class="other_user_container">
+                    <a class="other_user_name" href="${user_profile_href}">${display_name}</a>
+                    <img class="other_user_img" src="${photo_url}">
+                    <button class="btn btn-secondary btn-block btn_add_friend add-pending-mode" data-other-id="${user_id}">Add</button>
+                </div>`;
 
-            matched_users_container.append(other_user_container);
+                matched_users_container.append(other_user_container);
+            }
         }
     }).fail(function(){
         alert("Failed to grab data from database");

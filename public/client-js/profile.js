@@ -1,4 +1,4 @@
-var local_stream;
+var stream_track;
 
 var add_tag_to_container = function(word){
     var tag_list_container = $("#tag_list_container");
@@ -53,7 +53,7 @@ var activate_video = function(){
     
    function handleVideo(stream) {
        video.src = window.URL.createObjectURL(stream);
-       local_stream = stream;
+       stream_track = stream.getTracks()[0];
    }
     
    function videoError(e) {
@@ -87,8 +87,8 @@ var set_webcam_toggle_response = function(){
         else{
             this.innerHTML = "Activate webcam";
             setTimeout(function() {
-                ;
-            }, 0); //Why do I need a set timeout of 0? breaks if I remove setTimeout 
+                stream_track.stop();;
+            }, 100); //Why do I need a set timeout of 0? breaks if I remove setTimeout 
         }
         $("#canvas_user").toggleClass("display_none");
         $("#video_webcam").toggleClass("display_none");
