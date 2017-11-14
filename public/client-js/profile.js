@@ -31,6 +31,7 @@ var set_insert_tag_response = function(){
     });
     $("#input_tag").on("keypress", function(e){
         if(e.which === 13){
+            e.preventDefault(); //Prevents normal form submit
             insert_tag();
         }
     });
@@ -155,7 +156,6 @@ var load_tags = function(){
 };
 
 var main = function(){
-    //Set tag insert listener for buton
     set_insert_tag_response();
     set_remove_tag_response();
     set_save_profile_response();
