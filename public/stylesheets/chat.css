@@ -22,14 +22,15 @@
 }
 
 #msgs_container{
-    padding: 0px 15px;
+    padding: 5px 15px;
     overflow: scroll;
     overflow-x: hidden;
     border: 1px solid #a1a1a1;
 }
 
 #msgs_list{
-    padding:0px;
+    margin:0px;
+    height:100%;
     list-style-type: none;
 }
 

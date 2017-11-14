@@ -79,8 +79,8 @@ var add_msg_to_container = function(from_name, msg, is_sender){
     receive_class = "justify-content-md-start";
     var class_to_add = is_sender?send_class:receive_class;
     $("#msgs_list").append(
-        $(`<li class="row ${class_to_add}">
-                <div class="border border-primary rounded px-2 mt-2 mx-2 msg_container">${from_name + ": " + msg}</div>
+        $(`<li class="py-1 row ${class_to_add}">
+                <div class="border border-primary rounded px-2 mx-2 msg_container">${from_name + ": " + msg}</div>
             </li>`
         ));
 };
