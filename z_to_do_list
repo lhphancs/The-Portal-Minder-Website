@@ -1,8 +1,7 @@
-1) Fix chatroom so chat starts on bottom and works up
-2) Are chat msgs out of order?
-3) State date on msgs?
+1) State date on msgs?
 
 Questions:
+1) Mongo seems to extract in order. Is this guarentee?
 1) profile, any way to submit tag?
 2) Styling, how to make it so col-sm takes rest of screen?
     And how to make it so takes full height? (chat specifically and friends)
