@@ -13,12 +13,26 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/get-chat-history', function(req, res, next){
-  var other_user_id = req.query.other_user_id;
-  MessageModel.find( { 
-    $or: [ {from_id: other_user_id, to_id: req.user._id}
-          ,{from_id: req.user._id, to_id: other_user_id}] }
-    , function(err, messages){
-    res.send(messages);
+  var self_id = String(req.user._id); //Need to convert object to string for some reason
+  var selected_user_id = req.query.selected_user_id;
+  MessageModel.collection.aggregate(// Pipeline
+    [
+      // Stage 1
+      {
+        $match: {
+          $or: [{ "from_id": selected_user_id, "to_id": self_id }
+          , { "from_id": self_id, "to_id": selected_user_id }]
+        }
+      },
+      // Stage 2
+      {
+        $sort: {
+          time: 1
+        }
+      },
+    ],
+    function(err, chat_history) {
+      res.send(chat_history);
   });
 });
 
