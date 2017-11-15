@@ -10,7 +10,9 @@ var LISTID = {
 var add_user_to_container = function(list_id, user){
     var attachment; //Attachment that goes right besides their name, ie) btns: Remove/Accept/Reject...
     switch(list_id){
-        case LISTID.friends: attachment = `<button type="button" class="btn btn-outline-danger btn-sm btn_remove_friend">Remove</button>`; break;
+        case LISTID.friends:
+            attachment = `<button type="button" class="btn btn-outline-danger btn-sm btn_remove_friend">Remove</button>`;
+            break;
         case LISTID.friend_requests:
             attachment = `<button type="button" class="btn btn-outline-success btn-sm btn_accept_friend_request">Accept</button>
                             <button type="button" class="btn btn-outline-danger btn-sm btn_reject_friend_request">Reject</button>`;
@@ -81,6 +83,7 @@ var set_remove_friend_response = function(){
 
 var set_accept_friend_request_response = function(){
     $(`#${LISTID.friend_requests}`).on("click", ".btn_accept_friend_request", function(){
+        var li_to_remove = $(this).parent().parent();
         //Add to database for both users
         $.ajax({
             url:"http://localhost:3000/friends/add-friend",
@@ -90,18 +93,19 @@ var set_accept_friend_request_response = function(){
             dataType:"json",
             type:"PATCH"
         }).done(function(user){
-            add_user_to_container(user, LISTID.friends);
-
-            //Now update the screen by removing the accepted user
-            $(this).parent().parent().remove();
             //Update count
             var friend_requests_count = $("#friend_requests_count_badge").text();
             $("#friend_requests_count_badge").text(--friend_requests_count);
             var friends_count = $("#friends_count_badge").text();
             $("#friends_count_badge").text(++friends_count);
-            }).fail(function(){
-                alert("Failed to add friend to database!!");
+
+            //Update user's screen
+            add_user_to_container(LISTID.friends, user);
+            li_to_remove.remove();
+        }).fail(function(){
+            alert("Failed to add friend to database!!");
         });
+        
     });
 };
 
