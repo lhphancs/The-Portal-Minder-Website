@@ -26,7 +26,7 @@ var add_user_to_container = function(list_id, user){
     var user_name = user.firstName + " " + user.lastName;
     var user_id = user._id;
     $(`#${list_id}`).append(
-        `<li class="list-group-item d-flex justify-content-between" data-user-id="${user_id}">
+        `<li class="list-group-item d-flex justify-content-between list_row" data-user-id="${user_id}">
         <a href="http://localhost:3000/discover/profile/${user_id}">${user_name}</a>
         <div>
             ${attachment}

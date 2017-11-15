@@ -1,7 +1,7 @@
 1) State date on msgs?
 
 Questions:
-1) How to fix chat so it doesn't shrink 
+1) How to fix flexbox in chat
 2) Mongo seems to extract in order. Is this guarentee?
 3) profile, any way to submit tag?
 4) Styling, how to make it so col-sm takes rest of screen?

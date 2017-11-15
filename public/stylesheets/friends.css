@@ -17,6 +17,7 @@
 }
 
 .list-group-item{
+    height:40px;
     padding: 5px 5px;
 }
 
@@ -29,4 +30,8 @@
     height: 100%;
     padding: 0px 5px;
     margin-left: 5px;
+}
+
+.list_row{
+    min-height: 40px;
 }
