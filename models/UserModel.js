@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var userSchema = mongoose.Schema({
-  firstName: {type: String, require:true},
+  firstName: {type: String, require: true},
   lastName: {type: String, require: true},
   email: {type: String, require: true, unique: true},
   password: String,
@@ -14,7 +14,11 @@ var userSchema = mongoose.Schema({
   pendingFriends: [String], default: [],
   blockedUsers: [String], default: [],
   notifications: [ {from_id: String, message: String, unread: Boolean} ], default: [],
-  photoURL: String, default: ""
+  photoURL: String, default: "",
+  settings: { notification: {
+    friendAccepted: {type: Boolean, default: true},
+    chatInitiated: {type: Boolean, default: true},
+  } }
 });
 
 module.exports = mongoose.model('User', userSchema);

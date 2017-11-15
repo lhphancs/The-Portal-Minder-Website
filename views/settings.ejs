@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <% include bootstrap %>
+        <link type="text/css" rel= "stylesheet" href="/stylesheets/global.css">
+        <link type="text/css" rel= "stylesheet" href="/stylesheets/settings.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    </head>
+    
+    <body>
+        <% include nav_logged %>
+        <h1 class="title">Settings</h1>
+        <div class="container">
+            <form method="POST" action="settings/save">
+                
+                <div id="notifications_container" class="settings_row">
+                    <h5>Notifications</h1>
+                    <div>
+                        <div>
+                            <label class="form-check-label" for="checkbox_accepted_friend_requests">
+                                <input id="checkbox_accepted_friend_requests" class="form-check-input" type="checkbox" name="accepted_friend_requests">
+                                Accepted friend requests
+                            </label>
+                        </div>
+                        <div>
+                            <label class="form-check-label" for="checkbox_chat_initiated">
+                                <input id="checkbox_chat_initiated" class="form-check-input" type="checkbox" name="chat_initiated">
+                                First chat conversation initiated
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <input class="mt-2" type="submit" value="Save">
+            </form>
+            </div>
+        </div>
+    </body>
+</html>
+<script src="/client-js/settings.js"></script>
