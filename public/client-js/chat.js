@@ -75,11 +75,11 @@ var load_friends_and_click_first = function(){
 };
 
 var add_msg_to_container = function(from_name, msg, is_sender){
-    send_class = "justify-content-md-end";
-    receive_class = "justify-content-md-start";
+    send_class = "msg_sent";
+    receive_class = "msg_receive";
     var class_to_add = is_sender?send_class:receive_class;
     $("#msgs_list").append(
-        $(`<li class="py-1 row ${class_to_add}">
+        $(`<li class="py-1 ${class_to_add}">
                 <div class="border border-primary rounded px-2 mx-2 msg_container">${from_name + ": " + msg}</div>
             </li>`
         ));

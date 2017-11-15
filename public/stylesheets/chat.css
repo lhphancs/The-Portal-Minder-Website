@@ -42,3 +42,11 @@
     display:inline-block;
     white-space: pre-wrap;
 }
+
+.msg_sent{
+    text-align: end;
+}
+
+.msg_receive{
+    text-align: start;
+}
