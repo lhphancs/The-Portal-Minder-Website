@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 
 var userSchema = mongoose.Schema({
-  firstName: String,
-  lastName: String,
-  email: String,
+  firstName: {type: String, require:true},
+  lastName: {type: String, require: true},
+  email: {type: String, require: true, unique: true},
   password: String,
-  city: String,
+  city: {type: String, require: true},
   description: String, default: "",
   tags: [String], default: [],
   education: String, default: "",
@@ -13,7 +13,7 @@ var userSchema = mongoose.Schema({
   friendRequests: [String], default: [],
   pendingFriends: [String], default: [],
   blockedUsers: [String], default: [],
-  notification: [{id: String, message: String}], default: [],
+  notifications: [ {from_id: String, message: String, unread: Boolean} ], default: [],
   photoURL: String, default: ""
 });
 

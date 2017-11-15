@@ -13,10 +13,10 @@ var saltRounds = 10;
 router.get('/add-two', function(req, res, next){
   users = [
     {
-      firstName: "A", lastName: "A", email: "a@gmail.com", password: hash_password = bcrypt.hashSync("a", saltRounds)
+      firstName: "A", lastName: "A", email: "a@gmail.com", password: hash_password = bcrypt.hashSync("a", saltRounds), city: "A"
     }
     ,{
-      firstName: "B", lastName: "B", email: "b@gmail.com", password: hash_password = bcrypt.hashSync("b", saltRounds)
+      firstName: "B", lastName: "B", email: "b@gmail.com", password: hash_password = bcrypt.hashSync("b", saltRounds), city: "B"
     }
   ];
   UserModel.insertMany(users, function(error, docs) {});
