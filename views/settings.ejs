@@ -11,27 +11,31 @@
         <% include nav_logged %>
         <h1 class="title">Settings</h1>
         <div class="container">
-            <form method="POST" action="settings/save">
+            <form id="form_settings">
                 <div id="notifications_container" class="settings_row first_settings_row">
                     <h5>Account</h1>
                     <div>
                         <div class="form-group row">
                             <label for="input_current_password" class="col-sm-3 col-form-label text_right_align">Current Password</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" id="input_current_password" name="input_current_password">
+                                <input class="form-control" id="input_current_password" type="password">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="input_new_password1" class="col-sm-3 col-form-label text_right_align">New Password</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" id="input_new_password1" name="input_new_password1">
+                                <input class="form-control" id="input_new_password1" type="password" name="input_new_password1">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="input_new_password2" class="col-sm-3 col-form-label text_right_align">Confirm New Password</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" id="input_new_password2">
+                                <input class="form-control" id="input_new_password2" type="password">
                             </div>
+                        </div>
+                        <div id="alert_change_password" class="alert alert-danger mt-2 invisible" role="alert">
+                            <!-- Text = 'wrong password', 'non-matching pass'
+                                , or 'all password inputs required'. Handled by ajax -->
                         </div>
                     </div>
                 </div>

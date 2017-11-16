@@ -16,32 +16,33 @@ router.get('/', function(req, res, next) {
   } );
 });
 
-router.post('/save', function(req, res, next){
+var saltRounds = 10;
+router.patch('/save', function(req, res, next){
   var self_id = req.user._id;
-  var input_current_password = req.body.input_current_password;
-  var input_new_password1 = req.body.input_new_password1;
+  var current_password = req.body.current_password;
+  var new_password1 = req.body.new_password1;
 
   UserModel.findOne( { _id: self_id }, function(err, user){
     //User wants to change password
-    if(req.body.input_new_password1 === ""){
-      var is_matching_password = bcrypt.compareSync(req.body.password, user.password);
+    if(req.body.current_password !== ""){
+      var is_matching_password = bcrypt.compareSync(current_password, user.password);
       if(is_matching_password){
-        ;
+        var hash_password = bcrypt.hashSync(new_password1, saltRounds);
+        user.password = hash_password;
       }
       else{
-        res.redirect("/settings", {is_wrong_password: true});
+        res.send(false);
+        return;
       }
     }
-    else{
-      var is_setting_friend_accept = req.body.accepted_friend_requests === 'on';
-      var is_setting_chat_initiated = req.body.chat_initiated === 'on';
-      UserModel.update( {_id: self_id}, {
-        settings: {notification: {friendAccepted: is_setting_friend_accept,
-                    chatInitiated: is_setting_chat_initiated} }
-      }, function(err, data){
-        res.redirect("/settings");
-      });
-    }
+    //User successfully matched password or just wants to change non-security settings
+    var is_accept_friend_requests = req.body.is_accept_friend_requests;
+    var is_accept_chat_initiated = req.body.is_accept_chat_initiated;
+
+    user.settings = {notification: {friendAccepted: is_accept_friend_requests,
+                      chatInitiated: is_accept_chat_initiated} };
+    user.save();
+    res.send(true);
   });
 });
 

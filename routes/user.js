@@ -15,6 +15,7 @@ router.post('/validation', function(req, res, next) {
     if(user){
       //Check if password matches
       var is_matching_password = bcrypt.compareSync(req.body.password, user.password);
+      delete user.password;
       if(is_matching_password){
         req.session.user = user;
         res.send(true);
@@ -105,7 +106,6 @@ router.get('/logout', require_login, function(req, res, next){
   req.session.reset();
   res.redirect('/');
 });
-
 
 
 router.get('/get-blocked-users-list', require_login, function(req, res, next){
