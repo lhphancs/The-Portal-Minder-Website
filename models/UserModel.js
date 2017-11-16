@@ -13,7 +13,7 @@ var userSchema = mongoose.Schema({
   friendRequests: [String], default: [],
   pendingFriends: [String], default: [],
   blockedUsers: [String], default: [],
-  notifications: [ {from_id: String, message: String, unread: Boolean} ], default: [],
+  notifications: [ {from_id: String, message: String, isUnread: {type: Boolean, default: true} } ], default: [],
   photoURL: String, default: "",
   settings: { notification: {
     friendAccepted: {type: Boolean, default: true},

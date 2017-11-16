@@ -12,7 +12,29 @@
         <h1 class="title">Settings</h1>
         <div class="container">
             <form method="POST" action="settings/save">
-                
+                <div id="notifications_container" class="settings_row first_settings_row">
+                    <h5>Account</h1>
+                    <div>
+                        <div class="form-group row">
+                            <label for="input_current_password" class="col-sm-3 col-form-label text_right_align">Current Password</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="input_current_password" name="input_current_password">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="input_new_password1" class="col-sm-3 col-form-label text_right_align">New Password</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="input_new_password1" name="input_new_password1">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="input_new_password2" class="col-sm-3 col-form-label text_right_align">Confirm New Password</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="input_new_password2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="notifications_container" class="settings_row">
                     <h5>Notifications</h1>
                     <div>

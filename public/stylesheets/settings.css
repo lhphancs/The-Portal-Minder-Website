@@ -1,7 +1,9 @@
+.first_settings_row{
+    border-top: 1px solid black;
+}
+
 .settings_row{
     display:block;
-    margin-top: 10px;
     padding: 10px;
-    border-top: 1px solid black;
     border-bottom: 1px solid black;
 }

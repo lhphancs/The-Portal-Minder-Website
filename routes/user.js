@@ -5,7 +5,6 @@ var UserModel = require('../models/UserModel');
 var Message = require('../models/MessageModel');
 var bcrypt = require('bcrypt');
 var auth = require('../util/auth');
-
 var require_login = auth.require_login;
 
 var saltRounds = 10;
@@ -15,7 +14,7 @@ router.post('/validation', function(req, res, next) {
     //Check if user exists
     if(user){
       //Check if password matches
-      is_matching_password = bcrypt.compareSync(req.body.password, user.password);
+      var is_matching_password = bcrypt.compareSync(req.body.password, user.password);
       if(is_matching_password){
         req.session.user = user;
         res.send(true);
