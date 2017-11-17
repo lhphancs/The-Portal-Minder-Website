@@ -9,6 +9,10 @@ router.get('/', require_login, function(req, res, next) {
   res.render("notifications");
 });
 
+router.delete('/', require_login, function(req, res, next) {
+  res.render("notifications");
+});
+
 router.get('/get-all-notifications', require_login, function(req, res, next) {
   res.send(
     [
@@ -21,7 +25,7 @@ router.get('/get-all-notifications', require_login, function(req, res, next) {
       {
         id: -111111111111111,
         name: "ADMIN",
-        msg: "Here are some spam msgs!",
+        msg: "Here are some spam msgsssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss!",
         unread: true
       },
       {

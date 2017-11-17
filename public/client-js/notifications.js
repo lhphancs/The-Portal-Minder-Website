@@ -17,9 +17,9 @@ var load_notifications_with_database = function(){
         var json_size = json.length;
         for(var i=0; i<json_size; ++i){
             notifications_container.append(
-                `<li class="single_notification_container">
+                `<li class="single_notification_container data-user-id="${json[i].id}"">
                     <input type="checkbox" class="notification_checkbox">
-                    <a href="#"><div class="anchor_div" data-user-id="${json[i].id}"><b>${json[i].name}:</b> ${json[i].msg}</div></a>
+                    <a href="#"><div class="anchor_div"><b>${json[i].name}:</b> ${json[i].msg}</div></a>
                 </li>`
             );
         }
@@ -28,9 +28,26 @@ var load_notifications_with_database = function(){
     });
 };
 
+var set_select_all_notification_toggle = function(){
+    $("#selection_box").change(function(){
+        if(this.checked){
+            $(".notification_checkbox").each(function(){
+                $(this).prop("checked", true);
+            });
+        }
+            
+        else{
+            $(".notification_checkbox").each(function(){
+                $(this).prop("checked", false);
+            });
+        }
+    });
+}
+
 var main = function(){
     load_notifications_with_database();
     set_btn_notification_response();
+    set_select_all_notification_toggle();
 };
 
 main();
