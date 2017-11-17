@@ -47,14 +47,6 @@ router.post('/register-add', function(req, res, next) {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         city: req.body.city,
-        description: "",
-        tags: [],
-        education: "",
-        friends: [],
-        friendRequests: [],
-        pendingFriends: [],
-        blockedUsers: [],
-        notification: [],
         photoURL: req.body.photoURL
       });
       req.session.user = newUser;

@@ -20,10 +20,15 @@ router.patch('/add-pending-friend', function(req, res, next){
     user.pendingFriends.push(selected_user_id);
     user.save();
   });
-
   //For selected_user, add friendRequest
   UserModel.findOne( { _id: selected_user_id }, function(err, selected_user){
     selected_user.friendRequests.push(self_id);
+    if(selected_user.settings.notifications)
+    selected_user.notifications.push({
+      from_id: self_id,
+      message: "Friend request: I would like to become friends!",
+      isUnread: true
+    });
     selected_user.save();
   });
 
@@ -67,7 +72,12 @@ router.patch('/add-friend', function(req, res, next){
   //update selected_user
   UserModel.update( 
     { _id: selected_user_id },
-    { $push: {friends: self_id}
+    { $push: {friends: self_id},
+      $push: {notifications: {
+        from_id: self_id,
+        message: "Friend added: Hi friend!",
+        isUnread: true
+      } }
       , $pull: { friendRequests : self_id } //Why does order matter?
       , $pull: { pendingFriends : self_id }} //Why does order matter?
       , function(err, data) {

@@ -31,20 +31,12 @@
     font-size: 0.8em;
 }
 
-.notification_checkbox{
-    
-}
-
 .single_notification_container{
+    margin: 0px;
     border-top: 1px solid grey;
     padding: 5px;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-.anchor_div{
-    display:inline;
-    padding: 0px 0px 0px 5px;
-
 }
 
 .notification_header{
@@ -61,3 +53,10 @@
     cursor: pointer;
 }
 
+.unread{
+    font-weight: bold;
+}
+
+.no_notifications{
+    color: grey;
+}

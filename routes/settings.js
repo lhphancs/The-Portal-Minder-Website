@@ -39,7 +39,7 @@ router.patch('/save', function(req, res, next){
     var is_accept_friend_requests = req.body.is_accept_friend_requests;
     var is_accept_chat_initiated = req.body.is_accept_chat_initiated;
 
-    user.settings = {notification: {friendAccepted: is_accept_friend_requests,
+    user.settings = {notifications: {friendAccepted: is_accept_friend_requests,
                       chatInitiated: is_accept_chat_initiated} };
     user.save();
     res.send(true);

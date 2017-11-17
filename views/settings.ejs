@@ -46,7 +46,7 @@
                             <label class="form-check-label" for="checkbox_accepted_friend_requests">
                                 <input id="checkbox_accepted_friend_requests" class="form-check-input"
                                     type="checkbox" name="accepted_friend_requests"
-                                    <%if (settings.notification.friendAccepted) { %>
+                                    <%if (settings.notifications.friendAccepted) { %>
                                         checked="checked"
                                     <% } %>>Accepted friend requests
                             </label>
@@ -54,7 +54,7 @@
                         <div>
                             <label class="form-check-label" for="checkbox_chat_initiated">
                                 <input id="checkbox_chat_initiated" class="form-check-input" type="checkbox" name="chat_initiated"
-                                <%if (settings.notification.chatInitiated) { %>
+                                <%if (settings.notifications.chatInitiated) { %>
                                     checked="checked"
                                 <% } %>>First chat conversation initiated
                             </label>

@@ -41,14 +41,7 @@ router.get('/add-randoms', function(req, res, next){
           firstName: t_json.name.first,
           lastName: t_json.name.last,
           city: t_json.location.city,
-          description: "",
           tags: get_random_tags(),
-          education: "",
-          friends: [],
-          friendRequests: [],
-          pendingFriends: [],
-          blockedUsers: [],
-          notification: [],
           photoURL: t_json.picture.thumbnail
         };
         users.push(user);

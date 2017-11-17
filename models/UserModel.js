@@ -4,7 +4,7 @@ var userSchema = mongoose.Schema({
   firstName: {type: String, require: true},
   lastName: {type: String, require: true},
   email: {type: String, require: true, unique: true},
-  password: String,
+  password: {type: String, require: true},
   city: {type: String, require: true},
   description: String, default: "",
   tags: [String], default: [],
@@ -13,9 +13,10 @@ var userSchema = mongoose.Schema({
   friendRequests: [String], default: [],
   pendingFriends: [String], default: [],
   blockedUsers: [String], default: [],
-  notifications: [ {from_id: String, message: String, isUnread: {type: Boolean, default: true} } ], default: [],
+  notifications: [ {from_id: String, message: String, time : {type: Date, default: Date.now}
+                  , isUnread: {type: Boolean, default: true} } ], default: [],
   photoURL: String, default: "",
-  settings: { notification: {
+  settings: { notifications: {
     friendAccepted: {type: Boolean, default: true},
     chatInitiated: {type: Boolean, default: true},
   } }
