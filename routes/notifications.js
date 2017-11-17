@@ -15,17 +15,20 @@ router.get('/get-all-notifications', require_login, function(req, res, next) {
       {
         id: -111111111111111,
         name: "ADMIN",
-        msg: "Welcome to minder!"
+        msg: "Welcome to minder!",
+        unread: true
       },
       {
         id: -111111111111111,
         name: "ADMIN",
-        msg: "Here are some spam msgs!"
+        msg: "Here are some spam msgs!",
+        unread: true
       },
       {
         id: -111111111111111,
         name: "ADMIN",
-        msg: "Here are some spam msgs!"
+        msg: "Here are some spam msgs!",
+        unread: true
       }
     ]
   );

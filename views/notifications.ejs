@@ -12,12 +12,23 @@
 
 		<h1 class="title">Notification</h1>
 		<div class="container">
-			<div class="row">
-				<div id="notifications_container" class="col-sm-12 ml-2">
-					<!-- AJAX fills this spot with database-->
+			<div class="header_container">
+				<input id="selection_box" type="checkbox">
+				<div class="btn-group ml-2">
+					<button class="btn btn-secondary btn-sm dropdown-toggle drop_down_button" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+					</button>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="#">Delete</a>
+						<a class="dropdown-item" href="#">Mark as read</a>
+						<a class="dropdown-item" href="#">Mark as unread</a>
+					</div>
 				</div>
 			</div>
-			
+		
+			<ul id="notifications_list">
+				<!-- AJAX fills this spot with database-->
+			</ul>
 		</div>
 	</body>
 </html>
