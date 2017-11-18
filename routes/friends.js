@@ -63,8 +63,7 @@ router.patch('/add-friend', function(req, res, next){
   UserModel.update( 
     { _id: self_id },
     { $push: {friends: selected_user_id}
-      , $pull: { pendingFriends : selected_user_id } //Why does order matter?
-      , $pull: { friendRequests : selected_user_id } } //Why does order matter?
+      , $pull: { pendingFriends : selected_user_id, friendRequests : selected_user_id } }
       , function(err, data) {
         console.log("Updated self: added friend/remove pendingFriends + friendRequests");
   });
@@ -72,14 +71,13 @@ router.patch('/add-friend', function(req, res, next){
   //update selected_user
   UserModel.update( 
     { _id: selected_user_id },
-    { $push: {friends: self_id},
-      $push: {notifications: {
-        from_id: self_id,
-        message: "Friend added: Hi friend!",
-        isUnread: true
-      } }
-      , $pull: { friendRequests : self_id } //Why does order matter?
-      , $pull: { pendingFriends : self_id }} //Why does order matter?
+    { $push: {friends: self_id,
+        notifications: {
+          from_id: self_id,
+          message: "Friend added: Hi friend!",
+          isUnread: true }
+      }
+      , $pull: { friendRequests : self_id, pendingFriends : self_id } }
       , function(err, data) {
         console.log("Updated selected_user: added friend/remove pendingFriends + friendRequests");
   });
@@ -91,14 +89,14 @@ router.patch('/reject-friend-request', function(req, res, next){
   var selected_user_id = req.body.select_user_id;
   //update self
   UserModel.update( 
-    { _id: self_id }, { $pull: { friendRequests : selected_user_id } }
+    { _id: self_id }, { $pull: { friendRequests : selected_user_id, pendingFriends: selected_user_id} }
       , function(err, data) {
         console.log("Updated self: removed pendingFriend");
   });
 
   //update selected_user
   UserModel.update( 
-    { _id: selected_user_id }, { $pull: { pendingFriends : self_id } }
+    { _id: selected_user_id }, { $pull: { friendRequests: self_id, pendingFriends: self_id} }
       , function(err, data) {
         console.log("Updated selectedUser: removed friendRequest");
   });

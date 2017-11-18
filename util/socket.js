@@ -14,7 +14,7 @@ module.exports = {
               });
 
             socket.on('sent_chat_msg', function(data){
-                socket.broadcast.to(data.room_id).emit('received_chat_msg', data.msg);
+                socket.to(data.room_id).emit('received_chat_msg', data.msg);
             });
         });
         

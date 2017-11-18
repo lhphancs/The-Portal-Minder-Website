@@ -83,12 +83,13 @@ var set_remove_friend_response = function(){
 
 var set_accept_friend_request_response = function(){
     $(`#${LISTID.friend_requests}`).on("click", ".btn_accept_friend_request", function(){
+        var select_user_id = $(this).parent().parent().attr("data-user-id");
         var li_to_remove = $(this).parent().parent();
         //Add to database for both users
         $.ajax({
             url:"http://localhost:3000/friends/add-friend",
             data:{
-                select_user_id: $(this).parent().parent().attr("data-user-id")
+                select_user_id: select_user_id
             },
             dataType:"json",
             type:"PATCH"
@@ -102,6 +103,13 @@ var set_accept_friend_request_response = function(){
             //Update user's screen
             add_user_to_container(LISTID.friends, user);
             li_to_remove.remove();
+
+            //If selected user is in pending list as well, remove that too
+            var return_removal = $(`li[data-user-id='${select_user_id}']`).remove();
+            if(return_removal.length != 0){
+                var pending_friends_count = $("#pending_friends_count_badge").text();
+                $("#pending_friends_count_badge").text(--pending_friends_count);
+            }
         }).fail(function(){
             alert("Failed to add friend to database!!");
         });
@@ -112,10 +120,11 @@ var set_accept_friend_request_response = function(){
 var set_reject_friend_request_response = function(){
     $(`#${LISTID.friend_requests}`).on("click", ".btn_reject_friend_request", function(){
         //Update pendingFriend and requestFriend to database for both users
+        var select_user_id = $(this).parent().parent().attr("data-user-id");
         $.ajax({
             url:"http://localhost:3000/friends/reject-friend-request",
             data:{
-                select_user_id: $(this).parent().parent().attr("data-user-id")
+                select_user_id: select_user_id
             },
             dataType:"json",
             type:"PATCH"
@@ -127,6 +136,13 @@ var set_reject_friend_request_response = function(){
         //Update count
         var count = $("#friend_requests_count_badge").text();
         $("#friend_requests_count_badge").text(--count);
+
+        //If selected user is in pending list as well, remove that too
+        var return_removal = $(`li[data-user-id='${select_user_id}']`).remove();
+        if(return_removal.length != 0){
+            var pending_friends_count = $("#pending_friends_count_badge").text();
+            $("#pending_friends_count_badge").text(--pending_friends_count);
+        }
     });
 };
 
