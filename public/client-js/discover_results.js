@@ -57,7 +57,9 @@ var set_btn_response_toggle_add_friend = function(){
                 dataType: "json"
             }).done(function(){
                 socket.emit('notify', {
-                    id: select_user_id,
+                    self_id: self_id,
+                    select_user_id: select_user_id,
+                    type: NOTIFY_TYPE.add_pending,
                     msg: "Friend request: " + self_name
                 });
             }).fail(function(){
@@ -74,7 +76,9 @@ var set_btn_response_toggle_add_friend = function(){
             }).done(function(){
                 //Now notify other user
                 socket.emit('notify', {
-                    id: select_user_id,
+                    self_id: self_id,
+                    select_user_id: select_user_id,
+                    type: NOTIFY_TYPE.remove_pending,
                     msg: "Friend request cancelled: " + self_name
                 });
             }).fail(function(){

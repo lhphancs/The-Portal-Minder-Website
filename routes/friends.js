@@ -43,19 +43,24 @@ router.patch('/remove-pending-friend', function(req, res, next){
   var selected_user_id = req.body.select_user_id;
 
   //Remove pending friend
-  UserModel.update( 
-    { _id: self_id },
-    { $pull: { pendingFriends : selected_user_id } },
-    function(err, data) {
-        ;
+  UserModel.findOne( { _id: self_id }, function(err, user){
+    user.pendingFriends.pull(selected_user_id);
+    user.save();
   });
 
   //Remove request for selected_user
-  UserModel.update( 
-    { _id: selected_user_id },
-    { $pull: { friendRequests: self_id } },
-    function(err, data) {
-        res.send(true);
+  UserModel.findOne( { _id: selected_user_id }, function(err, selected_user){
+    selected_user.friendRequests.pull(self_id);
+    if(selected_user.settings.notifications.friendRequestCancel){
+      selected_user.notifications.messages.push({
+        from_id: self_id,
+        message: "Friend request cancel: Nevermind!",
+        isUnread: true
+      });
+      ++selected_user.notifications.unviewedCount;
+    }
+    selected_user.save();
+    res.send(true);
   });
 });
 
@@ -84,9 +89,8 @@ router.patch('/add-friend', function(req, res, next){
       ++selected_user.notifications.unviewedCount;
     }
     selected_user.save();
+    res.send(selected_user);
   });
-
-  res.send(req.user);
 });
 
 router.patch('/reject-friend-request', function(req, res, next){

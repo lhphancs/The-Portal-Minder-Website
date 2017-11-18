@@ -1,8 +1,8 @@
-1) Need to delete password from cookie
+1) Update in real time friends list if they do stuff to it.
 
 Questions:
-1) How to fix flexbox in chat
-2) Mongo seems to extract in order. Is this guarentee?
-3) profile, any way to submit tag?
-4) Styling, how to make it so col-sm takes rest of screen?
+1) How to fix flexbox in chat.
+    A: height needs to be set
+2) profile, any way to submit tag?
+3) Styling, how to make it so col-sm takes rest of screen?
     And how to make it so takes full height? (chat specifically and friends)

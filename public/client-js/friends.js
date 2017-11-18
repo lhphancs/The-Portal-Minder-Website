@@ -81,7 +81,9 @@ var set_remove_friend_response = function(){
         $("#friends_count_badge").text(--count);
 
         socket.emit('notify', {
-            id: select_user_id,
+            self_id: self_id,
+            select_user_id: select_user_id,
+            type: NOTIFY_TYPE.remove_friend,
             msg: "Friend removed you: " + self_name
         });
     });
@@ -90,7 +92,7 @@ var set_remove_friend_response = function(){
 var set_accept_friend_request_response = function(){
     $(`#${LISTID.friend_requests}`).on("click", ".btn_accept_friend_request", function(){
         var select_user_id = $(this).parent().parent().attr("data-user-id");
-        var li_to_remove = $(this).parent().parent();
+        $(this).parent().parent().remove();
         //Add to database for both users
         $.ajax({
             url:"/friends/add-friend",
@@ -108,7 +110,6 @@ var set_accept_friend_request_response = function(){
 
             //Update user's screen
             add_user_to_container(LISTID.friends, user);
-            li_to_remove.remove();
 
             //If selected user is in pending list as well, remove that too
             var return_removal = $(`#pending-friends-list > li[data-user-id='${select_user_id}']`).remove();
@@ -119,7 +120,9 @@ var set_accept_friend_request_response = function(){
 
             //Now notify other user
             socket.emit('notify', {
-                id: select_user_id,
+                self_id: self_id,
+                select_user_id: select_user_id,
+                type: NOTIFY_TYPE.accept_friend,
                 msg: "Friend Accepted: " + self_name
             });
         }).fail(function(){
@@ -133,7 +136,7 @@ var set_reject_friend_request_response = function(){
     $(`#${LISTID.friend_requests}`).on("click", ".btn_reject_friend_request", function(){
         //Update pendingFriend and requestFriend to database for both users
         var select_user_id = $(this).parent().parent().attr("data-user-id");
-        var li_to_remove = $(this).parent().parent();
+        $(this).parent().parent().remove();
         $.ajax({
             url:"/friends/reject-friend-request",
             data:{
@@ -146,8 +149,6 @@ var set_reject_friend_request_response = function(){
             var count = $("#friend_requests_count_badge").text();
             $("#friend_requests_count_badge").text(--count);
 
-            li_to_remove.remove();
-
             //If selected user is in pending list as well, remove that too
             var return_removal = $(`#pending-friends-list > li[data-user-id='${select_user_id}']`).remove();
             if(return_removal.length != 0){
@@ -157,7 +158,9 @@ var set_reject_friend_request_response = function(){
 
             //Now notify other user
             socket.emit('notify', {
-                id: select_user_id,
+                self_id: self_id,
+                select_user_id: select_user_id,
+                type: NOTIFY_TYPE.reject_friend,
                 msg: "Friend Rejected: " + self_name
             });
         }).fail(function(){
@@ -169,7 +172,8 @@ var set_reject_friend_request_response = function(){
 var set_remove_pending_friend_response = function(){
     $(`#${LISTID.pending_friends}`).on("click", ".btn_remove_pending", function(){
         //Update pendingFriend and requestFriend to database for both users
-        var select_user_id = $(this).parent().parent().attr("data-user-id")
+        var select_user_id = $(this).parent().parent().attr("data-user-id");
+        $(this).parent().parent().remove();
         $.ajax({
             url:"/friends/remove-pending-friend",
             data:{
@@ -186,7 +190,9 @@ var set_remove_pending_friend_response = function(){
 
             //Now notify other user
             socket.emit('notify', {
-                id: select_user_id,
+                self_id: self_id,
+                select_user_id: select_user_id,
+                type: NOTIFY_TYPE.remove_pending,
                 msg: "Friend request cancelled: " + self_name
             });
         }).fail(function(){

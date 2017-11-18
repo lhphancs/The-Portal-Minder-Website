@@ -19,14 +19,18 @@ module.exports = {
               });
 
             //sent_chat_msg 'data' is {room_id:self+selectedID, msg: "some message"} where room_id sorted by alphabetical
-            socket.on('sent_chat_msg', function(data){ 
+            socket.on('sent_chat_msg', function(data){
+                console.log("Sent chat msg");
                 socket.broadcast.to(data.room_id).emit('received_chat_msg', data.msg);
             });
 
             socket.on('notify', function(data){
-                console.log("SENT");
-                socket.to(data.id).emit('notify', data.msg);
-                console.log(data.id);
+                console.log("SENT notification: " + data.type);
+                socket.to(data.select_user_id).emit('notify', {
+                    id: data.self_id,
+                    type: data.type,
+                    msg: data.msg
+                });
             })
         });
         
