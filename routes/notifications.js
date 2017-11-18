@@ -3,12 +3,13 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var auth = require('../util/auth');
 var UserModel = require('../models/UserModel');
+var NotificationModel = require('../models/NotificationModel');
 
 var require_login = auth.require_login;
 
 router.get('/', require_login, function(req, res, next) {
   UserModel.findOne( { _id: req.user._id }, function(err, user){
-    user.notifications.unviewedCount = 0;
+    user.notificationsUnviewedCount = 0;
     user.save();
     res.render("notifications");
     res.end;
@@ -17,7 +18,7 @@ router.get('/', require_login, function(req, res, next) {
 
 router.get('/get-unread-count', require_login, function(req, res, next) {
   UserModel.findOne( { _id: req.user._id }, function(err, user){
-    res.send( {count: user.notifications.unviewedCount} );
+    res.send( {count: user.notificationsUnviewedCount} );
   } );
 });
 
@@ -29,13 +30,10 @@ router.post('/get-names', require_login, function(req, res, next) {
   } );
 });
 
-router.delete('/', require_login, function(req, res, next) {
-  res.render("notifications");
-});
-
 router.get('/get-all-notifications', require_login, function(req, res, next) {
-  UserModel.findOne( { _id: req.user._id }, function(err, user){
-    res.send(user.notifications.messages);
+  NotificationModel.find( { user_id: req.user._id }, function(err, notifications){
+    console.log(notifications);
+    res.send(notifications);
   } );
 });
 

@@ -51,7 +51,7 @@ var load_notifications_with_database = function(){
         for(var i=0; i<json_size; ++i){
             var attached_class = json[i].isUnread?"unread":"";
             notifications_container.append(
-                `<li class="row single_notification_container ${attached_class}" data-user-id="${json[i].from_id}">
+                `<li class="row single_notification_container ${attached_class}" data-user-id="${json[i].fromId}">
                     <input type="checkbox" class="notification_checkbox">
                     <div class="col-sm-3 name_div"></div>
                     <div class="col-sm-8"> ${json[i].message}</div>

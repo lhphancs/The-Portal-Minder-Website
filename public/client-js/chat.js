@@ -109,7 +109,7 @@ var send_msg_response = function(socket){
     $.ajax({
         url: "/chat/save-message",
         data: {
-            to_id: selected_user.id,
+            toId: selected_user.id,
             message: msg_from_chat_box
         },
         dataType: "json",
@@ -151,7 +151,7 @@ var fill_chat_container_with_history_json = function(json){
     var selected_user_name = get_selected_user().name;
     var selected_user_id = get_selected_user().id;
     for(var i=0; i<json.length; ++i){
-        if( json[i].to_id === selected_user_id ){ //If sent msg
+        if( json[i].toId === selected_user_id ){ //If sent msg
             add_msg_to_container(self_name, json[i].message, true);
         } 
         else{ //else it is received msg

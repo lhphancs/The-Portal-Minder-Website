@@ -104,12 +104,6 @@ router.get('/logout', require_login, function(req, res, next){
 });
 
 
-router.get('/get-blocked-users-list', require_login, function(req, res, next){
-  UserModel.find( { _id: {$in: req.user.blockedUsers} }, ["_id", "firstName", "lastName"], function(err, users){
-    res.send(users);
-  });
-});
-
 router.get('/get-self', require_login, function(req, res, next){
   res.send(req.user);
 });

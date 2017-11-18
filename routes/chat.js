@@ -20,8 +20,8 @@ router.get('/get-chat-history', function(req, res, next){
       // Stage 1
       {
         $match: {
-          $or: [{ "from_id": selected_user_id, "to_id": self_id }
-          , { "from_id": self_id, "to_id": selected_user_id }]
+          $or: [{ "fromId": selected_user_id, "toId": self_id }
+          , { "fromId": self_id, "toId": selected_user_id }]
         }
       },
       // Stage 2
@@ -38,8 +38,8 @@ router.get('/get-chat-history', function(req, res, next){
 
 router.post('/save-message', function(req, res, next){
   var new_message = new MessageModel({
-    from_id: req.user._id,
-    to_id: req.body.to_id,
+    fromId: req.user._id,
+    toId: req.body.toId,
     message: req.body.message
   });
   new_message.save(function (err) {

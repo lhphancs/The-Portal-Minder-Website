@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var auth = require('../util/auth');
 var UserModel = require('../models/UserModel');
+var NotificationModel = require('../models/NotificationModel');
 
 router.use(auth.require_login);
 
@@ -24,18 +25,16 @@ router.patch('/add-pending-friend', function(req, res, next){
   UserModel.findOne( { _id: selected_user_id }, function(err, selected_user){
     selected_user.friendRequests.push(self_id);
     if(selected_user.settings.notifications.friendRequest){
-      selected_user.notifications.messages.push({
-        from_id: self_id,
-        message: "Friend request: I would like to become friends!",
-        isUnread: true
+      var newNotification = new NotificationModel({
+        fromId: self_id,
+        message: "Friend request: I would like to become friends!"
       });
-      ++selected_user.notifications.unviewedCount;
+      newNotification.save();
+      ++selected_user.notificationsUnviewedCount;
     }
-    
     selected_user.save();
+    res.send(true);
   });
-
-  res.send(true);
 });
 
 router.patch('/remove-pending-friend', function(req, res, next){
@@ -54,12 +53,12 @@ router.patch('/remove-pending-friend', function(req, res, next){
     selected_user.friendRequests.pull(self_id);
     selected_user.pendingFriends.pull(self_id);
     if(selected_user.settings.notifications.friendRequestCancelled){
-      selected_user.notifications.messages.push({
-        from_id: self_id,
-        message: "Friend request cancel: Nevermind!",
-        isUnread: true
+      var newNotification = new NotificationModel({
+        fromId: self_id,
+        message: "Friend request cancel: Nevermind!"
       });
-      ++selected_user.notifications.unviewedCount;
+      newNotification.save();
+      ++selected_user.notificationsUnviewedCount;
     }
     selected_user.save();
     res.send(true);
@@ -83,12 +82,12 @@ router.patch('/add-friend', function(req, res, next){
     selected_user.friendRequests.pull(self_id);
     selected_user.pendingFriends.pull(self_id);
     if(selected_user.settings.notifications.friendAccepted){
-      selected_user.notifications.messages.push({
-        from_id: self_id,
-        message: "Friend added: Hi friend!",
-        isUnread: true
+      var newNotification = new NotificationModel({
+        fromId: self_id,
+        message: "Friend added: Hi friend!"
       });
-      ++selected_user.notifications.unviewedCount;
+      newNotification.save();
+      ++selected_user.notificationsUnviewedCount;
     }
     selected_user.save();
     res.send(selected_user);
@@ -110,13 +109,14 @@ router.patch('/reject-friend-request', function(req, res, next){
   UserModel.findOne( { _id: selected_user_id }, function(err, selected_user){
     selected_user.friendRequests.pull(self_id);
     selected_user.pendingFriends.pull(self_id);
+
     if(selected_user.settings.notifications.friendRejected){
-      selected_user.notifications.messages.push({
-        from_id: self_id,
-        message: "Friend request rejected.",
-        isUnread: true
+      var newNotification = new NotificationModel({
+        fromId: self_id,
+        message: "Friend request rejected."
       });
-      ++selected_user.notifications.unviewedCount;
+      newNotification.save();
+      ++selected_user.notificationsUnviewedCount;
     }
     selected_user.save();
     console.log("Updated selectedUser: removed friendRequest");
@@ -138,12 +138,12 @@ router.patch('/remove-friend', function(req, res, next){
   UserModel.findOne( { _id: selected_user_id }, function(err, selected_user){
     selected_user.friends.pull(self_id);
     if(selected_user.settings.notifications.friendRemoved){
-      selected_user.notifications.messages.push({
-        from_id: self_id,
-        message: "Friend removed",
-        isUnread: true
+      var newNotification = new NotificationModel({
+        fromId: self_id,
+        message: "Friend request rejected."
       });
-      ++selected_user.notifications.unviewedCount;
+      newNotification.save();
+      ++selected_user.notificationsUnviewedCount;
     }
     selected_user.save();
     console.log("Updated self: removed friend");
