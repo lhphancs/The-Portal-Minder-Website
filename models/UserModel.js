@@ -23,8 +23,10 @@ var userSchema = mongoose.Schema({
   photoURL: String, default: "",
   settings: { notifications: {
     friendRequest: {type: Boolean, default: true},
-    friendRequestCancel: {type: Boolean, default: true},
+    friendRequestCancelled: {type: Boolean, default: true},
     friendAccepted: {type: Boolean, default: true},
+    friendRejected: {type: Boolean, default: true},
+    friendRemoved: {type: Boolean, default: true},
     chatInitiated: {type: Boolean, default: true}, 
   } }
 });

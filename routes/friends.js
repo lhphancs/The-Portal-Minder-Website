@@ -42,16 +42,18 @@ router.patch('/remove-pending-friend', function(req, res, next){
   var self_id = req.user._id;
   var selected_user_id = req.body.select_user_id;
 
-  //Remove pending friend
+  //Update self
   UserModel.findOne( { _id: self_id }, function(err, user){
+    user.friendRequests.pull(selected_user_id);
     user.pendingFriends.pull(selected_user_id);
     user.save();
   });
 
-  //Remove request for selected_user
+  //Update selected_user
   UserModel.findOne( { _id: selected_user_id }, function(err, selected_user){
     selected_user.friendRequests.pull(self_id);
-    if(selected_user.settings.notifications.friendRequestCancel){
+    selected_user.pendingFriends.pull(self_id);
+    if(selected_user.settings.notifications.friendRequestCancelled){
       selected_user.notifications.messages.push({
         from_id: self_id,
         message: "Friend request cancel: Nevermind!",
@@ -70,16 +72,16 @@ router.patch('/add-friend', function(req, res, next){
   //update self
   UserModel.findOne( { _id: self_id }, function(err, user){
     user.friends.push(selected_user_id);
-    user.pendingFriends.pull(selected_user_id);
     user.friendRequests.pull(selected_user_id);
+    user.pendingFriends.pull(selected_user_id);
     user.save();
   });
 
   //update selected_user
   UserModel.findOne( { _id: selected_user_id }, function(err, selected_user){
     selected_user.friends.push(self_id);
-    selected_user.pendingFriends.pull(self_id);
     selected_user.friendRequests.pull(self_id);
+    selected_user.pendingFriends.pull(self_id);
     if(selected_user.settings.notifications.friendAccepted){
       selected_user.notifications.messages.push({
         from_id: self_id,
@@ -97,38 +99,56 @@ router.patch('/reject-friend-request', function(req, res, next){
   var self_id = req.user._id;
   var selected_user_id = req.body.select_user_id;
   //update self
-  UserModel.update( 
-    { _id: self_id }, { $pull: { friendRequests : selected_user_id, pendingFriends: selected_user_id} }
-      , function(err, data) {
-        console.log("Updated self: removed pendingFriend");
+  UserModel.findOne( { _id: self_id }, function(err, user){
+    user.friendRequests.pull(selected_user_id);
+    user.pendingFriends.pull(selected_user_id);
+    user.save();
+    console.log("Updated self: removed pendingFriend");
   });
 
   //update selected_user
-  UserModel.update( 
-    { _id: selected_user_id }, { $pull: { friendRequests: self_id, pendingFriends: self_id} }
-      , function(err, data) {
-        console.log("Updated selectedUser: removed friendRequest");
+  UserModel.findOne( { _id: selected_user_id }, function(err, selected_user){
+    selected_user.friendRequests.pull(self_id);
+    selected_user.pendingFriends.pull(self_id);
+    if(selected_user.settings.notifications.friendRejected){
+      selected_user.notifications.messages.push({
+        from_id: self_id,
+        message: "Friend request rejected.",
+        isUnread: true
+      });
+      ++selected_user.notifications.unviewedCount;
+    }
+    selected_user.save();
+    console.log("Updated selectedUser: removed friendRequest");
+    res.send(true);
   });
-  res.send(true);
 });
 
 router.patch('/remove-friend', function(req, res, next){
   var self_id = req.user._id;
   var selected_user_id = req.body.select_user_id;
   //update self
-  UserModel.update( 
-    { _id: self_id }, { $pull: { friends : selected_user_id } }
-      , function(err, data) {
-        console.log("Updated self: removed friend");
+  UserModel.findOne( { _id: self_id }, function(err, user){
+    user.friends.pull(selected_user_id);
+    user.save();
+    console.log("Updated self: removed friend");
   });
 
   //update selected_user
-  UserModel.update( 
-    { _id: selected_user_id }, { $pull: { friends : self_id } }
-      , function(err, data) {
-        console.log("Updated selectedUser: removed friend");
+  UserModel.findOne( { _id: selected_user_id }, function(err, selected_user){
+    selected_user.friends.pull(self_id);
+    if(selected_user.settings.notifications.friendRemoved){
+      selected_user.notifications.messages.push({
+        from_id: self_id,
+        message: "Friend removed",
+        isUnread: true
+      });
+      ++selected_user.notifications.unviewedCount;
+    }
+    selected_user.save();
+    console.log("Updated self: removed friend");
+    res.send(true);
   });
-  res.send(true);
 });
 
 router.get('/get-friends-list', function(req, res, next){

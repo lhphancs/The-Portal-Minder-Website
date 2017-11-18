@@ -63,7 +63,8 @@ var load_list = function(list_id){
 var set_remove_friend_response = function(){
     $(`#${LISTID.friends}`).on("click", ".btn_remove_friend", function(){
         //Add to database for both users
-        var select_user_id = $(this).parent().parent().attr("data-user-id")
+        var select_user_id = $(this).parent().parent().attr("data-user-id");
+        $(this).parent().parent().remove();
         $.ajax({
             url:"/friends/remove-friend",
             data:{
@@ -71,20 +72,21 @@ var set_remove_friend_response = function(){
             },
             dataType:"json",
             type:"PATCH"
+        }).done(function(){
+            //Now update the screen by removing the accepted user
+            $(this).parent().parent().remove();
+            //Update count
+            var count = $("#friends_count_badge").text();
+            $("#friends_count_badge").text(--count);
+
+            socket.emit('notify', {
+                self_id: self_id,
+                select_user_id: select_user_id,
+                type: NOTIFY_TYPE.remove_friend,
+                msg: "Friend removed you: " + self_name
+            });
         }).fail(function(){
             alert("Failed to add friend to database!!");
-        });
-        //Now update the screen by removing the accepted user
-        $(this).parent().parent().remove();
-        //Update count
-        var count = $("#friends_count_badge").text();
-        $("#friends_count_badge").text(--count);
-
-        socket.emit('notify', {
-            self_id: self_id,
-            select_user_id: select_user_id,
-            type: NOTIFY_TYPE.remove_friend,
-            msg: "Friend removed you: " + self_name
         });
     });
 };
@@ -187,6 +189,13 @@ var set_remove_pending_friend_response = function(){
             //Update count
             var count = $("#pending_friends_count_badge").text();
             $("#pending_friends_count_badge").text(--count);
+
+            //If selected_user has user in friend_request, remove that too
+            var return_removal = $(`#friend-requests-list > li[data-user-id='${select_user_id}']`).remove();
+            if(return_removal.length != 0){
+                var friend_requests_count = $("#friend_requests_count_badge").text();
+                $("#friend_requests_count_badge").text(--friend_requests_count);
+            }
 
             //Now notify other user
             socket.emit('notify', {
