@@ -1,18 +1,3 @@
-/*NOTE: These are from the perspective of the person doing the action
-ex) remove_pending
-User 1: remove_pending  ie) User 1 is cancelling friend request
-User 2: Means other person withdrew friend request
-
-Using this to try to update friend list in real time.
-*/
-var NOTIFY_TYPE = {
-    add_pending: 0,
-    remove_pending: 1,
-    accept_friend: 2,
-    reject_friend: 3,
-    remove_friend: 4
-}
-
 //Setup for toast
 function show_toast() {
     // Get the snackbar DIV
@@ -51,5 +36,38 @@ socket.on('notify', function(data){
     //Show toast
     $("#snackbar").text(data.msg)
     show_toast();
+
+    //Now handle page specific stuff
+    switch(page){
+        case PAGE.discover_results:
+            if(data.type === NOTIFY_TYPE.accept_friend){
+                //Remove box for that user
+            }
+            else if(data.type === NOTIFY_TYPE.reject_friend || data.type === NOTIFY_TYPE.remove_pending){
+                //Set box to "add mode"
+            }
+            else if(data.type === NOTIFY_TYPE.remove_friend){
+                //Re-add box for that user
+            }
+            console.log("discover_results");
+            break;
+        case PAGE.friends:
+            if(data.type === NOTIFY_TYPE.accept_friend){
+                //Add to friend, remove friend_request+pending
+            }
+            else if(data.type === NOTIFY_TYPE.reject_friend || data.type === NOTIFY_TYPE.remove_pending){
+                //Remove friend_request+pending
+            }
+            else if(data.type === NOTIFY_TYPE.remove_friend){
+                //Remove from friend
+                console.log("friends");
+            }
+            else if(data.type === NOTIFY_TYPE.add_pending){
+                //Add to friend request
+            }
+            break;
+        default:
+            console.log("None");
+    }
 });
 

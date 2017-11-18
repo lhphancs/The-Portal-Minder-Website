@@ -15,8 +15,12 @@ router.post('/validation', function(req, res, next) {
     if(user){
       //Check if password matches
       var is_matching_password = bcrypt.compareSync(req.body.password, user.password);
-      delete user.password;
       if(is_matching_password){
+        //Only store necessary stuff
+        user = {
+          _id: user._id,
+          email: user.email
+        };
         req.session.user = user;
         res.send(true);
       }

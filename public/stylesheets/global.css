@@ -1,5 +1,6 @@
 body{
     background-color:#eae5ff;
+    padding-top: 50px; /* To counter the nav-bar */
 }
 
 .title{
