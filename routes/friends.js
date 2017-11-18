@@ -23,12 +23,15 @@ router.patch('/add-pending-friend', function(req, res, next){
   //For selected_user, add friendRequest
   UserModel.findOne( { _id: selected_user_id }, function(err, selected_user){
     selected_user.friendRequests.push(self_id);
-    if(selected_user.settings.notifications)
-    selected_user.notifications.push({
-      from_id: self_id,
-      message: "Friend request: I would like to become friends!",
-      isUnread: true
-    });
+    if(selected_user.settings.notifications.friendRequest){
+      selected_user.notifications.messages.push({
+        from_id: self_id,
+        message: "Friend request: I would like to become friends!",
+        isUnread: true
+      });
+      ++selected_user.notifications.unviewedCount;
+    }
+    
     selected_user.save();
   });
 
@@ -60,27 +63,29 @@ router.patch('/add-friend', function(req, res, next){
   var self_id = req.user._id;
   var selected_user_id = req.body.select_user_id;
   //update self
-  UserModel.update( 
-    { _id: self_id },
-    { $push: {friends: selected_user_id}
-      , $pull: { pendingFriends : selected_user_id, friendRequests : selected_user_id } }
-      , function(err, data) {
-        console.log("Updated self: added friend/remove pendingFriends + friendRequests");
+  UserModel.findOne( { _id: self_id }, function(err, user){
+    user.friends.push(selected_user_id);
+    user.pendingFriends.pull(selected_user_id);
+    user.friendRequests.pull(selected_user_id);
+    user.save();
   });
 
   //update selected_user
-  UserModel.update( 
-    { _id: selected_user_id },
-    { $push: {friends: self_id,
-        notifications: {
-          from_id: self_id,
-          message: "Friend added: Hi friend!",
-          isUnread: true }
-      }
-      , $pull: { friendRequests : self_id, pendingFriends : self_id } }
-      , function(err, data) {
-        console.log("Updated selected_user: added friend/remove pendingFriends + friendRequests");
+  UserModel.findOne( { _id: selected_user_id }, function(err, selected_user){
+    selected_user.friends.push(self_id);
+    selected_user.pendingFriends.pull(self_id);
+    selected_user.friendRequests.pull(self_id);
+    if(selected_user.settings.notifications.friendAccepted){
+      selected_user.notifications.messages.push({
+        from_id: self_id,
+        message: "Friend added: Hi friend!",
+        isUnread: true
+      });
+      ++selected_user.notifications.unviewedCount;
+    }
+    selected_user.save();
   });
+
   res.send(req.user);
 });
 

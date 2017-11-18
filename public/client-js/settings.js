@@ -25,7 +25,7 @@ var set_save_setting_response = function(){
         var is_checked_accept_friend_requests = $("#checkbox_accepted_friend_requests").is(":checked");
         var is_checked_chat_initiated = $("#checkbox_chat_initiated").is(":checked");
         $.ajax({
-            url: "http://localhost:3000/settings/save",
+            url: "/settings/save",
             data: {
                 current_password: current_password,
                 new_password1: new_password1,
@@ -36,7 +36,7 @@ var set_save_setting_response = function(){
             dataType: "json"
         }).done(function(save_successful){
             if(save_successful)
-                window.location.replace("http://localhost:3000/settings");
+                window.location.replace("/settings");
             else{
                 $("#alert_change_password").removeClass("invisible").text("Invalid current password. Try again.");
             }

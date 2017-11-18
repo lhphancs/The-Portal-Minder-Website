@@ -16,7 +16,7 @@ var load_name = function(){
         id_array.push(item);
 
     $.ajax({
-        url: "http://localhost:3000/notifications/get-names",
+        url: "/notifications/get-names",
         data: {id_set: JSON.stringify(id_array)},
         type: "POST",
         dataType: "json"
@@ -39,7 +39,7 @@ var load_name = function(){
 
 var load_notifications_with_database = function(){
     $.ajax({
-        url:"http://localhost:3000/notifications/get-all-notifications",
+        url:"/notifications/get-all-notifications",
         data:{},
         dataType:"json",
         type:"GET"

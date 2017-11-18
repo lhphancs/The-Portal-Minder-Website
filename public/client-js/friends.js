@@ -27,7 +27,7 @@ var add_user_to_container = function(list_id, user){
     var user_id = user._id;
     $(`#${list_id}`).append(
         `<li class="list-group-item d-flex justify-content-between list_row" data-user-id="${user_id}">
-        <a href="http://localhost:3000/discover/profile/${user_id}">${user_name}</a>
+        <a href="/discover/profile/${user_id}">${user_name}</a>
         <div>
             ${attachment}
         </div>
@@ -39,9 +39,9 @@ var add_user_to_container = function(list_id, user){
 var load_list = function(list_id){
     var get_url;
     switch(list_id){
-        case LISTID.friends: get_url = "http://localhost:3000/friends/get-friends-list"; break;
-        case LISTID.friend_requests: get_url = "http://localhost:3000/friends/get-friend-requests-list"; break;
-        case LISTID.pending_friends: get_url = "http://localhost:3000/friends/get-pending-friends-list"; break;
+        case LISTID.friends: get_url = "/friends/get-friends-list"; break;
+        case LISTID.friend_requests: get_url = "/friends/get-friend-requests-list"; break;
+        case LISTID.pending_friends: get_url = "/friends/get-pending-friends-list"; break;
         default: alert("Switch/case error: Check load_list function");
     }
 
@@ -64,7 +64,7 @@ var set_remove_friend_response = function(){
     $(`#${LISTID.friends}`).on("click", ".btn_remove_friend", function(){
         //Add to database for both users
         $.ajax({
-            url:"http://localhost:3000/friends/remove-friend",
+            url:"/friends/remove-friend",
             data:{
                 select_user_id: $(this).parent().parent().attr("data-user-id")
             },
@@ -87,7 +87,7 @@ var set_accept_friend_request_response = function(){
         var li_to_remove = $(this).parent().parent();
         //Add to database for both users
         $.ajax({
-            url:"http://localhost:3000/friends/add-friend",
+            url:"/friends/add-friend",
             data:{
                 select_user_id: select_user_id
             },
@@ -122,7 +122,7 @@ var set_reject_friend_request_response = function(){
         //Update pendingFriend and requestFriend to database for both users
         var select_user_id = $(this).parent().parent().attr("data-user-id");
         $.ajax({
-            url:"http://localhost:3000/friends/reject-friend-request",
+            url:"/friends/reject-friend-request",
             data:{
                 select_user_id: select_user_id
             },
@@ -150,7 +150,7 @@ var set_remove_pending_friend_response = function(){
     $(`#${LISTID.pending_friends}`).on("click", ".btn_remove_pending", function(){
         //Update pendingFriend and requestFriend to database for both users
         $.ajax({
-            url:"http://localhost:3000/friends/remove-pending-friend",
+            url:"/friends/remove-pending-friend",
             data:{
                 select_user_id: $(this).parent().parent().attr("data-user-id")
             },

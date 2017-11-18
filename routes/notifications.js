@@ -23,7 +23,7 @@ router.delete('/', require_login, function(req, res, next) {
 
 router.get('/get-all-notifications', require_login, function(req, res, next) {
   UserModel.findOne( { _id: req.user._id }, function(err, user){
-    res.send(user.notifications);
+    res.send(user.notifications.messages);
   } );
 });
 

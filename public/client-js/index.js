@@ -1,6 +1,6 @@
 var check_password_and_respond = function(){
     $.ajax({
-        url:"http://localhost:3000/user/validation",
+        url:"/user/validation",
         data:{
             email:$("#user_email").val(),
             password:$("#user_password").val()
@@ -9,7 +9,7 @@ var check_password_and_respond = function(){
         type:"POST",
     }).done(function(json){
         if(json){
-            window.location.replace("http://localhost:3000/user/profile");
+            window.location.replace("/user/profile");
         }
         else
             $("#alert_wrong_password").removeClass("invisible");//Do something that says invalid

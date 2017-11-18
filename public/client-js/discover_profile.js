@@ -5,7 +5,7 @@ var set_toggle_friend_response = function(){
         if( $(this).hasClass("add-mode") ){
             $(this).text("Remove Friend");
             $.ajax({
-                url:"http://localhost:3000/friends/add-pending-friend",
+                url:"/friends/add-pending-friend",
                 data:{select_user_id: discover_user_id},
                 type:"PATCH",
                 dataType:"json"
@@ -18,7 +18,7 @@ var set_toggle_friend_response = function(){
         else{
             $(this).text("Add Friend");
             $.ajax({
-                url:"http://localhost:3000/friends/remove-pending-friend",
+                url:"/friends/remove-pending-friend",
                 data:{select_user_id: discover_user_id},
                 type:"PATCH",
                 dataType:"json"

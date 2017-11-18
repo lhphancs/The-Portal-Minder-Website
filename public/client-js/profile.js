@@ -117,7 +117,7 @@ var set_save_profile_response = function(){
             all_tags.push( t_text.slice(0, t_text.length - 1) );
         });
         $.ajax({
-            url:"http://localhost:3000/user/profile",
+            url:"/user/profile",
             data:{
                 firstName: $("#input_first_name").val(),
                 lastName: $("#input_last_name").val(),
@@ -129,7 +129,7 @@ var set_save_profile_response = function(){
             dataType:"json",
             type:"PATCH"
         }).done(function(json){
-            window.location.replace("http://localhost:3000/user/profile");
+            window.location.replace("/user/profile");
         }).fail(function(){
             alert("Failed to grab data from database!!");
             return false;
@@ -139,7 +139,7 @@ var set_save_profile_response = function(){
 
 var load_tags = function(){
     $.ajax({
-        url:"http://localhost:3000/user/tags",
+        url:"/user/tags",
         data:{
             
         },

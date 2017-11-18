@@ -18,7 +18,7 @@ var get_selected_user = function(){
 var set_self = function(){
     $.ajax({
         async: false,
-        url: "http://localhost:3000/user/get-self",
+        url: "/user/get-self",
         data: {},
         dataType: "json",
         type: "GET"
@@ -50,7 +50,7 @@ var set_socket_settings = function(socket){
 
 var load_friends_and_click_first = function(){
     $.ajax({
-        url: "http://localhost:3000/friends/get-friends-list",
+        url: "/friends/get-friends-list",
         data: {},
         dataType: "json",
         type: "GET"
@@ -108,7 +108,7 @@ var send_msg_response = function(socket){
 
     //Now store message in database
     $.ajax({
-        url: "http://localhost:3000/chat/save-message",
+        url: "/chat/save-message",
         data: {
             to_id: selected_user.id,
             message: msg_from_chat_box
@@ -164,7 +164,7 @@ var fill_chat_container_with_history_json = function(json){
 var load_chat_history = function(){
     var selected_user_id = get_selected_user().id;
     $.ajax({
-        url: "http://localhost:3000/chat/get-chat-history",
+        url: "/chat/get-chat-history",
         type: "GET",
         dataType: "json",
         data: { selected_user_id: selected_user_id }

@@ -7,7 +7,7 @@ var load_all_users = function(mode){
         default: alert("load_all_users() did not detect any modes!");
     }
     $.ajax({
-        url:"http://localhost:3000/discover/" + ending_path,
+        url:"/discover/" + ending_path,
         data:{},
         dataType:"json",
         type:"GET",
@@ -50,7 +50,7 @@ var set_btn_response_toggle_add_friend = function(){
         if( $(this).hasClass("add-pending-mode") ){
             $(this).text("Remove");
             $.ajax({
-                url: "http://localhost:3000/friends/add-pending-friend",
+                url: "/friends/add-pending-friend",
                 data: {select_user_id: $(this).attr("data-other-id")},
                 type: "PATCH",
                 dataType: "json"
@@ -61,7 +61,7 @@ var set_btn_response_toggle_add_friend = function(){
         else{
             $(this).text("Add");
             $.ajax({
-                url: "http://localhost:3000/friends/remove-pending-friend",
+                url: "/friends/remove-pending-friend",
                 data: {select_user_id: $(this).attr("data-other-id")},
                 type: "PATCH",
                 dataType: "json"
