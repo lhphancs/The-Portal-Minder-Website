@@ -5,6 +5,7 @@
         <link type="text/css" rel= "stylesheet" href="/stylesheets/global.css">
         <link type="text/css" rel= "stylesheet" href="/stylesheets/settings.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
     </head>
     
     <body>
@@ -67,4 +68,9 @@
         </div>
     </body>
 </html>
+<script>
+    var self_id = "<%= user._id %>";
+    var self_name = "<%= user.firstName %>" + " " + "<%= user.lastName %>";
+</script>
+<script src="/client-js/global_logged.js"></script>
 <script src="/client-js/settings.js"></script>

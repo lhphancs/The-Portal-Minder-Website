@@ -10,13 +10,19 @@ var Message = require('../models/MessageModel');
 var require_login = auth.require_login;
 var saltRounds = 10;
 // Add two users, A and B
-router.get('/add-two', function(req, res, next){
+router.get('/add', function(req, res, next){
   users = [
     {
       firstName: "A", lastName: "A", email: "a@gmail.com", password: hash_password = bcrypt.hashSync("a", saltRounds), city: "A"
     }
     ,{
       firstName: "B", lastName: "B", email: "b@gmail.com", password: hash_password = bcrypt.hashSync("b", saltRounds), city: "B"
+    }
+    ,{
+      firstName: "C", lastName: "C", email: "c@gmail.com", password: hash_password = bcrypt.hashSync("c", saltRounds), city: "C"
+    }
+    ,{
+      firstName: "D", lastName: "D", email: "d@gmail.com", password: hash_password = bcrypt.hashSync("d", saltRounds), city: "D"
     }
   ];
   UserModel.insertMany(users, function(error, docs) {});

@@ -47,13 +47,19 @@ var load_all_users = function(mode){
 
 var set_btn_response_toggle_add_friend = function(){
     $("#matched_users_container").on("click", ".btn_add_friend", function(){
+        var select_user_id = $(this).attr("data-other-id");
         if( $(this).hasClass("add-pending-mode") ){
             $(this).text("Remove");
             $.ajax({
                 url: "/friends/add-pending-friend",
-                data: {select_user_id: $(this).attr("data-other-id")},
+                data: {select_user_id: select_user_id},
                 type: "PATCH",
                 dataType: "json"
+            }).done(function(){
+                socket.emit('notify', {
+                    id: select_user_id,
+                    msg: "Friend request: " + self_name
+                });
             }).fail(function(){
                 alert("FAILED ADD");
             });
@@ -62,9 +68,15 @@ var set_btn_response_toggle_add_friend = function(){
             $(this).text("Add");
             $.ajax({
                 url: "/friends/remove-pending-friend",
-                data: {select_user_id: $(this).attr("data-other-id")},
+                data: {select_user_id: select_user_id},
                 type: "PATCH",
                 dataType: "json"
+            }).done(function(){
+                //Now notify other user
+                socket.emit('notify', {
+                    id: select_user_id,
+                    msg: "Friend request cancelled: " + self_name
+                });
             }).fail(function(){
                 alert("FAILED REMOVE");
             });

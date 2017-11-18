@@ -42,7 +42,6 @@ var get_room_id_with_selected_user = function(){
 
 var set_socket_settings = function(socket){
     socket.on('received_chat_msg', function(msg){
-        console.log(msg);
         //Update chatbox to contain incoming msg
         add_msg_to_container(selected_user.name, msg, false);
     });

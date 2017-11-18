@@ -80,10 +80,13 @@ var set_select_all_notification_toggle = function(){
     });
 }
 
+
 var main = function(){
     load_notifications_with_database();
     set_btn_notification_response();
     set_select_all_notification_toggle();
 };
 
-main();
+$(document).ready(function(){
+    main();
+});

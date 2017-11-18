@@ -7,6 +7,11 @@ module.exports = {
             socket.on("subscribe", function(room_id){
                 console.log("User joined room: " + room_id);
                 socket.join(room_id);
+                
+            });
+            socket.on("on_connect", function(id){
+                console.log("User on_connect: " + id);
+                socket.join(id);
             });
 
             socket.on('disconnect', function(){
@@ -18,9 +23,10 @@ module.exports = {
                 socket.broadcast.to(data.room_id).emit('received_chat_msg', data.msg);
             });
 
-            //sent_chat_msg 'data' is {selected_id: id, msg: "some message"}
             socket.on('notify', function(data){
-                socket.to(data.selected_id).emit('notify', data.msg);
+                console.log("SENT");
+                socket.to(data.id).emit('notify', data.msg);
+                console.log(data.id);
             })
         });
         
