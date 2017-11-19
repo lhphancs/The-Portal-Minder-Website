@@ -1,19 +1,21 @@
 var express = require('express');
 var router = express.Router();
-var auth = require('../util/auth');
 var UserModel = require('../models/UserModel');
 var MessageModel = require('../models/MessageModel');
+var auth = require('../util/auth');
+var notification = require('../util/notification');
 
 router.use(auth.require_login);
 
 router.get('/', function(req, res, next) {
   UserModel.findOne( { _id: req.user._id }, function(err, user){
+    if( err){console.log(err); }
     res.render("chat");
   });
 });
 
 router.get('/get-chat-history', function(req, res, next){
-  var self_id = String(req.user._id); //Need to convert object to string for some reason
+  var self_id = String(req.user._id);
   var selected_user_id = req.query.selected_user_id;
   MessageModel.collection.aggregate(// Pipeline
     [
@@ -27,11 +29,12 @@ router.get('/get-chat-history', function(req, res, next){
       // Stage 2
       {
         $sort: {
-          time: 1
+          timestamp: 1
         }
       },
     ],
     function(err, chat_history) {
+      if( err){console.log(err); }
       res.send(chat_history);
   });
 });
@@ -43,8 +46,9 @@ router.post('/save-message', function(req, res, next){
     message: req.body.message
   });
   new_message.save(function (err) {
-    if (err) return handleError(err);
+    if( err){console.log(err); }
   });
   res.send(true);
 });
+
 module.exports = router;

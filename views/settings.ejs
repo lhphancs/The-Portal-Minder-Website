@@ -44,20 +44,43 @@
                     <h5>Notifications</h1>
                     <div>
                         <div>
-                            <label class="form-check-label" for="checkbox_accepted_friend_requests">
-                                <input id="checkbox_accepted_friend_requests" class="form-check-input"
-                                    type="checkbox" name="accepted_friend_requests"
-                                    <%if (settings.notifications.friendAccepted) { %>
+                            <label class="form-check-label" for="cb_friend_requests">
+                                <input id="cb_friend_requests" class="form-check-input" type="checkbox"
+                                    <%if (settings.notifications.friendRequest) { %>
                                         checked="checked"
-                                    <% } %>>Accepted friend requests
+                                    <% } %>>Friend requests
                             </label>
                         </div>
                         <div>
-                            <label class="form-check-label" for="checkbox_chat_initiated">
-                                <input id="checkbox_chat_initiated" class="form-check-input" type="checkbox" name="chat_initiated"
-                                <%if (settings.notifications.chatInitiated) { %>
+                            <label class="form-check-label" for="cb_friend_requests_cancelled">
+                                <input id="cb_friend_requests_cancelled" class="form-check-input" type="checkbox"
+                                <%if (settings.notifications.friendRequestCancelled) { %>
                                     checked="checked"
-                                <% } %>>First chat conversation initiated
+                                <% } %>>Friend requests cancelled
+                            </label>
+                        </div>
+                        <div>
+                            <label class="form-check-label" for="cb_friend_accepted">
+                                <input id="cb_friend_accepted" class="form-check-input" type="checkbox"
+                                <%if (settings.notifications.friendAccepted) { %>
+                                    checked="checked"
+                                <% } %>>Accepted friend requests
+                            </label>
+                        </div>
+                        <div>
+                            <label class="form-check-label" for="cb_friend_rejected">
+                                <input id="cb_friend_rejected" class="form-check-input" type="checkbox"
+                                <%if (settings.notifications.friendRejected) { %>
+                                    checked="checked"
+                                <% } %>>Rejected friend request
+                            </label>
+                        </div>
+                        <div>
+                            <label class="form-check-label" for="cb_friend_removed">
+                                <input id="cb_friend_removed" class="form-check-input" type="checkbox"
+                                <%if (settings.notifications.friendRemoved) { %>
+                                    checked="checked"
+                                <% } %>>Friend removed
                             </label>
                         </div>
                     </div>
@@ -70,6 +93,7 @@
 </html>
 <script src="/client-js/global_constants.js"></script>
 <script>
+    var page = PAGE.undefined; //Case we want to add special page specific socket feature
     var self_id = "<%= user._id %>";
     var self_name = "<%= user.firstName %>" + " " + "<%= user.lastName %>";
 </script>

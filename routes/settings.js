@@ -4,7 +4,6 @@ var auth = require('../util/auth');
 var UserModel = require('../models/UserModel');
 var bcrypt = require('bcrypt');
 
-
 var require_login = auth.require_login;
 router.use(auth.require_login);
 
@@ -12,6 +11,7 @@ var saltRounds = 10;
 
 router.get('/', function(req, res, next) {
   UserModel.findOne( { _id: req.user._id }, function(err, user){
+    if(err){ console.log(err); }
     res.render('settings', { settings: user.settings, title: 'Minder Settings' });
   } );
 });
@@ -23,6 +23,7 @@ router.patch('/save', function(req, res, next){
   var new_password1 = req.body.new_password1;
 
   UserModel.findOne( { _id: self_id }, function(err, user){
+    if(err){ console.log(err); }
     //User wants to change password
     if(req.body.current_password !== ""){
       var is_matching_password = bcrypt.compareSync(current_password, user.password);
@@ -36,11 +37,13 @@ router.patch('/save', function(req, res, next){
       }
     }
     //User successfully matched password or just wants to change non-security settings
-    var is_accept_friend_requests = req.body.is_accept_friend_requests;
-    var is_accept_chat_initiated = req.body.is_accept_chat_initiated;
-
-    user.settings = {notifications: {friendAccepted: is_accept_friend_requests,
-                      chatInitiated: is_accept_chat_initiated} };
+    console.log(req.body);
+    user.settings = {notifications: {
+      friendRequest: req.body.friend_requests,
+      friendRequestCancelled: req.body.friend_requests_cancelled, 
+      friendAccepted: req.body.friend_accepted,
+      friendRejected: req.body.friend_rejected,
+      friendRemoved: req.body.friend_removed} };
     user.save();
     res.send(true);
   });

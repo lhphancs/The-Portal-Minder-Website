@@ -16,5 +16,7 @@ var NOTIFY_TYPE = {
 /* This is to allow for page specific socket actions */
 var PAGE = {
     discover_results: 0,
-    friends: 1
+    friends: 1,
+    chat: 2,
+    undefined: -1 //Serves as a place holder
 };

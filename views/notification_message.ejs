@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<% include bootstrap %>
+		<link type="text/css" rel= "stylesheet" href="/stylesheets/global.css">
+		<link type="text/css" rel= "stylesheet" href="/stylesheets/notifications.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="/socket.io/socket.io.js"></script>
+	</head>
+	
+	<body>
+		<% include nav_logged %>
+		<% 
+		var date = new Date(notification.timestamp);
+		
+		var month = date.getMonth() +1;
+		var day = date.getDay();
+		var year = date.getFullYear();
+		var hour = date.getHours();
+		var minute = date.getMinutes();
+		var ampm = hour >= 12 ? 'PM' : 'AM';
+		
+		var formatted_time = hour%12 + ":" + minute + ampm;
+		var formatted_date = month + "/" + day + "/" + year;		
+		%>
+
+		<div class="container">
+			<div class="card text-center">
+				<div class="card-header">
+					Notification
+				</div>
+				<div class="card-body">
+					<h4 class="card-title">firstNameToFill lastNameToFill</h4>
+					<p class="card-text text-left"><%= notification.message %></p>
+					<a href="/notifications/message/delete/<%= notification._id %>" class="btn btn-primary">Delete</a>
+				</div>
+				<div class="card-footer text-muted">
+					<span><%= formatted_date %></span><span class="ml-2"><%= formatted_time %></span>
+				</div>
+			</div>
+
+			<p></p>
+		</div>
+	</body>
+</html>
+<script src="/client-js/global_constants.js"></script>
+<script>
+	var page = PAGE.undefined; //Case we want to add special page specific socket feature
+    var self_id = "<%= user._id %>";
+    var self_name = "<%= user.firstName %>" + " " + "<%= user.lastName %>";
+</script>
+<script src="/client-js/global_logged.js"></script>

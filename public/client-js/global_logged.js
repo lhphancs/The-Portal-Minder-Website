@@ -1,4 +1,4 @@
-//Setup for toast
+// ########## START Setup for toast ##########
 function show_toast() {
     // Get the snackbar DIV
     var x = document.getElementById("snackbar")
@@ -11,6 +11,7 @@ function show_toast() {
 } 
 
 $(document.body).append(`<div id="snackbar"></div>`);
+// ########## End Setup for toast ##########
 
 //Load the badge number for notification using database
 $.ajax({
@@ -21,7 +22,6 @@ $.ajax({
 }).done(function(json){
     $("#notification_badge").text(json.count);
 });
-
 
 //Set the socket to listen for notifications
 var socket = io();
@@ -66,8 +66,9 @@ socket.on('notify', function(data){
                 //Add to friend request
             }
             break;
+        case PAGE.chat:
+            //If any chat features in future
         default:
             console.log("None");
     }
 });
-

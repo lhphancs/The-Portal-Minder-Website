@@ -21,16 +21,16 @@ var set_save_setting_response = function(){
             }
         }
         //If reach here, tries to save settings. If current_password filled, it checks for match
-        $('#checkbox').is(':checked'); 
-        var is_checked_accept_friend_requests = $("#checkbox_accepted_friend_requests").is(":checked");
-        var is_checked_chat_initiated = $("#checkbox_chat_initiated").is(":checked");
         $.ajax({
             url: "/settings/save",
             data: {
                 current_password: current_password,
                 new_password1: new_password1,
-                is_accept_friend_requests: is_checked_accept_friend_requests,
-                is_accept_chat_initiated: is_checked_chat_initiated,
+                friend_requests: $("#cb_friend_requests").is(":checked"),
+                friend_requests_cancelled: $("#cb_friend_requests_cancelled").is(":checked"),
+                friend_accepted: $("#cb_friend_accepted").is(":checked"),
+                friend_rejected: $("#cb_friend_rejected").is(":checked"),
+                friend_removed: $("#cb_friend_removed").is(":checked")
             },
             type: "PATCH",
             dataType: "json"

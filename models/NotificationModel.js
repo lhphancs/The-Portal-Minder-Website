@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
 
 var notificationsSchema = mongoose.Schema({
-  userId: {type: Object},
-    fromId: String,
+  userId: {type: String},
+    fromId: {type: String},
     message: String,
-    time : {type: Date, default: Date.now},
+    timestamp : {type: Date, default: Date.now},
     isUnread: {type: Boolean, default: true} }
 );
 

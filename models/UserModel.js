@@ -20,8 +20,7 @@ var userSchema = mongoose.Schema({
     friendRequestCancelled: {type: Boolean, default: true},
     friendAccepted: {type: Boolean, default: true},
     friendRejected: {type: Boolean, default: true},
-    friendRemoved: {type: Boolean, default: true},
-    chatInitiated: {type: Boolean, default: true}, 
+    friendRemoved: {type: Boolean, default: true}
   } }
 });
 

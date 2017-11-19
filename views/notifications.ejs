@@ -11,30 +11,88 @@
 	<body>
 		<% include nav_logged %>
 
-		<h1 class="title">Notification</h1>
 		<div class="container">
 			<div class="header_container">
-				<input id="selection_box" type="checkbox">
-				<div class="btn-group ml-2">
-					<button class="btn btn-secondary btn-sm dropdown-toggle drop_down_button" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-					</button>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#">Delete</a>
-						<a class="dropdown-item" href="#">Mark as read</a>
-						<a class="dropdown-item" href="#">Mark as unread</a>
+				<div class="d-flex align-items-center flex-wrap justify-content-between">
+					<div>
+						<input id="selection_box" type="checkbox" class="header_component">
+						<div id="btn_drop_down" class="dropdown">
+							<button class="dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								
+							</button>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+								<button class="dropdown-item" type="button">Action</button>
+								<button class="dropdown-item" type="button">Another action</button>
+								<button class="dropdown-item" type="button">Something else here</button>
+							</div>
+						</div>
 					</div>
+					<nav aria-label="Page navigation example" class="pagination-sm">
+							<ul class="pagination">
+								<li class="page-item">
+								<a class="page-link" href="#" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+									<span class="sr-only">Previous</span>
+								</a>
+								</li>
+								<li class="page-item"><a class="page-link" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item">
+								<a class="page-link" href="#" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+									<span class="sr-only">Next</span>
+								</a>
+								</li>
+							</ul>
+						</nav>
 				</div>
 			</div>
-		
+			
 			<ul id="notifications_list">
-				<!-- AJAX fills this spot with database-->
+				<%if (notifications.length === 0) { %>
+					<div>No notifications</div>
+				<% } %>
+
+				<% notifications.forEach(function(notification) { %>
+					<li class="row single_notification_container
+							<%if (notification.isUnread) { %>
+								unread
+							<% } %> ${attached_class}"
+						data-notification-id="<%= notification._id %>">
+						<input type="checkbox" class="notification_checkbox">
+						<div class="col-sm-3 name_div text-truncate"><%= notification.name %></div>
+						<div class="col-sm-6 text-truncate p-0"><%= notification.message %></div>
+						
+						<% 
+						var date = new Date(notification.timestamp);
+						
+						var month = date.getMonth() +1;
+						var day = date.getDay();
+						var year = date.getFullYear();
+						var hour = date.getHours();
+						var minute = date.getMinutes();
+						var ampm = hour >= 12 ? 'PM' : 'AM';
+						
+						var formatted_time = hour%12 + ":" + minute + ampm;
+						var formatted_date = month + "/" + day + "/" + year;		
+						%>
+						<div class="col-sm-1 text-right p-0">
+							<%= formatted_time %>
+						</div>
+						<div class="col-sm-1">
+							<%= formatted_date %>
+						</div>
+                	</li>
+				<% }); %>
 			</ul>
 		</div>
+		
 	</body>
 </html>
 <script src="/client-js/global_constants.js"></script>
 <script>
+	var page = PAGE.undefined; //Case we want to add special page specific socket feature
     var self_id = "<%= user._id %>";
     var self_name = "<%= user.firstName %>" + " " + "<%= user.lastName %>";
 </script>

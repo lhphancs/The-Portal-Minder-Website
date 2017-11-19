@@ -55,13 +55,15 @@ var set_btn_response_toggle_add_friend = function(){
                 data: {select_user_id: select_user_id},
                 type: "PATCH",
                 dataType: "json"
-            }).done(function(){
-                socket.emit('notify', {
-                    self_id: self_id,
-                    select_user_id: select_user_id,
-                    type: NOTIFY_TYPE.add_pending,
-                    msg: "Friend request: " + self_name
-                });
+            }).done(function(json){
+                if(json.notify_is_on){
+                    socket.emit('notify', {
+                        self_id: self_id,
+                        select_user_id: select_user_id,
+                        type: NOTIFY_TYPE.add_pending,
+                        msg: "Friend request: " + self_name
+                    });
+                }
             }).fail(function(){
                 alert("FAILED ADD");
             });
@@ -73,14 +75,16 @@ var set_btn_response_toggle_add_friend = function(){
                 data: {select_user_id: select_user_id},
                 type: "PATCH",
                 dataType: "json"
-            }).done(function(){
-                //Now notify other user
-                socket.emit('notify', {
+            }).done(function(json){
+                if(json.notify_is_on){
+                    //Now notify other user
+                    socket.emit('notify', {
                     self_id: self_id,
                     select_user_id: select_user_id,
                     type: NOTIFY_TYPE.remove_pending,
                     msg: "Friend request cancelled: " + self_name
                 });
+                }
             }).fail(function(){
                 alert("FAILED REMOVE");
             });

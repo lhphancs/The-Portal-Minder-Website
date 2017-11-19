@@ -11,6 +11,7 @@ var saltRounds = 10;
 // User password check & cookie assignment if match
 router.post('/validation', function(req, res, next) {
   UserModel.findOne( { email: req.body.email }, function(err, user){
+    if(err){ console.log(err); }
     //Check if user exists
     if(user){
       //Check if password matches
@@ -41,6 +42,7 @@ router.get('/register', function(req, res, next) {
 // User registers
 router.post('/register-add', function(req, res, next) {
   UserModel.count({ email: req.body.email }, function(err, count){
+    if(err){ console.log(err); }
     if(count > 0)
       res.send(false);
     else{
@@ -65,6 +67,7 @@ router.post('/register-add', function(req, res, next) {
 router.get('/profile', require_login, function(req, res, next) {
   var user_email = req.user.email;
   UserModel.findOne( { email: user_email }, function(err, user){
+    if(err){ console.log(err); }
     res.render("profile", user);
   });
 });
@@ -77,7 +80,7 @@ router.patch('/profile', require_login, function(req, res, next){
   //If tags empty, is undefined. Must set it as empty array to prevent crash
   var tags = req.body.tags;
   tags = tags?tags:[];
-  UserModel.findOneAndUpdate({email: req.user.email},
+  UserModel.findOneAndUpdate( {email: req.user.email},
     {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -85,7 +88,8 @@ router.patch('/profile', require_login, function(req, res, next){
       description: req.body.description,
       tags: tags,
       education: req.body.education
-    }, function(err, doc){;
+    }, function(err, doc){
+      if(err){ console.log(err); }
     }
   );
   res.send(true);
@@ -93,7 +97,7 @@ router.patch('/profile', require_login, function(req, res, next){
 
 router.delete('/profile', require_login, function(req, res, next){
   UserModel.remove( { email: req.body.email }, function(err, user){
-    if (err) return handleError(err);
+    if(err){ console.log(err); }
     res.send(user);
   });
 });

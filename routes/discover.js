@@ -22,11 +22,10 @@ router.get('/get-all-users', function(req, res, next){
 });
 
 router.get('/get-all-tags-users', function(req, res, next){
-  UserModel.find(
-    { tags: {$in: req.user.tags},
-    email: {'$ne': req.user.email}, }
+  UserModel.find( { tags: {$in: req.user.tags}, email: {'$ne': req.user.email}, }
     , function(err, users){
-    res.send(users);
+      if(err){ console.log(err); }
+      res.send(users);
   });
 } );
 
@@ -35,12 +34,14 @@ router.get('/get-all-local-users', function(req, res, next){
     email: {'$ne': req.user.email},
     city: req.user.city
   }, function(err, users){
+    if(err){ console.log(err); }
     res.send(users);
   });
 });
 
 router.get('/profile/:id', function(req, res, next){
   UserModel.findOne( { _id: req.param('id') }, function(err, user){
+    if(err){ console.log(err); }
     res.render("discover_profile", {user: user});
   });
 });

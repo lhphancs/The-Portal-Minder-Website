@@ -12,23 +12,15 @@
 }
 
 #selection_box{
-    vertical-align: bottom;
     position:static;
     margin:0px;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
 }
 
-.drop_down_button{
-    text-align: center;
-    vertical-align: top;
+#btn_drop_down{
+    display: inline-block;
     border: 1px solid black;
-    padding: 0px;
-    width: 30px;
-    height: 20px;
-    color:black;
-    background-color: white;
-    font-size: 0.8em;
 }
 
 .single_notification_container{
@@ -49,7 +41,6 @@
 
 .single_notification_container:hover{
     background-color: #8DFF88;
-    border: 1px solid black;
     cursor: pointer;
 }
 
@@ -59,4 +50,9 @@
 
 .no_notifications{
     color: grey;
+}
+
+.notification_checkbox{
+    width:20px;
+    height:20px;
 }
