@@ -21,9 +21,9 @@
 								
 							</button>
 							<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-								<button class="dropdown-item" type="button">Action</button>
-								<button class="dropdown-item" type="button">Another action</button>
-								<button class="dropdown-item" type="button">Something else here</button>
+								<button id="btn_group_delete" class="dropdown-item" type="button">Delete</button>
+								<button id="btn_group_mark_read" class="dropdown-item" type="button">Mark as read</button>
+								<button id="btn_group_mark_unread" class="dropdown-item" type="button">Mark as unread</button>
 							</div>
 						</div>
 					</div>
@@ -62,13 +62,13 @@
 						data-notification-id="<%= notification._id %>">
 						<input type="checkbox" class="notification_checkbox">
 						<div class="col-sm-3 name_div text-truncate"><%= notification.name %></div>
-						<div class="col-sm-6 text-truncate p-0"><%= notification.message %></div>
+						<div class="col-sm-6 text-truncate p-0 notification_msg"><%= notification.message %></div>
 						
 						<% 
 						var date = new Date(notification.timestamp);
 						
 						var month = date.getMonth() +1;
-						var day = date.getDay();
+						var day = date.getDate();
 						var year = date.getFullYear();
 						var hour = date.getHours();
 						var minute = date.getMinutes();

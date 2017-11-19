@@ -52,10 +52,26 @@ router.get('/:offset?/:limit?', require_login, function(req, res, next) {
         }
       }, function(err, notifications){
         if(err){ console.log(err); }
-        
         res.render("notifications", {notifications: notifications});
     });
   });
+});
+
+router.delete('/message/group-delete', require_login, function(req, res, next){
+  var msg_ids = JSON.parse(req.body.msg_ids);
+  NotificationModel.remove( {_id: { $in: msg_ids} }, function(err, notifications){
+    if(err){ console.log(err); }
+    res.send(true);
+  });
+  
+});
+
+router.delete('/message/:id', require_login, function(req, res, next){
+  var notification_id = req.param('id');
+  NotificationModel.findOne( { _id: notification_id }, function(err, notification){
+    if(err){ console.log(err); }
+    res.render("notification_message", {notification: notification} );
+  } );
 });
 
 module.exports = router;

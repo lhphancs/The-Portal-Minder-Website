@@ -31,7 +31,7 @@ socket.on('notify', function(data){
     var notification_badge = $("#notification_badge");
     var count = notification_badge.text();
     notification_badge.text(++count);
-    notification_badge.fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+    notification_badge.fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
 
     //Show toast
     $("#snackbar").text(data.msg)
