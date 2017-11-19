@@ -67,14 +67,16 @@
 						<% 
 						var date = new Date(notification.timestamp);
 						
-						var month = date.getMonth() +1;
+						var month = date.getMonth() + 1;
 						var day = date.getDate();
 						var year = date.getFullYear();
 						var hour = date.getHours();
-						var minute = date.getMinutes();
 						var ampm = hour >= 12 ? 'PM' : 'AM';
+						if(hour >= 13)
+								hour -= 12;
+						var minute = date.getMinutes();
 						
-						var formatted_time = hour%12 + ":" + minute + ampm;
+						var formatted_time = hour + ":" + minute + ampm;
 						var formatted_date = month + "/" + day + "/" + year;		
 						%>
 						<div class="col-sm-1 text-right p-0">

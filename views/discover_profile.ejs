@@ -1,3 +1,13 @@
+<%
+var firstName = user.firstName;
+var lastName = user.lastName;
+var entireName = firstName + " " + lastName;
+var photoURL = user.photoURL?user.photoURL:"/images/logo.jpg";
+var description = user.description?user.description:"[None]";
+var education = user.education?user.education:"[None]";
+var city = user.city;
+var tags = user.tags?user.tags:["[None]"];
+%>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -10,18 +20,6 @@
 	
 	<body>
 		<% include nav_logged %>
-		<%
-		var firstName = user.firstName;
-		var lastName = user.lastName;
-		var entireName = firstName + " " + lastName;
-		var photoURL = user.photoURL?user.photoURL:"/images/logo.jpg";
-		var description = user.description?user.description:"[None]";
-		var education = user.education?user.education:"[None]";
-		var city = user.city;
-		var tags = user.tags?user.tags:["[None]"];
-		%>
-
-
 		<div class="container">
             <h1 class="title">Profile</h1>
             <div class="d-flex flex-column justify-content-center">

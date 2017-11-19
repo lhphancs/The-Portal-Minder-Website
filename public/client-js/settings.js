@@ -36,7 +36,7 @@ var set_save_setting_response = function(){
             dataType: "json"
         }).done(function(save_successful){
             if(save_successful)
-                window.location.replace("/settings");
+                show_toast(TOAST_TYPE.admin, "Settings Saved")
             else{
                 $("#alert_change_password").removeClass("invisible").text("Invalid current password. Try again.");
             }

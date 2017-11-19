@@ -54,6 +54,7 @@ var set_group_delete_reponse = function(){
         });
     });
 };
+
 var set_group_mark_read_response = function(){
     
 };

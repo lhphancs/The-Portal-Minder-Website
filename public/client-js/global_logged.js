@@ -1,7 +1,15 @@
+var TOAST_TYPE = {
+    admin: 0,
+    notification: 1
+}
+
 // ########## START Setup for toast ##########
-function show_toast() {
+function show_toast(toast_type, msg) {
+    var toast_id = toast_type === TOAST_TYPE.admin?"admin_snackbar":"snackbar";
+    $(`#${toast_id}`).text(msg);
+
     // Get the snackbar DIV
-    var x = document.getElementById("snackbar")
+    var x = document.getElementById(toast_id)
 
     // Add the "show" class to DIV
     x.className = "show";
@@ -11,6 +19,7 @@ function show_toast() {
 } 
 
 $(document.body).append(`<div id="snackbar"></div>`);
+$(document.body).append(`<div id="admin_snackbar"></div>`);
 // ########## End Setup for toast ##########
 
 //Load the badge number for notification using database
@@ -34,8 +43,7 @@ socket.on('notify', function(data){
     notification_badge.fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
 
     //Show toast
-    $("#snackbar").text(data.msg)
-    show_toast();
+    show_toast(TOAST_TYPE.notification, data.msg);
 
     //Now handle page specific stuff
     switch(page){
