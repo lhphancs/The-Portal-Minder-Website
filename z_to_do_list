@@ -1,11 +1,1 @@
-1) Update things in real time? discover/chat/friends
-
-Questions:
-1) How to fix flexbox in chat.
-    A: height needs to be set
-2) profile, any way to submit tag?
-3) Styling, how to make it so col-sm takes rest of screen?
-    And how to make it so takes full height? (chat specifically and friends)
-
-
-Check getchathistory, because changed to objectID
+1) Need to join the name in notifications

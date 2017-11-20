@@ -91,7 +91,7 @@ router.patch('/add-friend', function(req, res, next){
       ++selected_user.notificationsUnviewedCount;
     }
     selected_user.save();
-    res.send( {user: req.user,
+    res.send( {user: selected_user,
       notify_is_on: notify_is_on} );
   });
 });
@@ -128,6 +128,8 @@ router.patch('/reject-friend-request', function(req, res, next){
 router.patch('/remove-friend', function(req, res, next){
   var self_id = req.user._id;
   var selected_user_id = req.body.select_user_id;
+  console.log(self_id);
+  console.log(selected_user_id);
   //update self
   UserModel.findOne( { _id: self_id }, function(err, user){
     if(err){ console.log(err); }
