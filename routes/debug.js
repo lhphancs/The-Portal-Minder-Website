@@ -66,7 +66,7 @@ var getRandomInt = function(min, max) {
 
 var get_random_tags = function(){
   const AMOUNT_OF_TAGS = 10;
-  const hobbies =[
+  var hobbies =[
     "American Football","Baseball","Cricket","Gaelic Football","Hurling"
     ,"Rugby Union","Soccer","Speedball","Australian Rules Football"
     ,"Canadian Football","Field Hockey","Highland Games","Lacrosse"
@@ -86,6 +86,8 @@ var get_random_tags = function(){
     ,"Carriage Driving","Eventing","Greyhound Racing","Horse Racing","Polo"
     ,"Sled Dog Racing"
   ];
+  hobbies = hobbies.map(function(x){ return x.toLowerCase() }); // convert all to lower case
+
   var random_hobbies = [];
   var hobbies_len = hobbies.length;
 

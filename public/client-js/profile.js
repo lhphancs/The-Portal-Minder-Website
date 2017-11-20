@@ -20,9 +20,13 @@ var insert_tag = function(){
 
     //Add new removable tag based on input
     else{
-        add_tag_to_container( $("#input_tag").val() );
+        var input_txt = $("#input_tag").val();
+        input_txt = input_txt.trim(); //rid whitespace
+        input_txt = input_txt.toLowerCase(); //Now force all lower case
+
+        add_tag_to_container(input_txt);
     }
-    $("#input_tag").val("");
+    $("#input_tag").val(""); //Resets input to blank
 }
 
 var set_insert_tag_response = function(){
@@ -135,14 +139,15 @@ var set_save_profile_response = function(){
         var all_tags = [];
         $(".tag").each(function(){
             var t_text = this.innerText; //This contains the X. Need to slice it off
-            all_tags.push( t_text.slice(0, t_text.length - 1) );
+            t_text = t_text.slice(0, t_text.length - 1);
+            all_tags.push(t_text);
         });
         $.ajax({
             url:"/user/profile",
             data:{
                 firstName: $("#input_first_name").val(),
                 lastName: $("#input_last_name").val(),
-                city: $("#input_city").val(),
+                city: $("#input_city").val().trim(),
                 description: $("#textarea_description").val(),
                 tags: all_tags,
                 education: $("#input_education").val(),
