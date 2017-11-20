@@ -6,9 +6,11 @@
     list-style-type: none;
 }
 
-.header_container{
+#header_container{
+    margin-top: 56px;
     padding: 3px;
     border: 1px solid black;
+    background: white;
 }
 
 #selection_box{
@@ -26,7 +28,7 @@
 .single_notification_container{
     margin: 0px;
     border-top: 1px solid grey;
-    padding: 5px;
+    padding: 2px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -62,4 +64,8 @@
 
 .dropdown-item:hover{
     background-color: #8ea9ff;
+}
+
+body{
+    padding-top: 120px;
 }

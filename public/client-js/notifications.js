@@ -1,10 +1,3 @@
-var set_btn_notification_response = function(){
-    $("#notifications_container").on("click", ".single_notification_container", function(){
-        message = $(this).children("p").text();
-        alert("MESSAGE: " + message);
-    });
-};
-
 var set_select_all_notification_toggle = function(){
     $("#selection_box").change(function(){
         if(this.checked){
@@ -19,7 +12,7 @@ var set_select_all_notification_toggle = function(){
             });
         }
     });
-}
+};
 
 var set_click_msg_response = function(){
     $("#notifications_list").on("click", ".single_notification_container", function(e){
@@ -40,7 +33,7 @@ var get_selected_msg_ids = function(){
 
 var set_group_delete_reponse = function(){
     $("#btn_group_delete").click(function(){
-        msg_ids_json = JSON.stringify( get_selected_msg_ids() );
+        var msg_ids_json = JSON.stringify( get_selected_msg_ids() );
         
         $.ajax({
             url: "/notifications/message/group-delete",
@@ -51,19 +44,48 @@ var set_group_delete_reponse = function(){
             }
         }).done(function(){
             $(".notification_checkbox:checked").parent().remove();
+            if( $(".single_notification_container").length === 0){
+                $("#notifications_list").append(`<div>No notification</div>`);
+            }
         });
     });
 };
 
 var set_group_mark_read_response = function(){
-    
+    $("#btn_group_mark_read").click(function(){
+        msg_ids_json = JSON.stringify( get_selected_msg_ids() );
+        
+        $.ajax({
+            url: "/notifications/message/group-mark-read",
+            type: "PATCH",
+            dataType: "json",
+            data: {
+                msg_ids: msg_ids_json
+            }
+        }).done(function(){
+            $(".notification_checkbox:checked").parent().removeClass("unread");
+        });
+    });
 };
+
 var set_group_mark_unread_response = function(){
-    
+    $("#btn_group_mark_unread").click(function(){
+        msg_ids_json = JSON.stringify( get_selected_msg_ids() );
+        
+        $.ajax({
+            url: "/notifications/message/group-mark-unread",
+            type: "PATCH",
+            dataType: "json",
+            data: {
+                msg_ids: msg_ids_json
+            }
+        }).done(function(){
+            $(".notification_checkbox:checked").parent().addClass("unread");
+        });
+    });
 };
 
 var main = function(){
-    set_btn_notification_response();
     set_select_all_notification_toggle();
     set_click_msg_response();
     set_group_delete_reponse();
