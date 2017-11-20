@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/get-chat-history', function(req, res, next){
-  var self_id = String(req.user._id);
+  var self_id = req.user._id;
   var selected_user_id = req.query.selected_user_id;
   MessageModel.collection.aggregate(// Pipeline
     [

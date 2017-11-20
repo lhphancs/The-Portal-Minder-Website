@@ -1,8 +1,10 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema,
+ObjectId = Schema.ObjectId;
 
 var messageSchema = mongoose.Schema({
-  fromId: String,
-  toId: String,
+  fromId: ObjectId,
+  toId: ObjectId,
   message: String,
   timestamp : { type : Date, default: Date.now }
 });

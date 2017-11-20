@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema,
+ObjectId = Schema.ObjectId;
 
 var userSchema = mongoose.Schema({
   firstName: {type: String, require: true},
@@ -9,10 +11,10 @@ var userSchema = mongoose.Schema({
   description: String, default: "",
   tags: [String], default: [],
   education: String, default: "",
-  friends: [String], default: [],
-  friendRequests: [String], default: [],
-  pendingFriends: [String], default: [],
-  blockedUsers: [String], default: [],
+  friends: [ObjectId], default: [],
+  friendRequests: [ObjectId], default: [],
+  pendingFriends: [ObjectId], default: [],
+  blockedUsers: [ObjectId], default: [],
   photoURL: String, default: "",
   notificationsUnviewedCount: {type: Number, default: 0},
   settings: { notifications: {

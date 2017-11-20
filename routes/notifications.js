@@ -73,7 +73,7 @@ router.get('/last/:limit?', require_login, function(req, res, next) {
   }).then(function(count){
     var page = Math.ceil(count/limit);
     var offset = (page - 1) * limit;
-    NotificationModel.find( { userId: String(req.user._id) }, [],
+    NotificationModel.find( { userId: req.user._id }, [],
     {
       skip: offset,
       sort:{
@@ -102,7 +102,7 @@ router.get('/:page?/:limit?', require_login, function(req, res, next) {
     user.notificationsUnviewedCount = 0;
     user.save();
   }).exec(function(){
-    NotificationModel.find( { userId: String(req.user._id) }, [],
+    NotificationModel.find( { userId: req.user._id }, [],
     {
       skip: offset,
       limit: limit * (MAX_JUMP_PAGE + 1),
