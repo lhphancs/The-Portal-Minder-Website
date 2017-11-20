@@ -97,13 +97,34 @@ var set_webcam_toggle_response = function(){
 };
 
 
-var update_map = function(){
-    var img_map = document.querySelector("#map");
-    var str_city = $("#input_city").val();
-    var query = "center=" + str_city;
-    img_map.src = "https://maps.googleapis.com/maps/api/staticmap?" + query
-                    + "&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794"
-                    + "&key=AIzaSyB4DZ4LgiGs_wHsmkGzgUCB4TJHSomYVFU";
+var load_map = function(){
+    var geocoder;
+    var map;
+    function initialize() {
+      geocoder = new google.maps.Geocoder();
+      var latlng = new google.maps.LatLng();
+      var mapOptions = {
+        zoom: 8
+      }
+      map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    }
+  
+    function codeAddress() {
+    var address = $("#input_city").val();
+    geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == 'OK') {
+            map.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+        });
+    }
+    initialize();
+    codeAddress();
 };
 
 
@@ -162,7 +183,7 @@ var main = function(){
     set_webcam_toggle_response();
     set_capture_listener();
     load_tags();
-    update_map();
+    load_map();
 };
 
 $(document).ready(function(){

@@ -42,13 +42,6 @@ textarea{
     margin: 10px auto;
 }
 
-.map_display{
-    width: 500px;
-    height: 500px;
-    border: 1px solid black;
-    margin: 10px;
-}
-
 .display_none{
     display: none;
 }
@@ -59,4 +52,21 @@ textarea{
 
 .info{
     margin: 10px 0px;
+}
+
+
+/* Always set the map height explicitly to define the size of the div
+* element that contains the map. */
+#map {
+    margin: 30px auto;
+    border: 1px solid black;
+    height: 600px;
+    width: 600px;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }

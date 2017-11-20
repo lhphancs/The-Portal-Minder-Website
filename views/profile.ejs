@@ -6,10 +6,15 @@
         <link type="text/css" rel= "stylesheet" href="/stylesheets/profile.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4DZ4LgiGs_wHsmkGzgUCB4TJHSomYVFU"
+            async defer></script>
+        <style>
+    </style>
     </head>
     
     <body>
         <% include nav_logged %>
+        
         <div class="container">
             <h1 class="title">Profile</h1>
             <div>
@@ -62,9 +67,12 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Save Profile</button>
             </form>
-            <img class="map_display" id="map">
         </div>
+
+        <div id="map" class="mt-2"></div>
+
     </body>
+    
 </html>
 <script src="/client-js/global_constants.js"></script>
 <script>
