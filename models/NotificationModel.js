@@ -5,6 +5,7 @@ ObjectId = Schema.ObjectId;
 var notificationsSchema = mongoose.Schema({
   userId: ObjectId,
     fromId: ObjectId,
+    fromName: String,
     message: String,
     timestamp : {type: Date, default: Date.now},
     isRead: {type: Boolean, default: false} }

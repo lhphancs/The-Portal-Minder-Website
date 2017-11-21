@@ -17,11 +17,7 @@ router.post('/validation', function(req, res, next) {
       //Check if password matches
       var is_matching_password = bcrypt.compareSync(req.body.password, user.password);
       if(is_matching_password){
-        //Only store necessary stuff
-        user = {
-          _id: user._id,
-          email: user.email
-        };
+        delete user.password; // delete the password from the session
         req.session.user = user;
         res.send(true);
       }
@@ -55,8 +51,10 @@ router.post('/register-add', function(req, res, next) {
         city: req.body.city,
         photoURL: req.body.photoURL
       });
-      req.session.user = newUser;
+      
       newUser.save(function (err) {
+        delete newUser.user.password; // delete the password from the session
+        req.session.user = newUser;
         res.send(true);
       });
     }
@@ -80,7 +78,7 @@ router.patch('/profile', require_login, function(req, res, next){
   //If tags empty, is undefined. Must set it as empty array to prevent crash
   var tags = req.body.tags;
   tags = tags?tags:[];
-  UserModel.findOneAndUpdate( {email: req.user.email},
+  UserModel.findOneAndUpdate( {_id: req.user._id},
     {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -88,7 +86,10 @@ router.patch('/profile', require_login, function(req, res, next){
       description: req.body.description,
       tags: tags,
       education: req.body.education
-    }, function(err, doc){
+    }, function(err, user){
+      //Update cookie
+      delete user.password; // delete the password from the session
+      req.session.user = user;
       if(err){ console.log(err); }
     }
   );

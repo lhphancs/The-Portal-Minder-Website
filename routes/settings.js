@@ -45,6 +45,9 @@ router.patch('/save', function(req, res, next){
       friendRejected: req.body.friend_rejected,
       friendRemoved: req.body.friend_removed} };
     user.save();
+    //Update cookie
+    delete user.password; // delete the password from the session
+    req.session.user = user;
     res.send(true);
   });
 });

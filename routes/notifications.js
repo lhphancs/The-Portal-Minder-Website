@@ -97,12 +97,13 @@ router.get('/:page?/:limit?', require_login, function(req, res, next) {
   var limit = typeof(limit_param) === "undefined" ? DEFAULT_LIMIT : Number(limit_param);
   var offset = (page - 1) * limit;
 
-  UserModel.findOne( { _id: req.user._id }, function(err, user){
+  var self_id = req.user._id;
+  UserModel.findOne( { _id: self_id }, function(err, user){
     if(err){ console.log(err); }
     user.notificationsUnviewedCount = 0;
     user.save();
-  }).exec(function(){
-    NotificationModel.find( { userId: req.user._id }, [],
+  }).then(function(){
+    NotificationModel.find( { userId: self_id }, [],
     {
       skip: offset,
       limit: limit * (MAX_JUMP_PAGE + 1),
@@ -111,7 +112,6 @@ router.get('/:page?/:limit?', require_login, function(req, res, next) {
       }
     }, function(err, notifications){
       if(err){ console.log(err); }
-
       var next_jumps_available = Math.ceil(notifications.length/limit) - 1;
       
       //Only send the limit

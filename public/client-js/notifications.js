@@ -44,8 +44,8 @@ var set_group_delete_reponse = function(){
             }
         }).done(function(){
             $(".notification_checkbox:checked").parent().remove();
-            if( $(".single_notification_container").length === 0){
-                $("#notifications_list").append(`<div>No notification</div>`);
+            if( $(".single_notification_container").length === 0 && $("#notifications_list > div").length !== 1){
+                $("#notifications_list").append(`<div>No notifications</div>`);
             }
         });
     });

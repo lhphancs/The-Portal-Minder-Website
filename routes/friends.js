@@ -30,7 +30,7 @@ router.patch('/add-pending-friend', function(req, res, next){
     
     var notify_is_on = selected_user.settings.notifications.friendRequest;
     if(notify_is_on){
-      notification.store_to_db(self_id, selected_user_id, "Friend request: Let's be friends!");
+      notification.store_to_db(req.user, selected_user_id, "Friend request: Let's be friends!");
       ++selected_user.notificationsUnviewedCount;
     }
     selected_user.save();
@@ -58,7 +58,7 @@ router.patch('/remove-pending-friend', function(req, res, next){
 
     var notify_is_on = selected_user.settings.notifications.friendRequestCancelled;
     if(notify_is_on){
-      notification.store_to_db(self_id, selected_user_id, "Friend request cancelled!");
+      notification.store_to_db(req.user, selected_user_id, "Friend request cancelled!");
       ++selected_user.notificationsUnviewedCount;
     }
     selected_user.save();
@@ -87,7 +87,7 @@ router.patch('/add-friend', function(req, res, next){
 
     var notify_is_on = selected_user.settings.notifications.friendAccepted;
     if(notify_is_on){
-      notification.store_to_db(self_id, selected_user_id, "Friend added: Hi friend!");
+      notification.store_to_db(req.user, selected_user_id, "Friend added: Hi friend!");
       ++selected_user.notificationsUnviewedCount;
     }
     selected_user.save();
@@ -116,7 +116,7 @@ router.patch('/reject-friend-request', function(req, res, next){
 
     var notify_is_on = selected_user.settings.notifications.friendRejected;
     if(notify_is_on){
-      notification.store_to_db(self_id, selected_user_id, "Friend request rejected.");
+      notification.store_to_db(req.user, selected_user_id, "Friend request rejected.");
       ++selected_user.notificationsUnviewedCount;
     }
     selected_user.save();
@@ -145,7 +145,7 @@ router.patch('/remove-friend', function(req, res, next){
 
     var notify_is_on = selected_user.settings.notifications.friendRemoved;
     if(notify_is_on){
-      notification.store_to_db(self_id, selected_user_id, "Friend removed.");
+      notification.store_to_db(req.user, selected_user_id, "Friend removed.");
       ++selected_user.notificationsUnviewedCount;
     }
     selected_user.save();
