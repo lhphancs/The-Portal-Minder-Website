@@ -44,7 +44,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
   cookieName: 'session',
-  secret: 'random_string_goes_here',
+  secret: 'random_string_goes_here_asdf',
   duration: 30 * 60 * 1000,
   activeDuration: 5 * 60 * 1000,
 }));
@@ -52,6 +52,7 @@ app.use(session({
 app.use(function(req, res, next) {
   if (req.session && req.session.user) {
     UserModel.findOne({ email: req.session.user.email }, function(err, user) {
+      user = user.toObject(); //Needed to delete properly. Mongoose object won't delete.
       if (user) {
         req.user = user;
         delete req.user.password; // delete the password from the session

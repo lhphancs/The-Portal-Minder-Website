@@ -17,7 +17,6 @@ router.post('/validation', function(req, res, next) {
       //Check if password matches
       var is_matching_password = bcrypt.compareSync(req.body.password, user.password);
       if(is_matching_password){
-        delete user.password; // delete the password from the session
         req.session.user = user;
         res.send(true);
       }
@@ -53,7 +52,6 @@ router.post('/register-add', function(req, res, next) {
       });
       
       newUser.save(function (err) {
-        delete newUser.user.password; // delete the password from the session
         req.session.user = newUser;
         res.send(true);
       });
@@ -63,6 +61,7 @@ router.post('/register-add', function(req, res, next) {
 
 // User viewing own
 router.get('/profile', require_login, function(req, res, next) {
+  console.log(req.user);
   var user_email = req.user.email;
   UserModel.findOne( { email: user_email }, function(err, user){
     if(err){ console.log(err); }
@@ -87,9 +86,6 @@ router.patch('/profile', require_login, function(req, res, next){
       tags: tags,
       education: req.body.education
     }, function(err, user){
-      //Update cookie
-      delete user.password; // delete the password from the session
-      req.session.user = user;
       if(err){ console.log(err); }
     }
   );
@@ -108,11 +104,8 @@ router.get('/logout', require_login, function(req, res, next){
   res.redirect('/');
 });
 
-
 router.get('/get-self', require_login, function(req, res, next){
   res.send(req.user);
 });
-
-
 
 module.exports = router;

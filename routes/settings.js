@@ -37,7 +37,6 @@ router.patch('/save', function(req, res, next){
       }
     }
     //User successfully matched password or just wants to change non-security settings
-    console.log(req.body);
     user.settings = {notifications: {
       friendRequest: req.body.friend_requests,
       friendRequestCancelled: req.body.friend_requests_cancelled, 
@@ -45,9 +44,6 @@ router.patch('/save', function(req, res, next){
       friendRejected: req.body.friend_rejected,
       friendRemoved: req.body.friend_removed} };
     user.save();
-    //Update cookie
-    delete user.password; // delete the password from the session
-    req.session.user = user;
     res.send(true);
   });
 });
