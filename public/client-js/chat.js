@@ -57,17 +57,25 @@ var load_friends_and_click_first = function(){
     }).done( function(json){
         var json_size = json.length;
         var contact_list = $("#contact_list");
-        for(var i=0; i<json_size; ++i){
-            var id = json[i]._id;
-            var name = json[i].firstName + " " + json[i].lastName;
-
+        if(json_size === 0){
             contact_list.append(
-                `<button class="btn btn-secondary btn-sm btn-block btn_user_name"
-                data-user-id="${id}">${name}</button>`);
-
-            //User may have long list of friends, so after load one, click it
-            if(i==0)
-                $("#contact_list > button")[0].click();
+                `<h5>No friends</h5>`
+            );
+            $("#msgs_container_header").text("No friends selected. Chat is in test mode.");
+        }
+        else{
+            for(var i=0; i<json_size; ++i){
+                var id = json[i]._id;
+                var name = json[i].firstName + " " + json[i].lastName;
+    
+                contact_list.append(
+                    `<button class="btn btn-secondary btn-sm btn-block btn_user_name"
+                    data-user-id="${id}">${name}</button>`);
+    
+                //User may have long list of friends, so after load one, click it
+                if(i==0)
+                    $("#contact_list > button")[0].click();
+            }
         }
     }).fail( function(json){
         alert("Fetching user_matches from database failed.")
