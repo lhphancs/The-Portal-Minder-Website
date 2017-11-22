@@ -71,7 +71,7 @@ router.get('/last/:limit?', require_login, function(req, res, next) {
   NotificationModel.count( { userId: req.user._id }, function(err, count){
     return count;
   }).then(function(count){
-    var page = Math.ceil(count/limit);
+    var page = count === 0? 1: Math.ceil(count/limit); //Needed in case they have 0 notifications
     var offset = (page - 1) * limit;
     NotificationModel.find( { userId: req.user._id }, [],
     {
@@ -81,6 +81,9 @@ router.get('/last/:limit?', require_login, function(req, res, next) {
       }
     }, function(err, notifications){
       if(err){ console.log(err); }
+      if(count === 0){
+        notifications = [];
+      }
       res.render("notifications", {notifications: notifications,
         page: page,
         limit: limit,
