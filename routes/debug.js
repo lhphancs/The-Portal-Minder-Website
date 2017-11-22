@@ -26,7 +26,7 @@ router.get('/add', function(req, res, next){
     }
   ];
   UserModel.insertMany(users, function(error, docs) {});
-  res.send(true);
+  res.send("Added two users: a@gmail.com/a, b@gmail.com/b");
 });
 
 router.get('/add-randoms', function(req, res, next){

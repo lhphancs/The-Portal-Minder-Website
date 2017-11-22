@@ -32,7 +32,7 @@ var load_all_users = function(mode){
                 //Create elements to add to container
                 var other_user_container = `<div class="other_user_container">
                     <a class="other_user_name" href="${user_profile_href}">${display_name}</a>
-                    <img class="other_user_img" src="${photo_url}">
+                    <a href="${user_profile_href}"><img class="other_user_img" src="${photo_url}"></a>
                     <button class="btn btn-secondary btn-block btn_add_friend add-pending-mode" data-other-id="${user_id}">Add</button>
                 </div>`;
 
