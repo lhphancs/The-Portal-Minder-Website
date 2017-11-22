@@ -61,7 +61,6 @@ router.post('/register-add', function(req, res, next) {
 
 // User viewing own
 router.get('/profile', require_login, function(req, res, next) {
-  console.log(req.user);
   var user_email = req.user.email;
   UserModel.findOne( { email: user_email }, function(err, user){
     if(err){ console.log(err); }

@@ -27,10 +27,10 @@
 		<div class="container">
 			<div class="card text-center">
 				<div class="card-header">
-					Notification
+						Notification
 				</div>
 				<div class="card-body">
-					<h4 class="card-title">firstNameToFill lastNameToFill</h4>
+					<h4 class="card-title">From: <%= notification.fromName %></h4>
 					<p class="card-text text-left"><%= notification.message %></p>
 					<a href="/notifications/message/delete/<%= notification._id %>" class="btn btn-primary">Delete</a>
 				</div>

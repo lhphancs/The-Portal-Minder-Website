@@ -105,7 +105,6 @@ router.patch('/reject-friend-request', function(req, res, next){
     user.friendRequests.pull(selected_user_id);
     user.pendingFriends.pull(selected_user_id);
     user.save();
-    console.log("Updated self: removed pendingFriend");
   });
 
   //update selected_user
@@ -120,7 +119,6 @@ router.patch('/reject-friend-request', function(req, res, next){
       ++selected_user.notificationsUnviewedCount;
     }
     selected_user.save();
-    console.log("Updated selectedUser: removed friendRequest");
     res.send( {notify_is_on: notify_is_on} );
   });
 });
@@ -128,14 +126,11 @@ router.patch('/reject-friend-request', function(req, res, next){
 router.patch('/remove-friend', function(req, res, next){
   var self_id = req.user._id;
   var selected_user_id = req.body.select_user_id;
-  console.log(self_id);
-  console.log(selected_user_id);
   //update self
   UserModel.findOne( { _id: self_id }, function(err, user){
     if(err){ console.log(err); }
     user.friends.pull(selected_user_id);
     user.save();
-    console.log("Updated self: removed friend");
   });
 
   //update selected_user
@@ -149,7 +144,6 @@ router.patch('/remove-friend', function(req, res, next){
       ++selected_user.notificationsUnviewedCount;
     }
     selected_user.save();
-    console.log("Updated self: removed friend");
     res.send( {notify_is_on: notify_is_on} );
   });
 });
