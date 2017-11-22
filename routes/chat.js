@@ -4,6 +4,7 @@ var UserModel = require('../models/UserModel');
 var MessageModel = require('../models/MessageModel');
 var auth = require('../util/auth');
 var notification = require('../util/notification');
+var mongoose = require('mongoose');
 
 router.use(auth.require_login);
 
@@ -16,7 +17,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/get-chat-history', function(req, res, next){
   var self_id = req.user._id;
-  var selected_user_id = req.query.selected_user_id;
+  var selected_user_id = mongoose.Types.ObjectId(req.query.selected_user_id);
   MessageModel.collection.aggregate(// Pipeline
     [
       // Stage 1

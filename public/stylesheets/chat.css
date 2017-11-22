@@ -38,6 +38,8 @@
 }
 
 #textarea_msg{
+    overflow: scroll;
+    overflow-x: hidden;
     resize: none;
 }
 
