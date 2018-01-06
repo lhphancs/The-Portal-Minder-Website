@@ -1,4 +1,4 @@
-# the_portal_minder
+# The Portal Training - Minder Website
 Website that serves as a friend finder. Stores user's profile/traits and allows them to befriend other users. Also integrates real time private chat.
 
 Uses the following:
